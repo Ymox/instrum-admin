@@ -1,0 +1,355 @@
+global:
+  site_name: Instrum Bex
+  organization_name: Union Instrumentale de Bex
+  "yes": Oui
+  "no": Non
+  "true": Vrai
+  "false": Faux
+  "on": Activé
+  "off": Désactivé
+  action:
+    new: Nouveau
+    show: Détails
+    edit: Editer
+    validate: Valider
+    list: Retour à la liste
+    delete: Supprimer
+    confirm_delete: Etes-vous certain de vouloir effectuer la suppression ?
+    sort:
+      asc: Trier par {field} ascendant
+      desc: Trier par {field} descendant
+    filter: Filtrer
+    reset: Réinitialiser
+    download: Télécharger
+    quick: Actions rapides
+    check_all: Sélectionner tout
+    mailing: Générer un lien de publipostage
+    expand:
+      menu: Dérouler le menu
+      list: Dérouler la liste
+    close: Fermer
+    page:
+      prev: Page précédente
+      next: Page suivante
+    print: Version imprimable
+  info:
+    help: Informations
+    loading: Chargement
+    sorted:
+      none: Aucun tri appliqué
+      asc: Tri ascendant appliqué
+      desc: Tri descendant appliqué
+  ago:
+    years: >-
+      {years, plural,
+        one   {# an}
+        other {# ans}
+      }
+  join:
+    end: " et "
+
+app:
+  flash:
+    success:
+      duplicates:
+        member: Le dédoublonnage a été effectué
+      reset_password:
+        done: Mot de passe changé avec succès
+        asked: Lien de changement de mot de passe généré
+    warning:
+      reset_password:
+        valid_once_until_changed: Après validation de ce formulaire, le lien ne sera plus valide
+  file:
+    download: Télécharger le fichier actuel
+    delete: Supprimer le fichier
+    download_selected: Télécharger la sélection
+
+  fields:
+    id: N°
+    category:
+      name:
+        label: &name Nom
+    instrument:
+      number:
+        label: Numéro
+      brand:
+        label: Marque
+      usable:
+        label: Utilisable
+      property:
+        label: Propriété
+      recipient:
+        label: Bénéficiaire
+        placeholder: — Libre —
+      information:
+        label: Informations
+      cat:
+        label: Type
+        placeholder: — Veuillez choisir —
+      subcat:
+        label: Sous-type
+        placeholder: — Dépend du type choisi —
+    level:
+      name:
+        label: *name
+    member:
+      title:
+        label: Titre
+        placeholder: — Titre —
+      lastname:
+        label: Nom de famille
+      firstname:
+        label: Prénom
+      address:
+        label: Adresse
+        address:
+          label: Rue
+        locality:
+          label: Localité
+        zip:
+          label: Code postal
+      mobile:
+        label: Mobile
+        placeholder: &phone +####/###.##.##
+      phone:
+        label: Téléphone
+        placeholder: *phone
+      email:
+        label: E-mail
+      birthday:
+        label: Date de naissance
+      scmv:
+        label: Cotise au canton depuis
+      band:
+        label: A l'Instrum depuis
+      cat:
+        label: Registre
+      informations:
+        label: Informations
+      student:
+        label: Elève
+      related:
+        label: Personne responsable
+      relateds:
+        label: Personne(s) responsable(s)
+      statuses:
+        label: Rôles
+      levels:
+        label: Niveaux
+      instruments:
+        label: Instrument(s)
+      awards:
+        label: Distinctions
+      relations:
+        label: Responsable de
+      stocks:
+        label: &personal Inventaire personnel
+      provisions:
+        label: *personal
+    property:
+      name:
+        label: *name
+    status:
+      name:
+        label: *name
+      active:
+        label: Actif
+    subcategory:
+      name:
+        label: *name
+      cat:
+        label: Catégorie
+    user:
+      username:
+        label: Nom d'utilisateur
+      password:
+        label: Mot de passe
+        first:
+          label: Nouveau mot de passe
+        second:
+          label: Confirmation du nouveau mot de passe
+      nbConnect:
+        label: Nombre de connexions
+      lastConnection:
+        label: Dernière connexion
+    stock:
+      what:
+        label: Désignation
+      amount:
+        label: Quantité totale
+      members:
+        label: Bénéficiaires
+      provisions:
+        label: Dans l'inventaire personnel de
+    provision:
+      stock:
+        label: Désignation
+      amount:
+        label: Quantité
+      details:
+        label: Détails
+      member:
+        label: Membre
+    awardType:
+      name:
+        label: *name
+      years:
+        label: Nombre d'années
+      members:
+        label: Membres distingués
+      eligibleStatuses:
+        label: Statuts éligibles
+      column:
+        label: Années de calcul
+        band: à l'Instrum
+        scmv: au canton
+      statusToAward:
+        label: Statut à décerner
+    award:
+      member:
+        label: Membre
+      awardType:
+        label: Distinction
+      year:
+        label: Année
+
+  login:
+    title: &title Authentification
+    heading: *title
+    user: Utilisateur
+    password: Mot de passe
+
+  reset_password:
+    title: Changement de mot de passe
+
+  menu:
+    members:
+      heading: Membres
+      list: Tous
+      active: Actifs
+      passive: Passifs
+      statuses: Rôles de membre
+      awards: Distinctions
+    instruments:
+      heading: Instruments
+      list: Inventaire
+      categories: Registres
+      properties: Types de propriété
+    students: Ecole de musique
+    stocks:
+      heading: Stocks
+    users: Utilisateurs
+    logout: Déconnexion
+  
+  home:
+    welcome: "Bonjour <strong>{name}</strong> !"
+
+  changelog:
+    title: &changelog Liste des changements
+    heading: *changelog
+
+  member:
+    index:
+      heading: >-
+        {type, select,
+          Externe {{number, plural,
+            one {Membre passif}
+            other {Liste des membres passifs}
+          }}
+          Membre {{number, plural,
+            one {Membre actif}
+            other {Liste des membres actifs}
+          }}
+          other {{number, plural,
+            one {Membre}
+            other {Liste des membres}
+          }}
+        }
+      popup:
+        mailing:
+          heading: Lien de publipostage
+      action:
+        provide: Fournir…
+        decern: &decern Décerner…
+    new:
+      heading: Nouveau membre
+    show:
+      action:
+        decern: *decern
+    students:
+      heading: Elèves de l'école de musique
+    duplicates:
+      duplicate: Enregistrement à supprimer
+      master: Enregistrement principal
+
+  instrument:
+    index:
+      heading: Inventaire des instruments
+      unusable: Inutilisable
+      available: Libre
+    new:
+      heading: Nouvel instrument
+    assign:
+      assigned_to: "Bénéficiaire actuel : {member}"
+  user:
+    index:
+      heading: Liste des utilisateurs
+      ask_reset_password: Permettre de changer le mot de passe
+    new:
+      heading: Nouvel utilisateur
+  category:
+    index:
+      heading: Liste des registres
+    new:
+      heading: Nouveau registre
+  property:
+    index:
+      heading: Liste des types de propriété
+    new:
+      heading: Nouveau type de propriété
+  status:
+    index:
+      heading: Liste des rôles de membre
+    new:
+      heading: Nouveau statut de membre
+  stock:
+    index:
+      heading: Liste des stocks
+      action:
+        provide: Fournir à…
+    new:
+      heading: Nouveau stock
+    show:
+      remains: Disponible
+  provision:
+    index:
+      heading:
+        member: "Inventaire personnel de {member}"
+    new:
+      heading:
+        member: "Fournir à {member}"
+        stock: "Fournir {stock}"
+    edit:
+      heading: "{stock} de {member}"
+  awardType:
+    index:
+      heading: Distinctions décernables
+      action:
+        decern: *decern
+    new:
+      heading: Nouvelle distinction décernable
+    show:
+      not_awarded: Membres à distinguer
+      action:
+        decern: Décerner à…
+  award:
+    index:
+      heading: >-
+        {number, plural,
+          one   {Distinction de {member}}
+          other {Distinctions de {member}}
+        }
+    new:
+      heading:
+        member: "Décerner à {member}"
+        award_type: "Décerner {awardType}"

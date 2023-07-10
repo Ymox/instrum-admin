@@ -1,0 +1,7 @@
+	<div class="modal-header">
+		<h2 class="modal-title">{% block title %}{% endblock %}</h2>
+		<button type="button" class="btn-close" title="{{ 'global.action.close'|trans }}" data-bs-dismiss="modal" aria-label="{{ 'global.action.close'|trans }}"></button>
+	</div>
+	<div class="modal-body">
+		{% block body %}{% endblock %}
+	</div>

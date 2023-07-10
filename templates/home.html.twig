@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div>
+	<h2>{{ 'app.home.welcome'|trans({'name': app.user|title})|raw }} <a href="{{ path('changelog') }}" class="btn btn-large btn-info" target="_blank"><i class="fas fa-question-circle" title="{{ 'global.info.help'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'global.info.help'|trans }}</span></a></h2>
+
+	<img src="https://instrumbex.ch/wp-content/uploads/2021/11/cropped-Logo-INSTRUM.png" alt="Logo de l'Union Instrumentale de Bex" class="d-block mx-auto img-fluid" />
+	<h1 class="text-center">{{ 'global.organization_name'|trans }}</h1>
+</div>
+{% endblock %}

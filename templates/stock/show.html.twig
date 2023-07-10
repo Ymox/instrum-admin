@@ -1,0 +1,72 @@
+{% extends app.request.xmlHttpRequest ? 'base_modal.html.twig' : 'base.html.twig' %}
+
+{% block title %}{{ stock }}{% if not app.request.xmlHttpRequest %} | {{ parent() }}{% endif %}{% endblock %}
+
+{% block body %}
+	{% if not app.request.xmlHttpRequest %}
+	<h1>{{ stock }}</h1>
+	{% endif %}
+
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>{{ 'app.fields.stock.amount.label'|trans }}</th>
+				<td>{{ stock.amount }}</td>
+			</tr>
+			<tr>
+				<th>{{ 'app.stock.show.remains'|trans }}</th>
+				<td>{{ stock.amount - stock.members.count }}</td>
+			</tr>
+			<tr>
+				<th colspan="2"><h2>{{ 'app.fields.stock.members.label'|trans }}</h2></th>
+			</tr>
+			{% for provision in stock.members %}
+				{% if loop.index0 is even %}<tr>{% endif %}
+				<td><a href="{{ path('provision_edit', {'member': provision.member.id, 'stock': provision.stock.id}) }}" class="btn btn-sm btn-outline-warning"><i class="fas fa-pencil-alt" title="{{ 'global.action.edit'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'global.action.edit'|trans }}</span></a>
+					{{ provision.member }}
+					{%- if provision.details %}
+					({{ provision.details }})
+					{%- endif %}</td>
+				{% if loop.index0 is even and loop.last %}<td></td>{% endif %}
+				{% if loop.index0 is odd %}</tr>{% endif %}
+			{% endfor %}
+		</tbody>
+	</table>
+
+	{% if not app.request.xmlHttpRequest %}
+	<ul class="list-inline float-end">
+		<li class="list-inline-item">
+			<a href="{{ path('stock_index') }}" class="btn btn-light"><i class="fas fa-list" title="{{ 'global.action.list'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'global.action.list'|trans }}</span></a>
+		</li>
+	{% else %}
+</div>
+<div class="modal-footer">
+	<ul class="list-inline float-end">
+		<li class="list-inline-item">
+	{% endif %}
+
+			<a href="{{ path('stock_provide', {'stock': stock.id}) }}" class="btn btn-success"
+				{%- if not app.request.xmlHttpRequest %} data-bs-target="#Modal" data-bs-toggle="modal"
+				{%- endif %}><i class="fas fa-user-plus" title="{{ 'global.action.edit'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'global.action.edit'|trans }}</span></a>
+		</li>
+		<li class="list-inline-item">
+			<a href="{{ path('stock_edit', {'id': stock.id}) }}" class="btn btn-warning" target="_blank"><i class="fas fa-pencil-alt" title="{{ 'global.action.edit'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'global.action.edit'|trans }}</span></a>
+
+		</li>
+		<li class="list-inline-item">
+			{% if app.request.xmlHttpRequest -%}
+			<button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{ 'global.action.close'|trans }}</button>
+			{% else %}
+			{{ include('stock/_delete_form.html.twig') }}
+			{% endif %}
+		</li>
+	</ul>
+{% endblock %}
+
+{% block javascripts %}
+		{% if not app.request.xmlHttpRequest %}
+		<script src="{{ asset('js/collection_adder.js') }}"></script>
+		<script src="{{ asset('js/dynamic_modal.js') }}"></script>
+		<script src="{{ asset('js/ajaxify.js') }}"></script>
+		{% endif %}
+{% endblock %}

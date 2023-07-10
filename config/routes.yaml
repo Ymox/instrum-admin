@@ -1,0 +1,11 @@
+home:
+  path: /
+  controller:  Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+  defaults:
+    template:  'home.html.twig'
+
+changelog:
+  path: "/changelog"
+  controller:  Symfony\Bundle\FrameworkBundle\Controller\TemplateController
+  defaults:
+    template:  'changelog.html.twig'

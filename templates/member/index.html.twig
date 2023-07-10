@@ -1,0 +1,168 @@
+{% extends 'base.html.twig' %}
+
+{% set status = app.request.query.all('q')['statuses']['on'][0] ?? null %}
+
+{% block title %}{{ 'app.member.index.heading'|trans({'type': status, 'number': members|length}) }} | {{ parent() }}{% endblock %}
+
+{% block stylesheets %}
+		<style type="text/css">
+		.form-select-sm {
+			min-height: 4em;
+			height: 5em;
+			resize: vertical;
+			overflow-y: auto;
+			overflow-x: hidden;
+		}
+		.form-check-input.positive:checked {
+			background-color: var(--bs-success);
+			border-color: var(--bs-success);
+		}
+		.form-check-input.negative:checked {
+			background-color: var(--bs-danger);
+			border-color: var(--bs-danger);
+			background-image: url("data:image/svg+xml,%3csvg xmlns='http%3A//www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cg transform='matrix%280.09892134,0,0,0.09892134,3.9999942,3.9999694%29'%3e%3cpath fill='%23fff' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m 90.914,5.296 c 6.927,-7.034 18.188,-7.065 25.154,-0.068 6.961,6.995 6.991,18.369 0.068,25.397 l -30.393,30.827 30.425,30.855 c 6.866,6.978 6.773,18.28 -0.208,25.247 -6.983,6.964 -18.21,6.946 -25.074,-0.031 L 60.669,86.881 30.395,117.58 c -6.927,7.034 -18.188,7.065 -25.154,0.068 C -1.72,110.653 -1.751,99.279 5.173,92.251 L 35.566,61.424 5.142,30.568 C -1.725,23.59 -1.631,12.288 5.35,5.321 12.333,-1.642 23.56,-1.625 30.424,5.352 l 30.217,30.643 z' /%3e%3c/g%3e%3c/svg%3e");
+		}
+		</style>
+{% endblock %}
+
+{% block body %}
+	<h1>{{ 'app.member.index.heading'|trans({'type': status, 'number': members|length}) }}</h1>
+</div>
+<div class="container-fluid">
+	<form class="table-responsive" action="{{ path(app.current_route, app.request.query|merge({'_format': 'csv'})) }}">
+		<table class="table table-sm table-hover mx-auto" style="width: auto;">
+			<thead>
+				<tr>
+					<th class="filter-match">{{ 'app.fields.member.statuses.label'|trans }}</th>
+					<th class="filter-match columnSelector-false">{{ 'app.fields.member.title.label'|trans }}</th>
+					<th class="filter-match">{{ 'app.fields.member.lastname.label'|trans }}</th>
+					<th class="filter-match">{{ 'app.fields.member.firstname.label'|trans }}</th>
+					<th class="filter-match columnSelector-false">{{ 'app.fields.member.levels.label'|trans }}</th>
+					<th class="filter-match columnSelector-false">{{ 'app.fields.member.birthday.label'|trans }}</th>
+					<th class="filter-match">{{ 'app.fields.member.address.label'|trans }}</th>
+					<th class="filter-match">{{ 'app.fields.member.cat.label'|trans }}</th>
+					<th class="filter-match columnSelector-false">{{ 'app.fields.member.mobile.label'|trans }}</th>
+					<th class="filter-match columnSelector-false">{{ 'app.fields.member.phone.label'|trans }}</th>
+					<th data-sorter="false">{{ 'app.fields.member.email.label'|trans }}</th>
+					<th class="filter-false columnSelector-false">{{ 'app.fields.member.scmv.label'|trans }}</th>
+					<th class="filter-false columnSelector-false">{{ 'app.fields.member.band.label'|trans }}</th>
+					<th data-sorter="false" data-filter="false" data-column-selector="disable">
+						<div class="btn-group btn-group-sm">
+							<a href="{{ path('member_new') }}" class="btn btn-sm btn-success">{{ 'global.action.new'|trans }}</a>
+							<button role="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" title="{{ 'global.action.expand.menu'|trans }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="sr-only">{{ 'global.action.expand.menu'|trans }}</span>
+							</button>
+							<ul id="ColumnSelector" class="dropdown-menu" data-column-selector-prototype="&lt;li&gt;&lt;label class=&quot;dropdown-item&quot;&gt;&lt;input type=&quot;checkbox&quot;&gt; {name}&lt;/label&gt;&lt;/li&gt;">
+								<button type="button" class="dropdown-item" id="MailCollector" data-bs-toggle="modal" data-bs-target="#Modal" data-prototype="&lt;div class=&quot;modal-header&quot;&gt;&lt;h3&gt;{{ 'app.member.index.popup.mailing.heading'|trans }}&lt;/h3&gt;&lt;/div&gt;&lt;div class=&quot;modal-body&quot;&gt;&lt;a href=&quot;mailto:__mails__&quot;&gt;__mails__&lt;/a&gt;&lt;/div&gt;&lt;div class=&quot;modal-footer&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-bs-dismiss=&quot;modal&quot;&gt;{{ 'global.action.close'|trans }}&lt;/button&gt;&lt;/div&gt;">{{ 'global.action.mailing'|trans }}</button>
+								<div class="dropdown-divider"></div>
+							</ul>
+						</div>
+					</th>
+				</tr>
+				<tr class="tablesorter-ignoreRow">
+					<th>{{ form_label(searchForm.statuses, null, {'label_attr': {'class': 'sr-only'}}) }}{{ form_widget(searchForm.statuses, {'attr': {'class': 'form-control form-select-sm'}, 'translation_domain': false}) }}<input type="search" id="SearchStatuses" class="d-none searchField"{% if app.request.all('q')['statuses'] is defined %} value="
+							{{-
+								(app.request.query.all('q')['statuses']['on'] is defined
+									? app.request.query.all('q')['statuses']['on'] is iterable
+										? app.request.query.all('q')['statuses']['on']|join(' or ')
+										: app.request.query.all('q')['statuses']['on'])
+								~ (app.request.query.all('q')['statuses']|length == 2
+									? ' && '
+									: '')
+								~ (app.request.query.all('q')['statuses']['off'] is defined
+									? app.request.query.all('q')['statuses']['off'] is iterable
+										? '!' ~ app.request.query.all('q')['statuses']['off']|join(' && !')
+										: app.request.query.all('q')['statuses']['off'])
+							-}}"{% endif %} data-column="0" /></th>
+					<th class="columnSelector-false">{{ form_label(searchForm.title, null, {'label_attr': {'class': 'sr-only'}}) }} {{ form_widget(searchForm.title , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.title.label'|trans, 'data-column': 1, 'tabindex': 1}, 'translation_domain': false}) }}</th>
+					<th>{{ form_label(searchForm.lastname, null, {'label_attr': {'class': 'sr-only'}}) }} {{ form_widget(searchForm.lastname , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.lastname.label'|trans, 'data-column': 2, 'tabindex': 1}, 'translation_domain': false}) }}</th>
+					<th>{{ form_label(searchForm.firstname, null, {'label_attr': {'class': 'sr-only'}}) }} {{ form_widget(searchForm.firstname , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.firstname.label'|trans, 'data-column': 3, 'tabindex': 1}, 'translation_domain': false}) }}</th>
+					<th class="columnSelector-false">{{ form_label(searchForm.levels, null, {'label_attr': {'class': 'sr-only'}}) }} {{ form_widget(searchForm.levels , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.levels.label'|trans, 'data-column': 4, 'tabindex': 1}, 'translation_domain': false}) }}</th>
+					<th class="columnSelector-false">{{ form_label(searchForm.birthday, null, {'label_attr': {'class': 'sr-only'}}) }} {{ form_widget(searchForm.birthday , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.birthday.label'|trans, 'data-column': 5, 'tabindex': 1}, 'translation_domain': false}) }}</th>
+					<th>{{ form_label(searchForm.address, null, {'label_attr': {'class': 'sr-only'}}) }} {{ form_widget(searchForm.address , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.address.label'|trans, 'data-column': 6, 'tabindex': 1}, 'translation_domain': false}) }}</th>
+					<th>{{ form_label(searchForm.cat, null, {'label_attr': {'class': 'sr-only'}}) }} {{ form_widget(searchForm.cat , {'attr': {'class': 'form-control form-select-sm', 'placeholder': 'app.fields.member.cat.label'|trans}}) }}<input type="hidden" class="d-none searchField"{% if app.request.all('q')['cat'] is defined %} value="{{ app.request.all('q')['cat'] is iterable ? '"' ~ app.request.all('q')['cat']|join('&quot; && &quot;') ~ '"' : app.request.all('q')['cat'] }}"{% endif %} data-column="7" /></th>
+					<th class="columnSelector-false">{{ form_label(searchForm.mobile, null, {'label_attr': {'class': 'sr-only'}}) }} {{ form_widget(searchForm.mobile , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.mobile.label'|trans, 'data-column': 8, 'tabindex': 1}, 'translation_domain': false}) }}</th>
+					<th class="columnSelector-false">{{ form_label(searchForm.phone, null, {'label_attr': {'class': 'sr-only'}}) }} {{ form_widget(searchForm.phone , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.phone.label'|trans, 'data-column': 9, 'tabindex': 1}, 'translation_domain': false}) }}</th>
+					<th data-sorter="false">{{ form_label(searchForm.email, null, {'label_attr': {'class': 'sr-only'}}) }} {{ form_widget(searchForm.email , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.email.label'|trans, 'data-column': 10, 'tabindex': 1}, 'translation_domain': false}) }}</th>
+					<th class="columnSelector-false">{{ form_label(searchForm.scmv, null, {'label_attr': {'class': 'sr-only'}}) }} {{ form_widget(searchForm.scmv , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.scmv.label'|trans, 'data-column': 11, 'tabindex': 1}, 'translation_domain': false}) }}</th>
+					<th class="columnSelector-false">{{ form_label(searchForm.band, null, {'label_attr': {'class': 'sr-only'}}) }} {{ form_widget(searchForm.band , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.band.label'|trans, 'data-column': 12, 'tabindex': 1}, 'translation_domain': false}) }}</th>
+					<th data-sorter="false" data-filter="false" data-column-selector="disable">
+						<button type="reset" class="btn btn-sm btn-light"><i class="fas fa-sync-alt" title="{{ 'global.action.reset'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'global.action.reset'|trans }}</span></button>
+						<button type="submit" class="btn btn-sm btn-info"><i class="fas fa-download" title="{{ 'global.action.download'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'global.action.download'|trans }}</span></button>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for member in members %}
+				<tr>
+					<td>{{ member.statuses|join(', ', 'global.join.end'|trans) }}</td>
+					<td>{{ member.title }}</td>
+					<td>{{ member.lastname }}</td>
+					<td>{{ member.firstname }}</td>
+					<td>{{ member.levels|join(', ', 'global.join.end'|trans) }}</td>
+					<td{% if member.birthday %} title={{ 'global.ago.years'|trans({'years': member.age}) }}{% endif %}>{{ member.birthday ? member.birthday|date('d.m.Y') }}</td>
+					<td>{{ member.address }}</td>
+					<td>{% if member.cat -%}
+						<a href="{{ path('instrument_index', {'q': {'recipient': member.lastname}}) }}">{{ member.cat }}</a>
+						{% endif %}</td>
+					<td>{% if member.mobile -%}
+						<a title="{{ member }}" href="tel:{{ member.mobile }}">{{ member.mobile }}</a>
+						{%- endif -%}
+						{%- for related in member.relateds -%}
+						{%- if related.mobile %}
+						<span class="d-inline-block"><a title="{{ related }}" href="tel:{{ related.mobile }}">{{ related.mobile }}</a> (<a href="{{ path('member_show', {'id': related.id}) }}" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-{% if related.title == constant('TITLE_MS', related) %}fe{% endif %}male" title="{{ 'app.fields.member.related.label'|trans }}" aria-hidden="true"></i><span class="sr-only"> {{ 'app.fields.member.relateds.label'|trans }}</span></a>)</span>
+						{%- endif -%}
+						{%- endfor %}</td>
+					<td>{% if member.phone -%}
+						<a title="{{ member }}" href="tel:{{ member.phone }}">{{ member.phone }}</a>
+						{%- endif -%}
+						{%- for related in member.relateds -%}
+						{%- if related.phone %}
+						<span class="d-inline-block"><a title="{{ related }}" href="tel:{{ related.phone }}">{{ related.phone }}</a> (<a href="{{ path('member_show', {'id': related.id}) }}" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-{% if related.title == constant('TITLE_MS', related) %}fe{% endif %}male" title="{{ 'app.fields.member.related.label'|trans }}" aria-hidden="true"></i><span class="sr-only"> {{ 'app.fields.member.relateds.label'|trans }}</span></a>)</span>
+						{%- endif -%}
+						{%- endfor %}</td>
+					<td>{% if member.email -%}
+						<a title="{{ member }}" href="mailto:{{ member.email }}">{{ member.email }}</a>
+						{%- endif -%}
+						{%- for related in member.relateds -%}
+						{%- if related.email %}
+						<span class="d-inline-block"><a title="{{ related }}" href="mailto:{{ related.email }}">{{ related.email }}</a> (<a href="{{ path('member_show', {'id': related.id}) }}" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-{% if related.title == constant('TITLE_MS', related) %}fe{% endif %}male" title="{{ 'app.fields.member.related.label'|trans }}" aria-hidden="true"></i><span class="sr-only"> {{ 'app.fields.member.relateds.label'|trans }}</span></a>)</span>
+						{%- endif -%}
+						{%- endfor %}</td>
+					<td{% if member.scmv %} title={{ 'global.ago.years'|trans({'years': 'now'|date('Y') - member.scmv}) }}{% endif %}>{{ member.scmv }}</td>
+					<td{% if member.band %} title={{ 'global.ago.years'|trans({'years': 'now'|date('Y') - member.band}) }}{% endif %}>{{ member.band }}</td>
+					<td>
+						<div class="btn-group btn-group-sm">
+							<a href="{{ path('member_show', {'id': member.id}) }}" class="btn btn-sm btn-outline-info" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank">{{ 'global.action.show'|trans }}</a>
+							<button role="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" title="{{ 'global.action.expand.menu'|trans }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="sr-only">{{ 'global.action.expand.menu'|trans }}</span>
+							</button>
+							<div class="dropdown-menu">
+								<a href="{{ path('member_edit', {'id': member.id}) }}" class="dropdown-item"><i class="fas fa-pencil-alt" title="{{ 'global.action.edit'|trans }}" aria-hidden="true"></i> {{ 'global.action.edit'|trans }}</a>
+								<a href="{{ path('member_provide', {'member': member.id}) }}" class="dropdown-item" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-suitcase" title="{{ 'app.member.index.action.provide'|trans }}" aria-hidden="true"></i> {{ 'app.member.index.action.provide'|trans }}</a>
+								<a href="{{ path('member_decern', {'member': member.id}) }}" class="dropdown-item" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-medal" title="{{ 'app.member.index.action.decern'|trans }}" aria-hidden="true"></i> {{ 'app.member.index.action.decern'|trans }}</a>
+								<form method="post" action="{{ path('member_delete', {'id': member.id}) }}" style="display: list-item" onsubmit="return confirm('{{ 'global.action.confirm_delete'|trans }}');">
+									<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ member.id) }}">
+									<button type="submit" class="dropdown-item"><i class="fas fa-trash" title="{{ 'global.action.delete'|trans }}" aria-hidden="true"></i> {{ 'global.action.delete'|trans }}</button>
+								</form>
+							</div>
+						</div>
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</form>
+{% endblock %}
+
+{% block javascripts %}
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.widgets.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/widgets/widget-columnSelector.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="{{ asset('js/collection_adder.js') }}"></script>
+		<script src="{{ asset('js/role_expander.js') }}"></script>
+		<script src="{{ asset('js/dynamic_modal.js') }}"></script>
+		<script src="{{ asset('js/ajaxify.js') }}"></script>
+		<script src="{{ asset('js/tablesorter_behaviour.js') }}"></script>
+		<script src="{{ asset('js/mail_collector.js') }}"></script>
+{% endblock %}

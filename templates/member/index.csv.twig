@@ -1,0 +1,48 @@
+﻿{% autoescape false -%}
+"{{ 'app.fields.member.statuses.label'|trans }}";"
+{{- 'app.fields.member.title.label'|trans }}";"
+{{- 'app.fields.member.lastname.label'|trans }}";"
+{{- 'app.fields.member.firstname.label'|trans }}";"
+{{- 'app.fields.member.birthday.label'|trans }}";"
+{{- 'app.fields.member.address.address.label'|trans }}";"
+{{- 'app.fields.member.address.zip.label'|trans }}";"
+{{- 'app.fields.member.address.locality.label'|trans }}";"
+{{- 'app.fields.member.mobile.label'|trans }}";"
+{{- 'app.fields.member.phone.label'|trans }}";"
+{{- 'app.fields.member.cat.label'|trans }}";"
+{{- 'app.fields.member.email.label'|trans }}";"
+{{- 'app.fields.member.scmv.label'|trans }}";"
+{{- 'app.fields.member.band.label'|trans }}"
+{%- for member in members ~%}
+	"{{ member.statuses|join(', ', 'global.join.end'|trans) }}";"
+	{{- member.title }}";"
+	{{- member.lastname }}";"
+	{{- member.firstname }}";"
+	{{- member.birthday ? member.birthday|date('d.m.Y') }}";"
+	{{- member.address.address }}";"
+	{{- member.address.zip }}";"
+	{{- member.address.locality }}";"
+	{{- member.mobile }}";"
+	{{- member.phone }}";"
+	{{- member.cat ? member.cat }}";"
+	{{- member.email }}";"
+	{{- member.scmv ? member.scmv }}";"
+	{{- member.band ? member.band }}"
+	{%~ if member.age < 18 -%}
+	{%- for related in member.relateds ~%}
+	"Parent";"
+	{{- related.title }}";"
+	{{- related.lastname }}";"
+	{{- related.firstname }}";"
+	{{- related.birthday ? related.birthday|date('d.m.Y') }}";"
+	{{- related.address.address }}";"
+	{{- related.address.zip }}";"
+	{{- related.address.locality }}";"
+	{{- related.mobile }}";"
+	{{- related.phone }}";"
+	{{- related.cat ? member.cat }}";"
+	{{- related.email }}";;
+	{%- endfor -%}
+	{%- endif -%}
+{%- endfor -%}
+{%- endautoescape -%}

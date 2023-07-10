@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}" xml:lang="{{ app.request.locale }}" data-bs-theme="auto">
+	<head>
+		<meta charset="UTF-8" />
+		<title>{% block title %}{{ 'global.site_name'|trans }}{% endblock %}</title>
+		<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.3/css/bootstrap.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/solid.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		{% block stylesheets %}{% endblock %}
+	</head>
+	<body>
+		{% block menu %}{{ include('menu.html.twig') }}{% endblock %}
+		<div class="container">
+			{% block flash %}
+			{% for label, messages in app.flashes %}
+				{% for message in messages %}
+					<div class="alert alert-{{ label }} mt-{{ loop.first ? '3' : '1' }}">
+						{{ message|raw }}
+					</div>
+				{% endfor %}
+			{% endfor %}
+			{% endblock flash %}
+			{% block body %}{% endblock %}
+		</div>
+		<div id="Modal" class="modal">
+			<div class="modal-dialog modal-dialog-scrollable modal-xl">
+				<div class="modal-content" data-empty-content="&lt;div class=&quot;text-center&quot;&gt;&lt;i class=&quot;fa fa-spinner fa-pulse&quot; title=&quot;{{ 'global.info.loading'|trans }}&quot;&gt;&lt;/i&gt;&lt;span class=&quot;sr-only&quot;&gt;{{ 'global.info.loading'|trans }}&lt;/span&gt;&lt;/div&gt;">
+					{% block modal_content %}<div class="text-center"><i class="fas fa-spinner fa-pulse" title="{{ 'global.info.loading'|trans }}"></i><span class="sr-only">{{ 'global.info.loading'|trans }}</span></div>{% endblock %}
+				</div>
+			</div>
+		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.3/js/bootstrap.bundle.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		{% block javascripts %}{% endblock %}
+	</body>
+</html>

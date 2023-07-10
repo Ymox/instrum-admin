@@ -1,0 +1,49 @@
+{% extends app.request.xmlHttpRequest ? 'base_modal.html.twig' : 'base.html.twig' %}
+
+{% block title %}{{ 'app.member.new.heading'|trans }}{% if not app.request.xmlHttpRequest %} | {{ parent() }}{% endif %}{% endblock %}
+
+{% block stylesheets %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2-bootstrap-5-theme/1.3.0/select2-bootstrap-5-theme.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock %}
+
+{% block body %}
+	{% if not app.request.xmlHttpRequest %}
+	<h1>{{ 'app.member.new.heading'|trans }}</h1>
+	{% endif %}
+
+	{{ include('member/_form.html.twig') }}
+
+	<ul class="list-inline float-end">
+		<li class="list-inline-item">
+			{% if not app.request.xmlHttpRequest %}
+			<a href="{{ path('member_index') }}" class="btn btn-light"><i class="fas fa-list" title="{{ 'global.action.list'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'global.action.list'|trans }}</span></a>
+			{% else %}
+			<button type="button" class="btn btn-light" data-bs-dismiss="modal">{{ 'global.action.close'|trans }}</a>
+			{% endif %}
+		</li>
+	</ul>
+{% endblock %}
+
+{% block javascripts %}
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="{{ asset('js/dynamic_modal.js') }}"></script>
+		<script src="{{ asset('js/ajaxify.js') }}"></script>
+		<script src="{{ asset('js/entity_adder.js') }}"></script>
+		<script src="{{ asset('js/role_limiter.js') }}"></script>
+		<script>//<![CDATA[
+		$(function() {
+			$('select.searchable').select2({
+				theme: "bootstrap-5"
+			});
+		});
+		$('form').on('change', '#member_statuses, #member_statuses [type="checkbox"]', function() {
+			if ($(':selected:contains("Elève")', this).length || $(':checked').next().text().match(/Elève/)) {
+				$('#StudentData').show();
+			} else {
+				$('#StudentData').hide();
+			}
+		});
+		/*]]>*/</script>
+{% endblock %}

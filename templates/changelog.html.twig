@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | {{ 'app.changelog.title'|trans }}{% endblock %}
+
+{% block body %}
+<div>
+	<h2>{{ 'app.changelog.title'|trans }}</h2>
+	<h3>Janvier 2023</h3>
+	<p>Pour des raisons techniques et administratives, le site a été mis à jour. Certaines choses n'ont pas ou peu changé (notamment au niveau graphique), d'autres ont été adaptées. Voici une liste non exhaustive.</p>
+	<h4>Nouveautés</h4>
+	<h5>Il est possible de saisir un élève et directement un de ses parents.</h5>
+	<p>Au-dessus du champ <q>{{ 'app.fields.member.relateds.label'|trans }}</q> se trouve un bouton <a href="#" class="btn btn-sm btn-outline-success"><i class="fa fa-plus-circle"></i></a> qui ouvre un nouveau formulaire en premier plan — évidemment sans toucher à ce que vous avez déjà saisi. La personne renseignée dans ce nouveau formulaire est automatiquement mise comme personne responsable de celle en arrière-plan. Il faut cependant bien valider les deux formulaires.</p>
+	<h5>Un élève peut avoir plusieurs personnes responsables</h5>
+	<p>Pratique dans le cas où il faut transmettre les informations à des parents séparés. <em class="text-warning">En conséquence, les informations des parents sont à renseigner pour ceux-ci et non pour leurs enfants</em></p>
+	<h5>Les exports des membres utilisent les filtres saisis</h5>
+	<p>Auparavant, les exports ne tenaient compte que du choix effectué dans la navigation. Désormais, après avoir peiné à afficher les membres souhaités, seulement ceux-ci seront présents dans l'export.</p>
+	<h5>Les adresses e-mail, numéros de téléphone et de mobile des parents s'affichent pour leur enfant</h5>
+	<p>Si un enfant n'a pas l'une de ces informations qui lui soit personnelle, celle(s) d'une (des) personne(s) responsable(s) s'affichent à la place, avec en plus un lien (<a href="#" data-bs-target="#Modal"><span title="{{ 'app.fields.member.relateds.label'|trans }}" aria-hidden="true"><i class="fas fa-male"></i><i class="fas fa-female"></i></span><span class="sr-only"> {{ 'app.fields.member.relateds.label'|trans }}</span></a>) qui ouvre les informations de la personne responsable. <em class="text-warning">En conséquence, les informations des parents sont à renseigner pour ceux-ci et non pour leurs enfants</em></p>
+	<p>Dans les exports, les données de la (des) personne(s) responsable(s) d'un élève feront automatiquement partie des informations dans le fichier.</p>
+	<h5>Les tableaux peuvent afficher certaines colonnes à volonté</h5>
+	<p>En cliquant sur le menu <a href="#" class="btn btn-sm btn-secondary dropdown-toggle dropdown-toggle-split show" title="Dérouler le menu"><span class="sr-only">Dérouler le menu</span></a> en haut de certaines pages, vous accédez à la liste des colonnes, avec des cases à cocher indiquant si elles sont ou non affichées. Vous pouvez ainsi affiner les informations que vous souhaitez voir. <em class="text-danger">Ceci n'a cependant pas d'influence sur les exports !</em></p>
+	<h5>Il est possible de générer des liens de publipostage</h5>
+	<p>En cliquant sur le menu <a href="#" class="btn btn-sm btn-secondary dropdown-toggle dropdown-toggle-split show" title="Dérouler le menu"><span class="sr-only">Dérouler le menu</span></a> en haut de certaines pages, avant la liste des colonnes, vous trouverez une option pour générer un lien de publipostage. Vous pourrez cliquer sur le lien, ce qui ouvrira une fenêtre de rédaction d'e-mail dans votre programme habituel.</p>
+	<h5>Gestion des clés, uniformes, polos, etc.</h5>
+	<p>Il est maintenant possible de renseigner qui possède quoi dans le système. Clés (avec leur type et leur numéro), pièces d'uniforme, polos, etc. : l'équipement des membres peut être contrôlé et comptabilisé. Pour tout cela, afficher la liste des membres et choisir <q>{{ 'app.member.index.action.provide'|trans }}</q> dans le menu individuel <a href="#" class="btn btn-sm btn-outline-secondary dropdown-toggle dropdown-toggle-split" title="Dérouler le menu"><span class="sr-only">Dérouler le menu</span></a>. <strong class="text-danger">Les instruments sont toujours gérés de l'ancienne manière</strong>.</p>
+	<h4>Changements</h4>
+	<h5>Les actions des listes sont toutes à droite</h5>
+	<p>Pour des raisons d'uniformité et de gestion des colonnes dynamiques, les liens pour voir les détails, éditer, supprimer depuis les listes sont du même côté sur toutes les listes.</p>
+	<h5>Les numéros de mobile sont uniques</h5>
+	<p>Plus question de mettre le numéro de mobile d'un parent pour un élève. Le numéro d'un parent est à renseigner dans les informations de la personne responsable, pour qu'il indique clairement et directement qui on aura au bout du fil.</p>
+	<h5>Il n'est plus possible de mettre plusieurs adresses mail pour une personne</h5>
+	<p>Lister les adresses mail des parents dans les informations d'un enfant n'est plus possible. L'adresse mail d'un parent est à renseigner dans les informations de la personne responsable, et l'on renseigne plusieurs personnes responsables le cas échéant</p>
+	<h5>Les paires nom/prénom doivent être uniques</h5>
+	<p>Il n'est plus possible de saisir deux fois la même personne dans le système. En contrepartie, les changements suivants ont été apportés.</p>
+	<h5>Champ Status pour les membres</h5>
+	<p>La gestion précédente n'était malheureusement pas claire et ne permettait pas toutes les possibilités que l'on peut rencontrer dans notre société. Les valeurs sont organisées en hiérarchie — voir sous <q>{{ 'app.menu.members.heading'|trans }}</q> &gt; <q>{{ 'app.menu.members.statuses'|trans }}</q>.</p>
+	<h6>Il a été renommé Rôles</h6>
+	<p>D'une part parce que Status n'a pas de différence orthographique au pluriel, mais aussi parce que la manière de l'utiliser a de fait un peu changé.</p>
+	<h6>Il peut contenir plusieurs valeurs</h6>
+	<p>Parce que les anciens statuts pouvaient en réalité s'entremêler, notamment les membres non musiciens, les élèves qui ne sont pas (encore) dans la fanfare ou qui le sont aussi. Du coup, il est possible de choisir plusieurs valeurs lors de la saisie d'une personne. <strong class="text-danger">Un rôle précis implique les rôles plus généraux au-dessus de lui, pas besoin de sélectionner toute la hiérarchie</strong>. Par exemple :
+		<ul>
+			<li>le rôle <q>Musicien</q> implique le rôle <q>Membre</q> ;</li>
+			<li>le rôle <q>Caissier</q> implique les rôles <q>Comité</q> et <q>Membre</q> ;</li>
+			<li>le rôle <q>Elève</q> implique le rôle <q>Ecole de musique</q>.</li>
+		</ul></p>
+	<h5>Gestion des distinctions</h5>
+	<p>Désormais, les distinctions ne sont plus uniquement des calculs sur des années, mais des éléments à enregistrer, pour permettre de gérer les années à rattrapper par exemple.</p>
+	<h6>Il est possible de renseigner plusieurs distinctions pour un seul membre</h6>
+	<p>Utile principalement pour rattrappage, cela se fait depuis la liste des membres avec l'option <q>{{ 'app.member.index.action.decern'|trans }}</q> trouvable dans le menu individuel du membre dans la liste <a href="#" class="btn btn-sm btn-outline-secondary dropdown-toggle dropdown-toggle-split" title="Dérouler le menu"><span class="sr-only">Dérouler le menu</span></a> ou depuis les détails de l'un d'eux.</p>
+	<h6>Il est possible de décerner la même distinction à plusieurs personnes à la fois</h6>
+	<p>Pour cela, il faut afficher la liste des distinctions et utiliser le menu individuel <a href="#" class="btn btn-sm btn-outline-secondary dropdown-toggle dropdown-toggle-split" title="Dérouler le menu"><span class="sr-only">Dérouler le menu</span></a> ou afficher les détails d'une distinction.</p>
+	<h5>Recherches avec les rôles</h5>
+	<p>La liste de choix a été remplacée par une liste de cases à cocher. Il y en a deux par rôle :
+		<ol>
+			<li>la première pour être sûr que les personnes <strong>ont</strong> le rôle. Elle devient <span class="badge bg-success fw-bold">verte</span> quand on la coche ;</li>
+			<li>la seconde pour être sûr que les personnes <strong>n'ont pas</strong> le rôle. Elle devient <span class="badge bg-danger fw-bold">rouge</span> quand on la coche.</p>
+		</ol>
+		Ne cocher aucune case d'un rôle veut dire que celui-ci peut être présent ou non pour les personnes qui sortent dans les résultats.</p>
+</div>
+{% endblock %}
+
+{% block stylesheets %}
+	<style>
+	[lang="fr"] q::before {
+		content: "« ";
+		font-weight: normal;
+	}
+	[lang="fr"] q::after {
+		content: " »";
+		font-weight: normal;
+	}
+	</style>
+{% endblock %}

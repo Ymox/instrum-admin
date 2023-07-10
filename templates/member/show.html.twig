@@ -1,0 +1,119 @@
+{% extends app.request.xmlHttpRequest ? 'base_modal.html.twig' : 'base.html.twig' %}
+
+{% block title %}{{ member }}{% if not app.request.xmlHttpRequest %} | {{ parent() }}{% endif %}{% endblock %}
+
+{% block body %}
+	{% if not app.request.xmlHttpRequest %}
+	<h1>{{ member }}<br />
+		<small>{% if 'Elève' in member.statuses %} ({{ 'app.fields.member.student.label'|trans }}){% endif %} {{ member.cat }}</small></h1>
+	{% endif %}
+
+	<table class="table table-sm table-borderless">
+		<tbody>
+			<tr>
+				<th>{{ 'app.fields.member.address.label'|trans }}</th>
+				<td>{{ member.address|nl2br }}</td>
+			</tr>
+			<tr>
+				<th>{{ 'app.fields.member.mobile.label'|trans }}</th>
+				<td>{% if member.mobile -%}
+					<a title="{{ member }}" href="tel:{{ member.mobile }}">{{ member.mobile }}</a>
+					{%- endif -%}
+					{%- for related in member.relateds -%}
+					{%- if related.mobile %}
+					<a title="{{ related }}" href="tel:{{ related.mobile }}">{{ related.mobile }}</a> (<a href="{{ path('member_show', {'id': related.id}) }}" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-{% if related.title == constant('TITLE_MS', related) %}fe{% endif %}male" title="{{ 'app.fields.member.related.label'|trans }}" aria-hidden="true"></i><span class="sr-only"> {{ 'app.fields.member.relateds.label'|trans }}</span></a>)
+					{%- endif -%}
+					{%- endfor %}</td>
+			</tr>
+			<tr>
+				<th>{{ 'app.fields.member.phone.label'|trans }}</th>
+				<td>{% if member.phone -%}
+					<a title="{{ member }}" href="tel:{{ member.phone }}">{{ member.phone }}</a>
+					{%- endif -%}
+					{%- for related in member.relateds -%}
+					{%- if related.phone %}
+					<a title="{{ related }}" href="tel:{{ related.phone }}">{{ related.phone }}</a> (<a href="{{ path('member_show', {'id': related.id}) }}" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-{% if related.title == constant('TITLE_MS', related) %}fe{% endif %}male" title="{{ 'app.fields.member.related.label'|trans }}" aria-hidden="true"></i><span class="sr-only"> {{ 'app.fields.member.relateds.label'|trans }}</span></a>)
+					{%- endif -%}
+					{%- endfor %}</td>
+			</tr>
+			<tr>
+				<th>{{ 'app.fields.member.email.label'|trans }}</th>
+				<td>{% if member.email -%}
+					<a title="{{ member }}" href="mailto:{{ member.email }}">{{ member.email }}</a>
+					{%- endif -%}
+					{%- for related in member.relateds -%}
+					{%- if related.email %}
+					<a title="{{ related }}" href="mailto:{{ related.email }}">{{ related.email }}</a> (<a href="{{ path('member_show', {'id': related.id}) }}" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-{% if related.title == constant('TITLE_MS', related) %}fe{% endif %}male" title="{{ 'app.fields.member.related.label'|trans }}" aria-hidden="true"></i><span class="sr-only"> {{ 'app.fields.member.relateds.label'|trans }}</span></a>)
+					{%- endif -%}
+					{%- endfor %}</td>
+			</tr>
+			<tr>
+				<th>{{ 'app.fields.member.birthday.label'|trans }}</th>
+				<td>{{ member.birthday ? (member.birthday|date('d.m.Y') ~ ' (' ~ 'global.ago.years'|trans({'years': member.age}) ~ ')') }}</td>
+			</tr>
+			{% if not member.relateds.empty %}
+			<tr>
+				<th>{{ 'app.fields.member.relateds.label'|trans }}</th>
+				<td>
+					{%- for related in member.relateds -%}
+					<a href="{{ path('member_show', {'id': related.id}) }}">{{ related }}</a>
+					{%- if not loop.last %}, {% endif %}
+					{%- endfor -%}
+				</td>
+			</tr>
+			{% endif %}
+			{% if not member.relations.empty %}
+			<tr>
+				<th>{{ 'app.fields.member.relations.label'|trans }}</th>
+				<td>
+					{%- for related in member.relations -%}
+					<a href="{{ path('member_show', {'id': related.id}) }}">{{ related }}</a>
+					{%- if not loop.last %}, {% endif %}
+					{%- endfor -%}
+				</td>
+			</tr>
+			{% endif %}
+			<tr>
+				<th>{{ 'app.fields.member.band.label'|trans }}</th>
+				<td>{{ member.scmv ? member.scmv ~ ' (' ~ 'global.ago.years'|trans({'years': 'now'|date('Y') - member.scmv}) ~ ')' }}</td>
+			</tr>
+			<tr>
+				<th>{{ 'app.fields.member.scmv.label'|trans }}</th>
+				<td>{{ member.band ? member.band ~ ' (' ~ 'global.ago.years'|trans({'years': 'now'|date('Y') - member.band}) ~ ')' }}</td>
+			</tr>
+			<tr>
+				<th>{{ 'app.fields.member.informations.label'|trans }}</th>
+				<td>{{ member.informations }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+			{%- if not app.request.xmlHttpRequest %}
+	<ul class="list-inline float-end">
+		<li class="list-inline-item">
+			<a href="{{ path('member_index') }}" class="btn btn-light"><i class="fas fa-list" title="{{ 'global.action.list'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'global.action.list'|trans }}</span></a>
+		</li>
+			{% else -%}
+</div>
+<div class="modal-footer">
+	<ul class="list-inline float-end">
+			{% endif -%}
+
+		<li class="list-inline-item">
+			<a href="{{ path('award_index', {'member': member.id}) }}" class="btn btn-info"><i class="fas fa-medal" title="{{ 'app.fields.member.stocks.label'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'app.fields.member.stocks.label'|trans }}</span></a>
+		</li>
+		<li class="list-inline-item">
+			<a href="{{ path('provision_index', {'member': member.id}) }}" class="btn btn-info"><i class="fas fa-suitcase" title="{{ 'app.fields.member.stocks.label'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'app.fields.member.stocks.label'|trans }}</span></a>
+		</li>
+		<li class="list-inline-item">
+			<a href="{{ path('member_edit', {'id': member.id}) }}" class="btn btn-warning"{#% if app.request.xmlHttpRequest %} target="_blank"{% endif %#}><i class="fas fa-pencil-alt" title="{{ 'global.action.edit'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'global.action.edit'|trans }}</span></a>
+		</li>
+		<li class="list-inline-item">
+			{% if app.request.xmlHttpRequest -%}
+			<button type="button" class="btn btn-primary" data-bs-dismiss="modal">{{ 'global.action.close'|trans }}</button>
+			{% else %}
+			{{ include('member/_delete_form.html.twig') }}
+			{% endif %}
+		</li>
+	</ul>
+{% endblock %}

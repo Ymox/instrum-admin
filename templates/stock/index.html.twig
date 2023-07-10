@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'app.stock.index.heading'|trans }} | {{ parent() }}{% endblock %}
+
+{% block body %}
+	<h1>{{ 'app.stock.index.heading'|trans }}</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th class="filter-match">{{ 'app.fields.stock.what.label'|trans }}</th>
+				<th data-filter="false">{{ 'app.fields.stock.amount.label'|trans }}</th>
+				<th id="ColumnSelector" data-sorter="false" data-filter="false" data-column-selector-prototype=""><a href="{{ path('stock_new') }}" class="btn btn-sm btn-success">{{ 'global.action.new'|trans }}</a></th>
+			</tr>
+				<tr class="tablesorter-ignoreRow">
+					<th><label for="SearchWhat" class="sr-only">{{ 'app.fields.stock.what.label'|trans }}</label><input type="search" name="q[what]" id="SearchWhat" class="searchField form-control form-control-sm"{% if app.request.all('q')['what'] is defined %} value="{{ app.request.all('q')['what'] }}"{% endif %} placeholder="{{ 'app.fields.stock.what.label'|trans }}" tabindex="1" data-column="0" /></th>
+					<th data-filter="false"></th>
+					<th id="ColumnSelector" data-sorter="false" data-filter="false" data-column-selector="disable" data-column-selector-prototype="">
+						<button type="reset" class="btn btn-sm btn-light"><i class="fas fa-sync-alt" title="{{ 'global.action.reset'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'global.action.reset'|trans }}</span></button>
+					</th>
+				</tr>
+		</thead>
+		<tbody>
+		{% for stock in stocks %}
+			<tr>
+				<td>{{ stock.what }}</td>
+				<td>{{ stock.amount }}</td>
+				<td>
+					<div class="btn-group btn-group-sm">
+						<a href="{{ path('stock_show', {'id': stock.id}) }}" class="btn btn-sm btn-outline-info" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank">{{ 'global.action.show'|trans }}</a>
+						<button role="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" title="{{ 'global.action.expand.menu'|trans }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<span class="sr-only">{{ 'global.action.expand.menu'|trans }}</span>
+						</button>
+						<div class="dropdown-menu">
+							<a href="{{ path('stock_edit', {'id': stock.id}) }}" class="dropdown-item"><i class="fas fa-pencil-alt" title="{{ 'global.action.edit'|trans }}" aria-hidden="true"></i> {{ 'global.action.edit'|trans }}</a>
+							<a href="{{ path('stock_provide', {'stock': stock.id}) }}" class="dropdown-item" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-user-plus" title="{{ 'app.stock.index.action.provide'|trans }}" aria-hidden="true"></i> {{ 'app.stock.index.action.provide'|trans }}</a>
+							<form method="post" action="{{ path('stock_delete', {'id': stock.id}) }}" style="display: list-item" onsubmit="return confirm('{{ 'global.action.confirm_delete'|trans }}');">
+								<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ stock.id) }}">
+								<button type="submit" class="dropdown-item"><i class="fas fa-trash" title="{{ 'global.action.delete'|trans }}" aria-hidden="true"></i> {{ 'global.action.delete'|trans }}</button>
+							</form>
+						</div>
+					</div>
+				</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}
+
+{% block stylesheets %}
+		<style type="text/css">
+			thead { border-top: 0 none transparent !important; }
+			.tablesorter-filter.disabled { display: none; }
+		</style>
+{% endblock %}
+
+{% block javascripts %}
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.widgets.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/widgets/widget-columnSelector.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="{{ asset('js/collection_adder.js') }}"></script>
+		<script src="{{ asset('js/dynamic_modal.js') }}"></script>
+		<script src="{{ asset('js/ajaxify.js') }}"></script>
+		<script src="{{ asset('js/tablesorter_behaviour.js') }}"></script>
+{% endblock %}

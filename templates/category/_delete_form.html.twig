@@ -1,0 +1,4 @@
+<form method="post" action="{{ path('category_delete', {'id': category.id}) }}" class="float-end" style="display: inline;" onsubmit="return confirm('{{ 'global.action.confirm_delete'|trans }}');">
+	<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ category.id) }}">
+	<button type="submit" class="btn btn-sm btn-outline-danger">{{ 'global.action.delete'|trans }}</button>
+</form>

@@ -1,0 +1,40 @@
+{{ form_start(form, {'attr': {'class': app.request.xmlHttpRequest ? 'ajaxify' : null}}) }}
+	<div class="row mb-3">
+		{{ form_row(form.title, {'row_attr': {'class': 'col-sm-2'}}) }}
+		{{ form_row(form.firstname, {'row_attr': {'class': 'col-sm-5'}}) }}
+		{{ form_row(form.lastname, {'row_attr': {'class': 'col-sm-5'}}) }}
+	</div>
+
+	<div class="row mb-3">
+		{{ form_row(form.statuses, {'row_attr': {'class': 'col-sm-6'}, 'attr': {'class': 'searchable'}, 'label_attr': {'class': 'mb-3'}}) }}
+		{{ form_row(form.relateds, {'row_attr': {'class': 'col-sm-6'}, 'attr': {'class': 'addable searchable'}}) }}
+	</div>
+
+	<div id="StudentData" class="row mb-3"{% if not ('Elève' in form.statuses.vars.data) %} style="display: none;"{% endif %}>
+		{{ form_row(form.levels, {'row_attr': {'class': 'col-sm-6'}}) }}
+		{{ form_row(form.instruments, {'row_attr': {'class': 'col-sm-6'}}) }}
+	</div>
+	<div class="row mb-3">
+		{{ form_row(form.birthday, {'row_attr': {'class': 'col-sm-6'}}) }}
+		{{ form_row(form.email, {'row_attr': {'class': 'col-sm-6'}}) }}
+	</div>
+	<div class="row mb-3">
+		{{ form_row(form.address.address, {'row_attr': {'class': 'col-sm-6'}}) }}
+		{{ form_row(form.address.zip, {'row_attr': {'class': 'col-sm-2'}}) }}
+		{{ form_row(form.address.locality, {'row_attr': {'class': 'col-sm-4'}}) }}
+	</div>
+	<div class="row mb-3">
+		{{ form_row(form.mobile, {'row_attr': {'class': 'col-sm-6'}}) }}
+		{{ form_row(form.phone, {'row_attr': {'class': 'col-sm-6'}}) }}
+	</div>
+
+	<div class="row mb-3">
+		{{ form_row(form.scmv, {'row_attr': {'class': 'col-sm-3'}}) }}
+		{{ form_row(form.band, {'row_attr': {'class': 'col-sm-3'}}) }}
+		{{ form_row(form.cat, {'row_attr': {'class': 'col-sm-6'}}) }}
+	</div>
+	<div class="row mb-3">
+		{{ form_row(form.informations) }}
+	</div>
+	<button type="submit" title="{{ 'global.action.validate'|trans }}" class="btn btn-primary"><i class="fas fa-check" title="{{ 'global.action.validate'|trans }}" aria-hidden="true"></i></button>
+{{ form_end(form) }}

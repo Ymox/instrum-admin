@@ -1,0 +1,25 @@
+{% extends app.request.xmlHttpRequest ? 'base_modal.html.twig' : 'base.html.twig' %}
+
+{% block title %}{{ 'app.user.new.heading'|trans }}	{% if not app.request.xmlHttpRequest %} | {{ parent() }}{% endif %}{% endblock %}
+
+{% block body %}
+	{% if not app.request.xmlHttpRequest %}
+	<h1>{{ 'app.user.new.heading'|trans }}</h1>
+	{% endif %}
+
+	{{ form_start(form, {'attr': {'class': app.request.xmlHttpRequest ? 'ajaxify' : null}}) }}
+		<div class="row mb-3">
+			{{ form_row(form.username, {'row_attr': {'class': 'col-sm-6'}}) }}
+			{{ form_row(form.plainPassword, {'row_attr': {'class': 'col-sm-6'}}) }}
+		</div>
+		<button type="submit" title="{{ 'global.action.validate'|trans }}" class="btn btn-primary float-start"><i class="fas fa-check" title="{{ 'global.action.validate'|trans }}" aria-hidden="true"></i></button>
+	{{ form_end(form) }}
+
+	{% if not app.request.xmlHttpRequest %}
+	<ul class="list-inline float-end">
+		<li class="list-inline-item">
+			<a href="{{ path('user_index') }}" class="btn btn-light"><i class="fas fa-list" title="{{ 'global.action.list'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'global.action.list'|trans }}</span></a>
+		</li>
+	</ul>
+	{% endif %}
+{% endblock %}

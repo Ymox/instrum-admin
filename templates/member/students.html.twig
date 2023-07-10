@@ -1,0 +1,106 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'app.member.students.heading'|trans }} | {{ parent() }}{% endblock %}
+
+{% block body %}
+	<h1>{{ 'app.member.students.heading'|trans }}</h1>
+</div>
+<div class="container-fluid">
+	<form class="table-responsive" action="{{ path(app.current_route, app.request.query|merge({'_format': 'csv'})) }}">
+		<table class="table table-sm table-hover mx-auto" style="width: auto;">
+			<thead>
+				<tr>
+					<th class="filter-exact filter-select columnSelector-false">{{ 'app.fields.member.statuses.label'|trans }}</th>
+					<th class="filter-exact filter-select">{{ 'app.fields.member.levels.label'|trans }}</th>
+					<th class="filter-exact filter-select">{{ 'app.fields.member.cat.label'|trans }}</th>
+					<th class="filter-match">{{ 'app.fields.member.lastname.label'|trans }}</th>
+					<th class="filter-match">{{ 'app.fields.member.firstname.label'|trans }}</th>
+					<th class="filter-match columnSelector-false">{{ 'app.fields.member.mobile.label'|trans }}</th>
+					<th class="filter-match columnSelector-false">{{ 'app.fields.member.phone.label'|trans }}</th>
+					<th data-sorter="false">{{ 'app.fields.member.email.label'|trans }}</th>
+					<th data-sorter="false" data-filter="false" data-column-selector="disable">
+						<div class="btn-group btn-group-sm">
+							<a href="{{ path('member_new') }}" class="btn btn-sm btn-success">{{ 'global.action.new'|trans }}</a>
+							<button role="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" title="{{ 'global.action.expand.menu'|trans }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="sr-only">{{ 'global.action.expand.menu'|trans }}</span>
+							</button>
+							<ul id="ColumnSelector" class="dropdown-menu" data-column-selector-prototype="&lt;li&gt;&lt;label class=&quot;dropdown-item&quot;&gt;&lt;input type=&quot;checkbox&quot;&gt; {name}&lt;/label&gt;&lt;/li&gt;">
+								<button type="button" class="dropdown-item" id="MailCollector" data-bs-toggle="modal" data-bs-target="#Modal" data-prototype="&lt;div class=&quot;modal-header&quot;&gt;&lt;h3&gt;{{ 'app.member.index.popup.mailing.heading'|trans }}&lt;/h3&gt;&lt;/div&gt;&lt;div class=&quot;modal-body&quot;&gt;&lt;a href=&quot;mailto:__mails__&quot;&gt;__mails__&lt;/a&gt;&lt;/div&gt;&lt;div class=&quot;modal-footer&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-bs-dismiss=&quot;modal&quot;&gt;{{ 'global.action.close'|trans }}&lt;/button&gt;&lt;/div&gt;">{{ 'global.action.mailing'|trans }}</button>
+								<div class="dropdown-divider"></div>
+							</ul>
+						</div>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for member in members %}
+				<tr>
+					<td>{{ member.statuses|join(', ', 'global.join.end'|trans) }}</td>
+					<td>{{ member.levels|join(', ', 'global.join.end'|trans) }}</td>
+					<td>{% if member.cat -%}
+						<a href="{{ path('instrument_index', {'q': {'recipient': member.lastname}}) }}">{{ member.cat }}</a>
+						{% endif %}</td>
+					<td>{{ member.lastname }}</td>
+					<td>{{ member.firstname }}</td>
+					<td>{% if member.mobile -%}
+						<a href="tel:{{ member.mobile }}">{{ member.mobile }}</a>
+						{%- endif -%}
+						{%- for related in member.relateds -%}
+						{%- if related.mobile %}
+						<span class="d-inline-block"><a title="{{ related }}" href="tel:{{ related.mobile }}">{{ related.mobile }}</a> (<a href="{{ path('member_show', {'id': related.id}) }}" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-{% if related.title == constant('TITLE_MS', related) %}fe{% endif %}male" title="{{ 'app.fields.member.related.label'|trans }}" aria-hidden="true"></i><span class="sr-only"> {{ 'app.fields.member.relateds.label'|trans }}</span></a>)</span>
+						{%- endif -%}
+						{%- endfor %}</td>
+					<td>{% if member.phone -%}
+						<a href="tel:{{ member.phone }}">{{ member.phone }}</a>
+						{%- endif -%}
+						{%- for related in member.relateds -%}
+						{%- if related.phone %}
+						<span class="d-inline-block"><a title="{{ related }}" href="tel:{{ related.phone }}">{{ related.phone }}</a> (<a href="{{ path('member_show', {'id': related.id}) }}" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-{% if related.title == constant('TITLE_MS', related) %}fe{% endif %}male" title="{{ 'app.fields.member.related.label'|trans }}" aria-hidden="true"></i><span class="sr-only"> {{ 'app.fields.member.relateds.label'|trans }}</span></a>)</span>
+						{%- endif -%}
+						{%- endfor %}</td>
+					<td>{% if member.email -%}
+						<a href="mailto:{{ member.email }}">{{ member.email }}</a>
+						{%- endif -%}
+						{%- for related in member.relateds -%}
+						{%- if related.email %}
+						<span class="d-inline-block"><a title="{{ related }}" href="mailto:{{ related.email }}">{{ related.email }}</a> (<a href="{{ path('member_show', {'id': related.id}) }}" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-{% if related.title == constant('TITLE_MS', related) %}fe{% endif %}male" title="{{ 'app.fields.member.related.label'|trans }}" aria-hidden="true"></i><span class="sr-only"> {{ 'app.fields.member.relateds.label'|trans }}</span></a>)</span>
+						{%- endif -%}
+						{%- endfor %}</td>
+					<td>
+						<div class="btn-group btn-group-sm">
+							<a href="{{ path('member_show', {'id': member.id}) }}" class="btn btn-sm btn-outline-info" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank">{{ 'global.action.show'|trans }}</a>
+							<button role="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" title="{{ 'global.action.expand.menu'|trans }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="sr-only">{{ 'global.action.expand.menu'|trans }}</span>
+							</button>
+							<div class="dropdown-menu">
+								<a href="{{ path('member_edit', {'id': member.id}) }}" class="dropdown-item"><i class="fas fa-pencil-alt" title="{{ 'global.action.edit'|trans }}" aria-hidden="true"></i> {{ 'global.action.edit'|trans }}</a>
+								<form method="post" action="{{ path('member_delete', {'id': member.id}) }}" style="display: list-item" onsubmit="return confirm('{{ 'global.action.confirm_delete'|trans }}');">
+									<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ member.id) }}">
+									<button type="submit" class="dropdown-item"><i class="fas fa-trash" title="{{ 'global.action.delete'|trans }}" aria-hidden="true"></i> {{ 'global.action.delete'|trans }}</button>
+								</form>
+							</div>
+						</div>
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+	</form>
+{% endblock %}
+
+{% block stylesheets %}
+		<style type="text/css">
+			thead { border-top: 0 none transparent !important; }
+			.tablesorter-filter.disabled { display: none; }
+		</style>
+{% endblock %}
+
+{% block javascripts %}
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.widgets.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/widgets/widget-columnSelector.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="{{ asset('js/dynamic_modal.js') }}"></script>
+		<script src="{{ asset('js/ajaxify.js') }}"></script>
+		<script src="{{ asset('js/tablesorter_behaviour.js') }}"></script>
+		<script src="{{ asset('js/mail_collector.js') }}"></script>
+{% endblock %}

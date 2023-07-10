@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'app.instrument.new.heading'|trans }} | {{ parent() }}{% endblock %}
+
+{% block body %}
+	<h1>{{ 'app.instrument.new.heading'|trans }}</h1>
+
+	{{ include('instrument/_form.html.twig') }}
+
+	<ul class="list-inline float-end">
+		<li class="list-inline-item">
+			<a href="{{ path('instrument_index') }}" class="btn btn-light"><i class="fas fa-list" title="{{ 'global.action.list'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'global.action.list'|trans }}</span></a>
+		</li>
+	</ul>
+{% endblock %}
+
+{% block javascripts %}
+		<script src="{{ asset('js/dynamic_options.js') }}"></script>
+{% endblock %}

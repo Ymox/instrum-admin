@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'app.category.index.heading'|trans }} | {{ parent() }}{% endblock %}
+
+{% block body %}
+	<h1>{{ 'app.category.index.heading'|trans }}
+		<a href="{{ path('category_new') }}" class="btn btn-success float-end">{{ 'global.action.new'|trans }}</a></h1>
+
+	{% for category in categories %}
+	<div class="card mb-3">
+		<div class="card-header">
+			<a href="#Category{{ category.id }}" class="btn btn-sm btn-outline-info" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="Category{{ category.id }}"><i class="fas fa-expand-alt" title="{{ 'global.action.expand.list'|trans }}"></i></a>
+			<a href="{{ path('instrument_index', {'q': {'cat': category.name}}) }}" type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-list" title=""></i></a>
+			{{ category}}
+			{{ include('category/_delete_form.html.twig') }}
+		</div>
+		<ul id="Category{{ category.id }}" class="collapse list-group list-group-flush">
+			<li class="list-group-item">
+				<form name="category" method="post" action="{{ path('subcategory_new') }}" class="row">
+					<label for="subcategory_name" class="col-form-label required col-sm-2 col-lg-1">{{ 'app.fields.subcategory.name.label'|trans }}</label>
+					<div class="col-xs-11 col-sm-9 col-lg-10">
+						<input type="text" id="subcategory_name" name="subcategory[name]" required="required" maxlength="255" class="form-control" />
+					</div>
+					<button type="submit" title="{{ 'global.action.validate'|trans }}" class="btn btn-sm btn-primary col-xs-1 col-sm-1 col-md-1"><i class="fas fa-check" title="{{ 'global.action.validate'|trans }}" aria-hidden="true"></i></button>
+					<input type="hidden" id="subcategory_cat" name="subcategory[cat]" value="{{ category.id }}" />
+					<input type="hidden" id="subcategory__token" name="subcategory[_token]" value="{{ csrf_token('subcategory') }}" />
+				</form>
+			</li>
+			{% for subcategory in category.subcategories %}
+			<li class="list-group-item">
+				<a href="{{ path('instrument_index', {'q': {'subcat': subcategory.name}}) }}" type="button" class="btn btn-sm btn-outline-secondary"><i class="fas fa-list" title=""></i></a>
+				{{ subcategory}}
+				{{ include('subcategory/_delete_form.html.twig') }}
+			</li>
+			{% endfor %}
+		</ul>
+	</div>
+	{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'app.provision.index.heading.member'|trans({'member': member}) }} | {{ parent() }}{% endblock %}
+
+{% block body %}
+	<h1>{{ 'app.provision.index.heading.member'|trans({'member': member}) }}</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>{{ 'app.fields.provision.stock.label'|trans }}</th>
+				<th>{{ 'app.fields.provision.details.label'|trans }}</th>
+				<th><a href="{{ path('member_show', {'id': member.id}) }}" class="btn btn-sm btn-light">{{ member }}</a>
+				    <a href="{{ path('member_provide', {'member': member.id}) }}" class="btn btn-sm btn-success">{{ 'global.action.new'|trans }}</a></th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for provision in provisions %}
+			<tr>
+				<td>{{ provision.stock }}</td>
+				<td>{{ provision.details }}</td>
+				<td>
+					<div class="btn-group btn-group-sm">
+						<a href="{{ path('provision_edit', {'member': member.id, 'stock': provision.stock.id}) }}" class="btn btn-sm btn-outline-warning">{{ 'global.action.edit'|trans }}</a>
+						<button role="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" title="{{ 'global.action.expand.menu'|trans }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<span class="sr-only">{{ 'global.action.expand.menu'|trans }}</span>
+						</button>
+						<div class="dropdown-menu">
+							<form method="post" action="{{ path('provision_delete', {'member': member.id, 'stock': provision.stock.id}) }}" style="display: list-item" onsubmit="return confirm('{{ 'global.action.confirm_delete'|trans }}');">
+								<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ member.id ~ provision.stock.id) }}">
+								<button type="submit" class="dropdown-item"><i class="fas fa-trash" title="{{ 'global.action.delete'|trans }}" aria-hidden="true"></i> {{ 'global.action.delete'|trans }}</button>
+							</form>
+						</div>
+					</div>
+				</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

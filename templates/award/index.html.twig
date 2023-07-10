@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'app.award.index.heading'|trans({'number': awards|length, 'member': member}) }} | {{ parent() }}{% endblock %}
+
+{% block body %}
+	<h1>{{ 'app.award.index.heading'|trans({'number': awards|length, 'member': member}) }}</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>{{ 'app.fields.award.awardType.label'|trans }}</th>
+				<th>{{ 'app.fields.award.year.label'|trans }}</th>
+				<th><a href="{{ path('member_show', {'id': member.id}) }}" class="btn btn-sm btn-light">{{ member }}</a>
+					<a href="{{ path('award_new', {'member': member.id}) }}" class="btn btn-sm btn-success">{{ 'global.action.new'|trans }}</a></th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for award in awards %}
+			<tr>
+				<td>{{ award.awardType }}</td>
+				<td>{{ award.year }}</td>
+				<td>
+					<div class="btn-group btn-group-sm">
+						<a href="{{ path('award_edit', {'member': member.id, 'awardType': award.awardType.id}) }}" class="btn btn-sm btn-outline-warning">{{ 'global.action.edit'|trans }}</a>
+						<button role="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" title="{{ 'global.action.expand.menu'|trans }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<span class="sr-only">{{ 'global.action.expand.menu'|trans }}</span>
+						</button>
+						<div class="dropdown-menu">
+							<form method="post" action="{{ path('award_delete', {'member': member.id, 'awardType': award.awardType.id}) }}" style="display: list-item" onsubmit="return confirm('{{ 'global.action.confirm_delete'|trans }}');">
+								<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ member.id ~ award.awardType.id) }}">
+								<button type="submit" class="dropdown-item"><i class="fas fa-trash" title="{{ 'global.action.delete'|trans }}" aria-hidden="true"></i> {{ 'global.action.delete'|trans }}</button>
+							</form>
+						</div>
+					</div>
+				</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

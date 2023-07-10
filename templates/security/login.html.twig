@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'app.login.title'|trans }} | {{ parent() }}{% endblock %}
+
+{% block menu %}
+		<nav class="navbar navbar-dark bg-dark">
+			<div class="container">
+				<div class="navbar-brand">{{ 'global.site_name'|trans }}</div>
+			</div>
+		</nav>
+{% endblock %}
+
+{% block body %}
+			{#% if app.user %}
+				<div class="mb-3">
+					You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+				</div>
+			{% endif %#}
+
+			<form method="post" class="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-xs-12 p-3 mt-5 mx-auto text-center bg-light rounded-3 shadow-sm">
+				<img src="https://instrumbex.ch/wp-content/uploads/2021/11/cropped-Logo-INSTRUM.png" alt="Logo de l'Union Instrumentale de Bex" class="w-50" />
+				{% if error %}
+					<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+				{% endif %}
+				<div class="mb-3 form-floating">
+					<input type="text" name="_username" id="username" class="form-control" placeholder="{{ 'app.fields.user.username.label'|trans }}" value="{{ lastUsername }}" />
+					<label for="username">{{ 'app.fields.user.username.label'|trans }}</label>
+				</div>
+
+				<div class="mb-3 form-floating">
+					<input type="password" name="_password" id="password" class="form-control" placeholder="{{ 'app.fields.user.password.label'|trans }}" />
+					<label for="password">{{ 'app.fields.user.password.label'|trans }}</label>
+				</div>
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+
+				<div class="d-grid"><button type="submit" class="btn btn-primary btn-lg"><i class="fas fa-unlock" aria-hidden="true"></i></button></div>
+			</form>
+{% endblock %}

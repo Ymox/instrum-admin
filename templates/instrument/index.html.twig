@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'app.instrument.index.heading'|trans }} | {{ parent() }}{% endblock %}
+
+{% block body %}
+	<h1>{{ 'app.instrument.index.heading'|trans }}</h1>
+
+	<div class="table-responsive">
+		<table class="table table-sm table-hover">
+			<thead>
+				<tr>
+					<th class="filter-match filter-select">{{ 'app.fields.instrument.cat.label'|trans }}</th>
+					<th class="filter-match filter-select">{{ 'app.fields.instrument.subcat.label'|trans }}</th>
+					<th class="filter-match filter-select">{{ 'app.fields.instrument.brand.label'|trans }}</th>
+					<th>{{ 'app.fields.instrument.number.label'|trans }}</th>
+					<th class="filter-match filter-select">{{ 'app.fields.instrument.property.label'|trans }}</th>
+					<th>{{ 'app.fields.instrument.recipient.label'|trans }}</th>
+					<th data-filter="false">{{ 'app.fields.instrument.information.label'|trans }}</th>
+					<th id="ColumnSelector" data-sorter="false" data-filter="false" data-column-selector="disable" data-column-selector-prototype=""><a href="{{ path('instrument_new') }}" class="btn btn-sm btn-success">{{ 'global.action.new'|trans }}</a></th>
+				</tr>
+				<tr class="tablesorter-ignoreRow">
+					<th><label for="SearchCat" class="sr-only">{{ 'app.fields.instrument.cat.label'|trans }}</label><input type="search" name="q[cat]" id="SearchCat" class="searchField form-control form-control-sm"{% if app.request.query.all('q')['cat'] is defined %} value="{{ app.request.query.all('q')['cat'] }}"{% endif %} placeholder="{{ 'app.fields.instrument.cat.label'|trans }}" tabindex="1" data-column="0" /></th>
+					<th><label for="SearchSubcat" class="sr-only">{{ 'app.fields.instrument.subcat.label'|trans }}</label><input type="search" name="q[subcat]" id="SearchSubcat" class="searchField form-control form-control-sm"{% if app.request.query.all('q')['subcat'] is defined %} value="{{ app.request.query.all('q')['subcat'] }}"{% endif %} placeholder="{{ 'app.fields.instrument.subcat.label'|trans }}" tabindex="1" data-column="1" /></th>
+					<th><label for="SearchBrand" class="sr-only">{{ 'app.fields.instrument.brand.label'|trans }}</label><input type="search" name="q[brand]" id="SearchBrand" class="searchField form-control form-control-sm"{% if app.request.query.all('q')['brand'] is defined %} value="{{ app.request.query.all('q')['brand'] }}"{% endif %} placeholder="{{ 'app.fields.instrument.brand.label'|trans }}" tabindex="1" data-column="2" /></th>
+					<th><label for="SearchNumber" class="sr-only">{{ 'app.fields.instrument.number.label'|trans }}</label><input type="search" name="q[number]" id="Searchnumber" class="searchField form-control form-control-sm"{% if app.request.query.all('q')['number'] is defined %} value="{{ app.request.query.all('q')['number'] }}"{% endif %} placeholder="{{ 'app.fields.instrument.number.label'|trans }}" tabindex="1" data-column="3" /></th>
+					<th><label for="SearchProperty" class="sr-only">{{ 'app.fields.instrument.property.label'|trans }}</label><input type="search" name="q[property]" id="SearchProperty" class="searchField form-control form-control-sm"{% if app.request.query.all('q')['property'] is defined %} value="{{ app.request.query.all('q')['property'] }}"{% endif %} placeholder="{{ 'app.fields.instrument.property.label'|trans }}" tabindex="1" data-column="4" /></th>
+					<th><label for="SearchRecipient" class="sr-only">{{ 'app.fields.instrument.recipient.label'|trans }}</label><input type="search" name="q[recipient]" id="SearchRecipient" class="searchField form-control form-control-sm"{% if app.request.query.all('q')['recipient'] is defined %} value="{{ app.request.query.all('q')['recipient'] }}"{% endif %} placeholder="{{ 'app.fields.instrument.recipient.label'|trans }}" tabindex="1" data-column="5" /></th>
+					<th data-filter="false"></th>
+					<th id="ColumnSelector" data-sorter="false" data-filter="false" data-column-selector="disable" data-column-selector-prototype="">
+						<button type="reset" class="btn btn-sm btn-light"><i class="fas fa-sync-alt" title="{{ 'global.action.reset'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'global.action.reset'|trans }}</span></button>
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for instrument in instruments %}
+				<tr>
+					<td>{{ instrument.cat }}</td>
+					<td>{{ instrument.subcat }}</td>
+					<td>{{ instrument.brand }}</td>
+					<td>{{ instrument.number }}</td>
+					<td>{{ instrument.property }}</td>
+					<td>{% if not instrument.usable %}
+						<strong>{{ 'app.instrument.index.unusable'|trans }}</strong>
+						{%- elseif instrument.recipient -%}
+						<a href="{{ path('member_show', {'id': instrument.recipient.id}) }}" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank">{{ instrument.recipient }}</a>
+						{%- else -%}
+						<em>{{ 'app.instrument.index.available'|trans }}</em>
+						{%- endif %}</td>
+					<td>{{ instrument.information }}</td>
+					<td>
+						<div class="btn-group btn-group-sm">
+							<a href="{{ path('instrument_edit', {'id': instrument.id}) }}" class="btn btn-sm btn-outline-warning">{{ 'global.action.edit'|trans }}</a>
+							<button role="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" title="{{ 'global.action.quick'|trans }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<span class="sr-only">{{ 'global.action.quick'|trans }}</span>
+							</button>
+							<div class="dropdown-menu">
+								<a href="{{ path('instrument_assign_member', {'id': instrument.id}) }}" class="dropdown-item" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-user" aria-hidden="true"></i> (Dés-)assigner</a>
+								<form method="post" action="{{ path('instrument_delete', {'id': instrument.id}) }}" style="display: list-item" onsubmit="return confirm('{{ 'global.action.confirm_delete'|trans }}');">
+									<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ instrument.id) }}">
+									<button type="submit" class="dropdown-item"><i class="fas fa-trash" title="{{ 'global.action.delete'|trans }}" aria-hidden="true"></i> {{ 'global.action.delete'|trans }}</button>
+								</form>
+							</div>
+						</div>
+					</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}
+
+{% block stylesheets %}
+		<style type="text/css">
+			thead { border-top: 0 none transparent !important; }
+			.tablesorter-filter.disabled { display: none; }
+		</style>
+{% endblock %}
+
+{% block javascripts %}
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.widgets.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/widgets/widget-columnSelector.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="{{ asset('js/dynamic_modal.js') }}"></script>
+		<script src="{{ asset('js/ajaxify.js') }}"></script>
+		<script src="{{ asset('js/tablesorter_behaviour.js') }}"></script>
+{% endblock %}

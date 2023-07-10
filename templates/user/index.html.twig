@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'app.user.index.heading'|trans }} | {{ parent() }}{% endblock %}
+
+{% block body %}
+	<h1>{{ 'app.user.index.heading'|trans }}</h1>
+
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th>{{ 'app.fields.user.username.label'|trans }}</th>
+				<th>{{ 'app.fields.user.nbConnect.label'|trans }}</th>
+				<th>{{ 'app.fields.user.lastConnection.label'|trans }}</th>
+				<th>{{ 'app.fields.user.password.label'|trans }}</th>
+				<th></th>
+				<th><a href="{{ path('user_new') }}" class="btn btn-sm btn-success" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank">{{ 'global.action.new'|trans }}</a></th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for user in users %}
+			<tr>
+				<td>{{ user.username }}</td>
+				<td>{{ user.nbConnect }}</td>
+				<td>{{ user.lastConnection ? user.lastConnection|date('d.m.Y H:i:s') }}</td>
+				<td>{% if user.resetToken -%}
+						{{ url('reset_password', {'token': user.resetToken}) -}}
+					{% else -%}
+						<a href="{{ url('user_ask_reset_password', {'id': user.id}) }}" class="btn btn-outline-secondary btn-sm" >{{ 'app.user.index.ask_reset_password'|trans }}</a>
+					{% endif %}</td>
+				<td>
+					<a href="{{ path('user_edit', {'id': user.id}) }}" class="btn btn-outline-warning btn-sm" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank">{{ 'global.action.edit'|trans }}</a>
+				</td>
+				<td>
+					<form method="post" action="{{ path('user_delete', {'id': user.id}) }}" onsubmit="return confirm('{{ 'global.action.confirm_delete'|trans }}');">
+						<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ user.id) }}">
+						<button type="submit" class="btn btn-sm btn-outline-danger">{{ 'global.action.delete'|trans }}</button>
+					</form>
+				</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}
+
+{% block javascripts %}
+		<script src="{{ asset('js/dynamic_modal.js') }}"></script>
+		<script src="{{ asset('js/ajaxify.js') }}"></script>
+{% endblock %}

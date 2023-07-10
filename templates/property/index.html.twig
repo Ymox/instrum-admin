@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'app.property.index.heading'|trans }} | {{ parent() }}{% endblock %}
+
+{% block body %}
+	<h1>{{ 'app.property.index.heading'|trans }}</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>{{ 'app.fields.property.name.label'|trans }}</th>
+				<th><a href="{{ path('property_new') }}" class="btn btn-sm btn-success">{{ 'global.action.new'|trans }}</a></th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for property in properties %}
+			<tr>
+				<td>{{ property }}</td>
+				<td>
+					<a href="{{ path('property_edit', {'id': property.id}) }}" class="btn btn-sm btn-outline-warning"><i class="fas fa-pencil-alt" title="{{ 'global.action.edit'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'global.action.edit'|trans }}</span></a>
+				</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}

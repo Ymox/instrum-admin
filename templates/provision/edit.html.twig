@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ ('app.provision.edit.heading')|trans({'member': provision.member, 'stock': provision.stock}) }} | {{ parent() }}{% endblock %}
+
+{% block body %}
+	<h1>{{ ('app.provision.edit.heading')|trans({'member': provision.member, 'stock': provision.stock}) }}</h1>
+
+	{{ include('provision/_form.html.twig') }}
+
+	<ul class="list-inline float-end">
+		<li class="list-inline-item">
+			<a href="{{ path('provision_index', {'member': provision.member.id}) }}" class="btn btn-light"><i class="fas fa-list" title="{{ 'global.action.list'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'global.action.list'|trans }}</span></a>
+		</li>
+		<li class="list-inline-item">
+			{{ include('provision/_delete_form.html.twig') }}
+		</li>
+	</ul>
+{% endblock %}
