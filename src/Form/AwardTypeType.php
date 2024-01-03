@@ -4,6 +4,8 @@ namespace App\Form;
 
 use App\Entity\AwardType;
 use App\Entity\Status;
+use App\Repository\StatusRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -34,6 +36,12 @@ class AwardTypeType extends AbstractType
             ->add('eligibleStatuses', EntityType::class, [
                 'class' => Status::class,
                 'multiple' => true,
+                'query_builder' => function (StatusRepository $repo) {
+                    $qb = $repo->createQueryBuilder('s');
+                    $qb ->join('s.root', 'r', Join::WITH, $qb->expr()->lte('r.lft', 1));
+                    
+                    return $qb;
+                },
                 'choice_label' => function (Status $status) {
                     return str_repeat('    ', $status->getLvl()) . $status->getName();
                 },
