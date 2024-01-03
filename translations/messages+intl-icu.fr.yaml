@@ -152,8 +152,9 @@ app:
     status:
       name:
         label: *name
-      active:
-        label: Actif
+      parent:
+        placeholder: — Statut racine —
+        label: Statut parent
     subcategory:
       name:
         label: *name

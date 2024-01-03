@@ -13,10 +13,25 @@ class StatusType extends AbstractType
     {
         $builder
             ->add('name', null, [
-                'label_format' => 'app.fields.status.%name%.label'
+                'label_format' => 'app.fields.status.%name%.label',
             ])
-            ->add('active', null, [
-                'label_format' => 'app.fields.status.%name%.label'
+            ->add('parent', null, [
+                'label_format' => 'app.fields.status.%name%.label',
+                'placeholder' => 'app.fields.status.parent.placeholder',
+                'choice_label' => function (Status $status) {
+                    $result = $status->getName();
+                    $parent = $status;
+                    $tree = [];
+                    while ($parent = $parent->getParent()) {
+                        $tree[] = $parent->getName();
+                    }
+
+                    if (empty($tree)) {
+                        return $result;
+                    }
+
+                    return $result . ' (< ' . implode(' < ', $tree) . ')';
+                },
             ])
         ;
     }

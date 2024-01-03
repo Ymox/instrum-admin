@@ -1,10 +1,4 @@
 {{ form_start(form) }}
-	<div class="row mb-3">
-		<div class="col-3 col-sm-2">
-			<label class="form-label mb-3"> </label>
-			{{ form_widget(form.active) }}
-		</div>
-		{{ form_row(form.name, {'row_attr': {'class': 'col-9 col-sm-10'}}) }}
-	</div>
+	{{ form_widget(form) }}
 	<button type="submit" title="{{ 'global.action.validate'|trans }}" class="btn btn-primary float-start"><i class="fas fa-check" title="{{ 'global.action.validate'|trans }}" aria-hidden="true"></i></button>
 {{ form_end(form) }}
