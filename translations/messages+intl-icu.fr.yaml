@@ -95,7 +95,7 @@ app:
     member:
       title:
         label: Titre
-        placeholder: — Titre —
+        placeholder: Entreprise, société
       lastname:
         label: Nom de famille
       firstname:

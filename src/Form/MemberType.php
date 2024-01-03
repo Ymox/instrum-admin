@@ -7,6 +7,7 @@ use App\Entity\Member;
 use App\Entity\Status;
 use App\Form\Embeddable\AddressType;
 use App\Repository\StatusRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
@@ -31,6 +32,7 @@ class MemberType extends AbstractType
     {
         $builder
             ->add('title', ChoiceType::class, [
+                'required' => false,
                 'choices' => array_combine(Member::$TITLES, Member::$TITLES),
                 'label_format' => 'app.fields.member.%name%.label',
                 'placeholder' => 'app.fields.member.title.placeholder',
@@ -148,6 +150,7 @@ class MemberType extends AbstractType
                 FormEvents::PRE_SET_DATA,
                 function (FormEvent $event) {
                     $this->addInstruments($event->getForm(), $event->getData());
+                    $this->addStatuses($event->getForm(), $event->getData()->getTitle());
                 }
             );
 
@@ -159,8 +162,17 @@ class MemberType extends AbstractType
                     $this->addInstruments($event->getForm()->getParent(), $event->getForm()->getData());
                 }
             );
+
+        $builder
+            ->get('title')
+            ->addEventListener(
+                FormEvents::POST_SUBMIT,
+                function (FormEvent $event) {
+                    $this->addStatuses($event->getForm()->getParent(), $event->getForm()->getData());
+                }
+            );
     }
-    
+
     private function addInstruments(FormInterface $form, ?Member $member)
     {
         $form
@@ -190,6 +202,48 @@ class MemberType extends AbstractType
                 'choice_label' => function (\App\Entity\Instrument $instrument) {
                     return $instrument . ' ' . $instrument->getBrand() . ' ' . $instrument->getNumber();
                 },
+            ]);
+    }
+    
+    private function addStatuses(FormInterface $form, ?string $title)
+    {
+        $form
+            ->add('statuses', EntityType::class, [
+                'required' => false,
+                'multiple' => true,
+                'class' => Status::class,
+                'label_format' => 'app.fields.member.%name%.label',
+                'query_builder' => function (\App\Repository\StatusRepository $repo) use ($title) {
+                    $qb = $repo->createQueryBuilder('s');
+                    if (!$title) {
+                        $qb ->join('s.root', 'r', Join::WITH, $qb->expr()->gt('r.lft', 1));
+                    }
+
+                    return $qb;
+                },
+                'choice_label' => function (Status $status) {
+                    $result = $status->getName();
+                    $parent = $status;
+                    $tree = [];
+                    while ($parent = $parent->getParent()) {
+                        $tree[] = $parent->getName();
+                    }
+
+                    if (empty($tree)) {
+                        return $result;
+                    }
+
+                    return $result . ' (< ' . implode(' < ', $tree) . ')';
+                },
+                'choice_attr' => function (Status $status) {
+                    return [
+                        'data-lft' => $status->getLft(),
+                        'data-rgt' => $status->getRgt(),
+                    ];
+                },
+                'attr' => [
+                    'data-dynamic-options' => 'title',
+                ],
             ]);
     }
 
