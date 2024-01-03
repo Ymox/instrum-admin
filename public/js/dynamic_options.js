@@ -4,7 +4,11 @@
  $(function() {
 	$('[data-dynamic-options]').each( function () {
 		const selfId = '#' + this.id;
-		const sourceId = '#' + this.id.replace(this.name.substring(this.name.lastIndexOf('[') + 1, this.name.lastIndexOf(']')), this.dataset.dynamicOptions);
+		let start = this.name.length;
+		if (this.name.endsWith('[]')) {
+			start = start - 3;
+		}
+		const sourceId = '#' + this.id.replace(this.name.substring(this.name.lastIndexOf('[', start) + 1, this.name.lastIndexOf(']', start)), this.dataset.dynamicOptions);
 		$(sourceId).change( function() {
 			const form = this.closest('form');
 			$.ajax({
@@ -12,9 +16,10 @@
 				method: form.method,
 				data: {[this.name]: this.value},
 				complete: function (response) {
-					$(selfId).replaceWith(
-						$(response.responseText).find(selfId)
+					$(selfId).html(
+						$(response.responseText).find(selfId).html()
 					);
+					$(selfId).change();
 				}
 			});
 		})
