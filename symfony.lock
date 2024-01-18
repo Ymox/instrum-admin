@@ -2,9 +2,6 @@
     "behat/transliterator": {
         "version": "v1.3.0"
     },
-    "composer/package-versions-deprecated": {
-        "version": "1.11.99.4"
-    },
     "doctrine/annotations": {
         "version": "1.13",
         "recipe": {
@@ -102,15 +99,6 @@
     },
     "nikic/php-parser": {
         "version": "v4.13.2"
-    },
-    "phpdocumentor/reflection-common": {
-        "version": "2.2.0"
-    },
-    "phpdocumentor/reflection-docblock": {
-        "version": "5.3.0"
-    },
-    "phpdocumentor/type-resolver": {
-        "version": "1.5.1"
     },
     "phpstan/phpdoc-parser": {
         "version": "1.2.0"
@@ -472,8 +460,5 @@
     },
     "twig/twig": {
         "version": "v3.3.4"
-    },
-    "webmozart/assert": {
-        "version": "1.10.0"
     }
 }
