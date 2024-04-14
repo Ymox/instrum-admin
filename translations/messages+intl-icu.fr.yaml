@@ -23,7 +23,10 @@ global:
     download: Télécharger
     quick: Actions rapides
     check_all: Sélectionner tout
-    mailing: Générer un lien de publipostage
+    mailing:
+      full: Lien de publipostage (complet)
+      related: Lien de publipostage (parents)
+      direct: Lien de publipostage (direct)
     expand:
       menu: Dérouler le menu
       list: Dérouler la liste
@@ -120,12 +123,16 @@ app:
         label: Date de naissance
       scmv:
         label: Cotise au canton depuis
+      scmvCorrection:
+        label: Corrections cantonales
+        help: Interruptions en positif, rachats en négatif
       band:
         label: A l'Instrum depuis
       cat:
         label: Registre
       informations:
         label: Informations
+        filter: Masquer
       student:
         label: Elève
       related:
@@ -213,6 +220,27 @@ app:
         label: Distinction
       year:
         label: Année
+    note:
+      type:
+        label: Type
+        placeholder: Ordre général
+      content:
+        label: Contenu
+      createdAt:
+        label: Créée le
+      updaatedAt:
+        label: Mise à jour le
+      readctor:
+        label: Dernier rédacteur
+
+    noteType:
+      name:
+        label: Nom
+      icon:
+        label: Icône
+      description:
+        label: Description
+        default: Type par défaut
 
   login:
     title: &title Authentification
@@ -231,6 +259,7 @@ app:
       passive: Passifs
       statuses: Rôles de membre
       awards: Distinctions
+      note_types: Types de notes
     instruments:
       heading: Instruments
       list: Inventaire
@@ -277,6 +306,7 @@ app:
     show:
       action:
         decern: *decern
+        comment: Ajouter une note
     students:
       heading: Elèves de l'école de musique
     duplicates:
@@ -354,3 +384,16 @@ app:
       heading:
         member: "Décerner à {member}"
         award_type: "Décerner {awardType}"
+  note:
+    new:
+      title: &title Nouvelle note pour {member}
+      heading: *title
+  noteType:
+    action:
+      verify_icon: Vérifier
+    index:
+      title: &title Types de notes
+      heading: *title
+    new:
+      title: &title Nouveau type de note
+      heading: *title

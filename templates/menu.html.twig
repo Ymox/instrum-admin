@@ -32,6 +32,8 @@
 						<a class="dropdown-item{% if 'status' in app.current_route %} active" aria-current="page{% endif %}" href="{{ path('status_index') }}">{{ 'app.menu.members.statuses'|trans }}</a>
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item{% if 'award' in app.current_route %} active" aria-current="page{% endif %}" href="{{ path('award_type_index') }}">{{ 'app.menu.members.awards'|trans }}</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item{% if 'note' in app.current_route %} active" aria-current="page{% endif %}" href="{{ path('note_type_index') }}">{{ 'app.menu.members.note_types'|trans }}</a>
 					</div>
 				</li>
 				<li class="nav-item dropdown">

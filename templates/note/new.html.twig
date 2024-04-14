@@ -1,0 +1,24 @@
+{% extends app.request.xmlHttpRequest ? 'base_modal.html.twig' : 'base.html.twig' %}
+
+{% block title %}{{ ('app.note.new.heading')|trans({'member': member}) }}{% if not app.request.xmlHttpRequest %} | {{ parent() }}{% endif %}{% endblock %}
+
+{% block body %}
+	{% if not app.request.xmlHttpRequest %}
+	<h1>{{ ('app.note.new.heading')|trans({'member': member}) }}</h1>
+	{% endif %}
+
+	{{ include('note/_form.html.twig') }}
+
+	{% if not app.request.xmlHttpRequest -%}
+	
+	<ul class="list-inline float-end">
+		<li class="list-inline-item">
+			<a href="{{ path('member_show', {'id': member.id}) }}" class="btn btn-light"><i class="fas fa-list" title="{{ 'global.action.list'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'global.action.list'|trans }}</span></a>
+		</li>
+	</ul>
+	{% endif %}
+{% endblock %}
+
+{% block javascripts %}
+		<script src="{{ asset('js/collection_adder.js') }}"></script>
+{% endblock %}

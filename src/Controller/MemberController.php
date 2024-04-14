@@ -4,13 +4,16 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\Member;
+use App\Entity\NoteType;
 use App\Entity\Status;
 use App\Form\MemberAwardType;
 use App\Form\MemberProvisionType;
 use App\Form\MemberSearchType;
 use App\Form\MemberType;
+use App\Form\NoteTypeHidderType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\HttpFoundation\HeaderUtils;
@@ -98,7 +101,9 @@ class MemberController extends AbstractController
     #[Route("/member/{id}", name: "show", methods: ["GET"])]
     public function show(Member $member): Response
     {
+        $form = $this->createForm(NoteTypeHidderType::class);
         return $this->render('member/show.html.twig', [
+            'noteTypes' => $form,
             'member' => $member,
         ]);
     }

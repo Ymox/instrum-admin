@@ -11,7 +11,7 @@
 		$where.prev().append(' ').append($('<button>', {type: 'button', 'class': 'btn btn-sm btn-success adder', 'html': '<i class="fa fa-plus-circle"></i>'}));
 		removeButton($where);
 	}
-	$('[data-prototype]').each( function() {
+	$(':not(button)[data-prototype]').each( function() {
 		addButton($(this));
 		const collectionObserver = new MutationObserver( function(mutations) {
 			mutations.forEach( function(mutation) {

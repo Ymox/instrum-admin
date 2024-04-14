@@ -14,7 +14,7 @@ final class Version20220113102038 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Migration from old structure to the Doctrine-managed one';
     }
 
     public function up(Schema $schema): void

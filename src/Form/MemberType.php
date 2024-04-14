@@ -13,6 +13,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
@@ -76,14 +77,16 @@ class MemberType extends AbstractType
                 'required' => false,
                 'label_format' => 'app.fields.member.%name%.label',
             ])
+            ->add('scmvCorrection', null, [
+                'required' => false,
+                'label_format' => 'app.fields.member.%name%.label',
+                'help' => 'app.fields.member.scmvCorrection.help',
+            ])
             ->add('band', null, [
                 'required' => false,
                 'label_format' => 'app.fields.member.%name%.label',
             ])
             ->add('cat', null, [
-                'label_format' => 'app.fields.member.%name%.label',
-            ])
-            ->add('informations', null, [
                 'label_format' => 'app.fields.member.%name%.label',
             ])
             ->add('relateds', null, [

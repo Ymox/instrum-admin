@@ -6,6 +6,7 @@ use App\Entity\Embeddable\Address;
 use App\Repository\MemberRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
@@ -23,7 +24,7 @@ class Member
     #[ORM\GeneratedValue]
     private ?int $id = 0;
 
-    #[ORM\Column(length: 15)]
+    #[ORM\Column(length: 15, nullable: true)]
     private ?string $title = null;
 
     #[ORM\Column]
@@ -44,17 +45,17 @@ class Member
     #[ORM\Column(nullable: true)]
     private ?string $email = null;
 
-    #[ORM\Column(type: "date", nullable: true)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTime $birthday = null;
 
     #[ORM\Column(columnDefinition: "YEAR(4)", nullable: true)]
     private ?int $scmv = null;
 
+    #[ORM\Column(columnDefinition: Types::SMALLINT)]
+    private int $scmvCorrection = 0;
+
     #[ORM\Column(columnDefinition: "YEAR(4)", nullable: true)]
     private ?int $band = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?string $informations = null;
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(name: "cat_id")]
@@ -62,12 +63,16 @@ class Member
 
     #[ORM\OneToMany(targetEntity: Instrument::class, mappedBy: "recipient", cascade: ["persist"])]
     private Collection $instruments;
-    
+
     #[ORM\OneToMany(targetEntity: Provision::class, mappedBy: "member", cascade: ["persist", "remove"])]
     private Collection $stocks;
-    
+
     #[ORM\OneToMany(targetEntity: Award::class, mappedBy: "member", cascade: ["persist", "remove"])]
     private Collection $awards;
+
+    #[ORM\OneToMany(mappedBy: 'member', targetEntity: Note::class, orphanRemoval: true)]
+    #[ORM\OrderBy(['updatedAt' => 'DESC'])]
+    private Collection $informations;
 
     #[ORM\ManyToMany(targetEntity: Member::class, inversedBy: "relations")]
     #[ORM\JoinTable("member_relation")]
@@ -102,6 +107,7 @@ class Member
         $this->relations = new ArrayCollection();
         $this->statuses = new ArrayCollection();
         $this->levels = new ArrayCollection();
+        $this->informations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -114,7 +120,7 @@ class Member
         return $this->title;
     }
 
-    public function setTitle(string $title): static
+    public function setTitle(?string $title): static
     {
         $this->title = $title;
 
@@ -217,6 +223,18 @@ class Member
         return $this;
     }
 
+    public function getScmvCorrection(): ?int
+    {
+        return $this->scmvCorrection;
+    }
+
+    public function setScmvCorrection(?int $scmvCorrection): static
+    {
+        $this->scmvCorrection = $scmvCorrection;
+
+        return $this;
+    }
+
     public function getBand(): ?int
     {
         return $this->band;
@@ -225,18 +243,6 @@ class Member
     public function setBand(?int $band): static
     {
         $this->band = $band;
-
-        return $this;
-    }
-
-    public function getInformations(): ?string
-    {
-        return $this->informations;
-    }
-
-    public function setInformations(?string $informations): static
-    {
-        $this->informations = $informations;
 
         return $this;
     }
@@ -365,7 +371,37 @@ class Member
     }
 
     /**
-     * @return Collection|Member[]
+     * @return Collection<int, Note>
+     */
+    public function getInformations(): Collection
+    {
+        return $this->informations;
+    }
+
+    public function addInformation(Note $information): static
+    {
+        if (!$this->informations->contains($information)) {
+            $this->informations->add($information);
+            $information->setMember($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInformation(Note $information): static
+    {
+        if ($this->informations->removeElement($information)) {
+            // set the owning side to null (unless already changed)
+            if ($information->getMember() === $this) {
+                $information->setMember(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Member>
      */
     public function getRelations(): Collection
     {
@@ -441,7 +477,13 @@ class Member
 
     public function __toString()
     {
-        return $this->firstname . ' ' . $this->lastname;
+        if ($this->title) {
+            $display = $this->firstname . ' ' . $this->lastname;
+        } else {
+            $display = $this->lastname . ' ' . $this->firstname;
+        }
+
+        return $display;
     }
 
     public function getAge(): int

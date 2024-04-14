@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'app.noteType.index.heading'|trans }} | {{ parent() }}{% endblock %}
+
+{% block body %}
+	<h1>{{ 'app.noteType.index.heading'|trans }}</h1>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>{{ 'app.fields.noteType.name.label'|trans }}</th>
+				<th>{{ 'app.fields.noteType.icon.label'|trans }}</th>
+				<th>{{ 'app.fields.noteType.description.label'|trans }}</th>
+				<th><a href="{{ path('note_type_new') }}" class="btn btn-sm btn-success">{{ 'global.action.new'|trans }}</a></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>{{ 'app.fields.note.type.placeholder'|trans }}</td>
+				<td><i class="fas fa-info-circle"></i></td>
+				<td><i>{{ 'app.fields.noteType.description.default'|trans }}</i></td>
+				<td> </td>
+			</tr>
+		{% for noteType in noteTypes %}
+			<tr>
+				<td>{{ noteType.name }}</td>
+				<td><i class="fas fa-{{ noteType.icon }}"></i></td>
+				<td>{{ noteType.description }}</td>
+				<td>
+					<div class="btn-group btn-group-sm">
+						<a href="{{ path('note_type_edit', {'id': noteType.id}) }}" class="btn btn-sm btn-outline-warning">{{ 'global.action.edit'|trans }}</a>
+						<button role="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" title="{{ 'global.action.expand.menu'|trans }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<span class="sr-only">{{ 'global.action.expand.menu'|trans }}</span>
+						</button>
+						<div class="dropdown-menu">
+							<form method="post" action="{{ path('note_type_delete', {'id': noteType.id}) }}" style="display: list-item" onsubmit="return confirm('{{ 'global.action.confirm_delete'|trans }}');">
+								<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ noteType.id) }}">
+								<button type="submit" class="dropdown-item"><i class="fas fa-trash" title="{{ 'global.action.delete'|trans }}" aria-hidden="true"></i> {{ 'global.action.delete'|trans }}</button>
+							</form>
+						</div>
+					</div>
+				</td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+{% endblock %}
