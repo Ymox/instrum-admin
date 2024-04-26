@@ -53,7 +53,9 @@
 								<span class="sr-only">{{ 'global.action.expand.menu'|trans }}</span>
 							</button>
 							<ul id="ColumnSelector" class="dropdown-menu" data-column-selector-prototype="&lt;li&gt;&lt;label class=&quot;dropdown-item&quot;&gt;&lt;input type=&quot;checkbox&quot;&gt; {name}&lt;/label&gt;&lt;/li&gt;">
-								<button type="button" class="dropdown-item" id="MailCollector" data-bs-toggle="modal" data-bs-target="#Modal" data-prototype="&lt;div class=&quot;modal-header&quot;&gt;&lt;h3&gt;{{ 'app.member.index.popup.mailing.heading'|trans }}&lt;/h3&gt;&lt;/div&gt;&lt;div class=&quot;modal-body&quot;&gt;&lt;a href=&quot;mailto:__mails__&quot;&gt;__mails__&lt;/a&gt;&lt;/div&gt;&lt;div class=&quot;modal-footer&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-bs-dismiss=&quot;modal&quot;&gt;{{ 'global.action.close'|trans }}&lt;/button&gt;&lt;/div&gt;">{{ 'global.action.mailing'|trans }}</button>
+								<button type="button" class="dropdown-item mail-collector" data-bs-toggle="modal" data-bs-target="#Modal" data-prototype="&lt;div class=&quot;modal-header&quot;&gt;&lt;h3&gt;{{ 'app.member.index.popup.mailing.heading'|trans }}&lt;/h3&gt;&lt;/div&gt;&lt;div class=&quot;modal-body&quot;&gt;&lt;a href=&quot;mailto:__mails__&quot;&gt;__mails__&lt;/a&gt;&lt;/div&gt;&lt;div class=&quot;modal-footer&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-bs-dismiss=&quot;modal&quot;&gt;{{ 'global.action.close'|trans }}&lt;/button&gt;&lt;/div&gt;" data-mail-type="">{{ 'global.action.mailing.full'|trans }}</button>
+								<button type="button" class="dropdown-item mail-collector" data-bs-toggle="modal" data-bs-target="#Modal" data-prototype="&lt;div class=&quot;modal-header&quot;&gt;&lt;h3&gt;{{ 'app.member.index.popup.mailing.heading'|trans }}&lt;/h3&gt;&lt;/div&gt;&lt;div class=&quot;modal-body&quot;&gt;&lt;a href=&quot;mailto:__mails__&quot;&gt;__mails__&lt;/a&gt;&lt;/div&gt;&lt;div class=&quot;modal-footer&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-bs-dismiss=&quot;modal&quot;&gt;{{ 'global.action.close'|trans }}&lt;/button&gt;&lt;/div&gt;" data-mail-type=":not(.related)">{{ 'global.action.mailing.direct'|trans }}</button>
+								<button type="button" class="dropdown-item mail-collector" data-bs-toggle="modal" data-bs-target="#Modal" data-prototype="&lt;div class=&quot;modal-header&quot;&gt;&lt;h3&gt;{{ 'app.member.index.popup.mailing.heading'|trans }}&lt;/h3&gt;&lt;/div&gt;&lt;div class=&quot;modal-body&quot;&gt;&lt;a href=&quot;mailto:__mails__&quot;&gt;__mails__&lt;/a&gt;&lt;/div&gt;&lt;div class=&quot;modal-footer&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-bs-dismiss=&quot;modal&quot;&gt;{{ 'global.action.close'|trans }}&lt;/button&gt;&lt;/div&gt;" data-mail-type=".related">{{ 'global.action.mailing.related'|trans }}</button>
 								<div class="dropdown-divider"></div>
 							</ul>
 						</div>
@@ -122,11 +124,11 @@
 						{%- endif -%}
 						{%- endfor %}</td>
 					<td>{% if member.email -%}
-						<a title="{{ member }}" href="mailto:{{ member.email }}">{{ member.email }}</a>
+						<span><a title="{{ member }}" href="mailto:{{ member.email }}">{{ member.email }}</a></span>
 						{%- endif -%}
 						{%- for related in member.relateds -%}
 						{%- if related.email %}
-						<span class="d-inline-block"><a title="{{ related }}" href="mailto:{{ related.email }}">{{ related.email }}</a> (<a href="{{ path('member_show', {'id': related.id}) }}" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-{% if related.title == constant('TITLE_MS', related) %}fe{% endif %}male" title="{{ 'app.fields.member.related.label'|trans }}" aria-hidden="true"></i><span class="sr-only"> {{ 'app.fields.member.relateds.label'|trans }}</span></a>)</span>
+						<span class="d-inline-block related"><a title="{{ related }}" href="mailto:{{ related.email }}">{{ related.email }}</a> (<a href="{{ path('member_show', {'id': related.id}) }}" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-{% if related.title == constant('TITLE_MS', related) %}fe{% endif %}male" title="{{ 'app.fields.member.related.label'|trans }}" aria-hidden="true"></i><span class="sr-only"> {{ 'app.fields.member.relateds.label'|trans }}</span></a>)</span>
 						{%- endif -%}
 						{%- endfor %}</td>
 					<td{% if member.scmv %} title={{ 'global.ago.years'|trans({'years': 'now'|date('Y') - member.scmv}) }}{% endif %}>{{ member.scmv }}</td>

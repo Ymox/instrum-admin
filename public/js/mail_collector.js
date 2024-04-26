@@ -5,7 +5,7 @@
 	$('#MailCollector, .mail-collector').click( function() {
 		const mailType = this.dataset.mailType || '';
 		let mails = '';
-		$('tbody tr:visible td:contains("@") a' + mailType + '[href^="mailto"]').each ( function() {
+		$('tbody tr:visible td:contains("@") ' + mailType + ' a[href^="mailto"]').each ( function() {
 			mails = mails + ' ' + this.href.substring(7);
 		});
 		mails = mails
