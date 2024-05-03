@@ -18,10 +18,18 @@
 				<th>{{ 'app.awardType.show.not_awarded'|trans }}</th>
 				<th>{{ ('app.fields.member.' ~ awardType.column ~ '.label')|trans }}</th>
 			</tr>
+			{% set currentYear = ('now'|date('Y') * 1) %}
 			{% for member in notAwarded %}
 			<tr>
 				<td>{{ member }}</td>
-				<td>{{ attribute(member, awardType.column) }}</td>
+				{% set year = attribute(member, awardType.column) + awardType.years %}
+				{% set type = year > currentYear
+					? 'info'
+					: (year == currentYear
+						? 'success'
+						: 'warning')
+				-%}
+				<td class="table-{{ type }}">{{ attribute(member, awardType.column) }}</td>
 			</tr>
 			{% endfor %}
 			{% endif %}
