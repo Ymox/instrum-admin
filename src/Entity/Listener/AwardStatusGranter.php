@@ -17,11 +17,10 @@ class AwardStatusGranter
                     break;
                 }
             }
-            dump($member->getStatuses());
+
             if (!$member->getStatuses()->contains($status)) {
                 $member->addStatus($status);
             }
-            dump($member->getStatuses());
         }
     }
 }

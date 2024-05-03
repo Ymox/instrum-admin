@@ -2,24 +2,18 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
 use App\Entity\Member;
-use App\Entity\NoteType;
-use App\Entity\Status;
 use App\Form\MemberAwardType;
-use App\Form\MemberProvisionType;
 use App\Form\MemberSearchType;
 use App\Form\MemberType;
 use App\Form\NoteTypeHidderType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -156,10 +150,6 @@ class MemberController extends AbstractController
 
     /**
      * Allows to handle duplicates in database
-     *
-     * @param Request $request
-     * @param Member $master The member that will be kept
-     * @param Member $duplicate The member that will be deleted
      */
     #[Route("/member/duplicates/{master}/{duplicate}", name: "duplicates", methods: ["GET", "POST"])]
     public function duplicates(Request $request, Member $master, Member $duplicate, TranslatorInterface $translator, EntityManagerInterface $em)

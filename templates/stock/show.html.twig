@@ -42,16 +42,15 @@
 </div>
 <div class="modal-footer">
 	<ul class="list-inline float-end">
-		<li class="list-inline-item">
 	{% endif %}
 
+		<li class="list-inline-item">
 			<a href="{{ path('stock_provide', {'stock': stock.id}) }}" class="btn btn-success"
 				{%- if not app.request.xmlHttpRequest %} data-bs-target="#Modal" data-bs-toggle="modal"
 				{%- endif %}><i class="fas fa-user-plus" title="{{ 'global.action.edit'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'global.action.edit'|trans }}</span></a>
 		</li>
 		<li class="list-inline-item">
 			<a href="{{ path('stock_edit', {'id': stock.id}) }}" class="btn btn-warning" target="_blank"><i class="fas fa-pencil-alt" title="{{ 'global.action.edit'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'global.action.edit'|trans }}</span></a>
-
 		</li>
 		<li class="list-inline-item">
 			{% if app.request.xmlHttpRequest -%}

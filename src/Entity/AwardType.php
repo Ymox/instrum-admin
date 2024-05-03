@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\AwardTypeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AwardTypeRepository::class)]
@@ -21,7 +22,7 @@ class AwardType
     #[ORM\Column]
     private ?string $name = null;
 
-    #[ORM\Column(type: "smallint")]
+    #[ORM\Column(type: Types::SMALLINT)]
     private ?int $years = 0;
 
     #[ORM\Column(length: 15)]
