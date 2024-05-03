@@ -59,9 +59,22 @@ app:
       reset_password:
         done: Mot de passe changé avec succès
         asked: Lien de changement de mot de passe généré
+      import:
+        member: Les données du membre ont été reprises
     warning:
       reset_password:
         valid_once_until_changed: Après validation de ce formulaire, le lien ne sera plus valide
+      import:
+        member:
+          match:
+            none: Pas de correspondance trouvée, ces données crééront un nouvel enregistrement
+    info:
+      import:
+        match:
+          member:
+            full_name_birthday: La correspondance s'est faite sur le nom complet et la date de naissance
+            full_name: La correspondance s'est faite sur le nom complet
+            mobile: La correspondance s'est faite sur le mobile
   file:
     download: Télécharger le fichier actuel
     delete: Supprimer le fichier
@@ -241,6 +254,10 @@ app:
       description:
         label: Description
         default: Type par défaut
+  
+    import:
+      type: Type d'import
+      file: Fichier à importer
 
   login:
     title: &title Authentification
@@ -397,3 +414,10 @@ app:
     new:
       title: &title Nouveau type de note
       heading: *title
+  import:
+    index:
+      title: &title Import
+      heading: *title
+    check:
+      incoming: Ligne {row}
+      record: Enregistrement {id}

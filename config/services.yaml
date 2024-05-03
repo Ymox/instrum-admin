@@ -5,12 +5,19 @@
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
   locale: fr
+  import_upload_path: '%kernel.project_dir%/public/temp'
+
+imports:
+    - { resource: member_csv.yaml }
 
 services:
   # default configuration for services in *this* file
   _defaults:
     autowire: true      # Automatically injects dependencies in your services.
     autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    bind:
+      $importUploadPath: "%import_upload_path%"
 
   # makes classes in src/ available to be used as services
   # this creates a service per class whose id is the fully-qualified class name

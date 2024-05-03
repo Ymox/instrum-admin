@@ -2,6 +2,8 @@ member:
   duplicate: Cette personne figure déjà dans la base de données
   mobile:
     not_unique: Ce numéro de mobile figure déjà dans la base de données. Ne mettez pas le numéro d'un parent pour un enfant
+  import:
+    invalid_file_type: Seuls les fichiers CSV sont gérés
 user:
   password:
     empty: "Veuillez renseigner un mot de passe"

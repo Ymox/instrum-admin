@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'app.import.index.title'|trans }} | {{ parent() }}{% endblock %}
+
+{% block body %}
+    <h1>{{ 'app.import.index.heading'|trans }}</h1>
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit" title="{{ 'global.action.validate'|trans }}" class="btn btn-primary float-start"><i class="fas fa-check" title="{{ 'global.action.validate'|trans }}" aria-hidden="true"></i></button>
+    {{ form_end(form) }}
+{% endblock %}

@@ -1,0 +1,26 @@
+parameters:
+  member_csv_mappings:
+    - rack
+    - cat
+    - title
+    - verified
+    - lastname
+    - firstname
+    - nickname
+    - fullname
+    - address.address
+    - address.zip
+    - address.locality
+    - mobile
+    - phone
+    - email
+    - birthday
+    - age
+    - statuses
+    - vacation
+    - isStudent
+    - roles
+    - unknown
+    - hasKey
+    - keyType
+    - keyNumber
