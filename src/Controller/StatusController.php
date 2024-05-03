@@ -18,7 +18,7 @@ class StatusController extends AbstractController
     {
         $statuses = $entityManager
             ->getRepository(Status::class)
-            ->findAll();
+            ->findBy([], ['lft' => 'ASC']);
 
         return $this->render('status/index.html.twig', [
             'statuses' => $statuses,

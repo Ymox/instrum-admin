@@ -117,6 +117,10 @@ class MemberType extends AbstractType
                         'data-rgt' => $status->getRgt(),
                     ];
                 },
+                'query_builder' => function (StatusRepository $repo) {
+                    $qb = $repo->createQueryBuilder('s');
+                    return $qb->orderBy('lft', 'ASC');
+                },
             ])
             ->add('levels', null, [
                 'required' => false,
