@@ -13,7 +13,7 @@
 {{- 'app.fields.member.email.label'|trans }}";"
 {{- 'app.fields.member.scmv.label'|trans }}";"
 {{- 'app.fields.member.band.label'|trans }}"
-{%- for member in members ~%}
+{%- for member in members -%}
 	"{{ member.statuses|join(', ', 'global.join.end'|trans) }}";"
 	{{- member.title }}";"
 	{{- member.lastname }}";"
@@ -28,8 +28,8 @@
 	{{- member.email }}";"
 	{{- member.scmv ? member.scmv }}";"
 	{{- member.band ? member.band }}"
-	{%~ if member.age < 18 -%}
-	{%- for related in member.relateds ~%}
+	{%- if member.age < 18 -%}
+	{%- for related in member.relateds -%}
 	"Parent";"
 	{{- related.title }}";"
 	{{- related.lastname }}";"
