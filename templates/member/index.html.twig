@@ -102,7 +102,7 @@
 					<td>{{ member.lastname }}</td>
 					<td>{{ member.firstname }}</td>
 					<td>{{ member.levels|join(', ', 'global.join.end'|trans) }}</td>
-					<td{% if member.birthday %} title={{ 'global.ago.years'|trans({'years': member.age}) }}{% endif %}>{{ member.birthday ? member.birthday|date('d.m.Y') }}</td>
+					<td{% if member.birthday %} title="{{ 'global.ago.years'|trans({'years': member.age}) }}" data-text="{{ member.birthday|date('Y-m-d') }}"{% endif %}>{{ member.birthday ? member.birthday|date('d.m.Y') }}</td>
 					<td>{{ member.address }}</td>
 					<td>{% if member.cat -%}
 						<a href="{{ path('instrument_index', {'q': {'recipient': member.lastname}}) }}">{{ member.cat }}</a>
