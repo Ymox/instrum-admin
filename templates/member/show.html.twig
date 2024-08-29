@@ -75,11 +75,11 @@
 			{% endif %}
 			{% if member.title %}
 			<tr>
-				<th>{{ 'app.fields.member.band.label'|trans }}</th>
+				<th>{{ 'app.fields.member.scmv.label'|trans }}</th>
 				<td>{{ member.scmv ? member.scmv ~ ' (' ~ 'global.ago.years'|trans({'years': 'now'|date('Y') - member.scmv}) ~ ')' }}</td>
 			</tr>
 			<tr>
-				<th>{{ 'app.fields.member.scmv.label'|trans }}</th>
+				<th>{{ 'app.fields.member.band.label'|trans }}</th>
 				<td>{{ member.band ? member.band ~ ' (' ~ 'global.ago.years'|trans({'years': 'now'|date('Y') - member.band}) ~ ')' }}</td>
 			</tr>
 			{% endif %}
