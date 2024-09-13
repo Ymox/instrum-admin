@@ -119,7 +119,7 @@ class MemberType extends AbstractType
                 },
                 'query_builder' => function (StatusRepository $repo) {
                     $qb = $repo->createQueryBuilder('s');
-                    return $qb->orderBy('lft', 'ASC');
+                    return $qb->orderBy('s.lft', 'ASC');
                 },
             ])
             ->add('levels', null, [

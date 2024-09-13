@@ -20,7 +20,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 #[Route(name: "member_")]
 class MemberController extends AbstractController
 {
-    #[Route("/member/{_format}", name: "index", methods: ["GET"], requirements: ["_format" => "^(?![\s\S])|html|csv"])]
+    #[Route("/person/{_format}", name: "index", methods: ["GET"], requirements: ["_format" => "^(?![\s\S])|html|csv"])]
     public function index(Request $request, EntityManagerInterface $entityManager, string $_format = 'html'): Response
     {
         $searchForm = $this->createForm(MemberSearchType::class, null, [
@@ -52,14 +52,14 @@ class MemberController extends AbstractController
         return $this->render(
             'member/index.' . $_format . '.twig',
             [
-                'searchForm' => $searchForm->createView(),
+                'searchForm' => $searchForm,
                 'members' => $members
             ],
             $response
         );
     }
 
-    #[Route("/member/new", name: "new", methods: ["GET", "POST"])]
+    #[Route("/person/new", name: "new", methods: ["GET", "POST"])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $member = new Member();
@@ -92,7 +92,7 @@ class MemberController extends AbstractController
         ]);
     }
 
-    #[Route("/member/{id}", name: "show", methods: ["GET"])]
+    #[Route("/person/{id}", name: "show", methods: ["GET"])]
     public function show(Member $member): Response
     {
         $form = $this->createForm(NoteTypeHidderType::class);
@@ -102,7 +102,7 @@ class MemberController extends AbstractController
         ]);
     }
 
-    #[Route("/member/{id}/edit", name: "edit", methods: ["GET", "POST"])]
+    #[Route("/person/{id}/edit", name: "edit", methods: ["GET", "POST"])]
     public function edit(Request $request, Member $member, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(MemberType::class, $member);
@@ -120,7 +120,7 @@ class MemberController extends AbstractController
         ]);
     }
 
-    #[Route("/member/{id}", name: "delete", methods: ["POST"])]
+    #[Route("/person/{id}", name: "delete", methods: ["POST"])]
     public function delete(Request $request, Member $member, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$member->getId(), $request->request->get('_token'))) {
@@ -148,10 +148,60 @@ class MemberController extends AbstractController
         ]);
     }
 
+    #[Route("/members", name: "members", methods: ["GET"])]
+    public function members(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $searchForm = $this->createForm(MemberSearchType::class, null, [
+            'method' => Request::METHOD_GET,
+            'csrf_protection' => false,
+        ]);
+        $searchForm->handleRequest($request);
+        $query = $searchForm->getData();
+
+        $members = $entityManager
+            ->getRepository(Member::class)
+            ->searchBy(
+                $query ?? ['statuses' => ['on' => new ArrayCollection([1]), 'off' => new ArrayCollection()]],
+                [
+                    $request->query->get('field', 'm.id') => $request->query->get('direction', 'asc'),
+                ]
+            );
+
+        return $this->render('member/index.html.twig', [
+            'members' => $members,
+            'searchForm' => $searchForm,
+        ]);
+    }
+
+    #[Route("/members/contributing/{_format}", name: "members", methods: ["GET"], requirements: ["_format" => "^(?![\s\S])|html|csv"])]
+    public function contributing(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $searchForm = $this->createForm(MemberSearchType::class, null, [
+            'method' => Request::METHOD_GET,
+            'csrf_protection' => false,
+        ]);
+        $searchForm->handleRequest($request);
+        $query = $searchForm->getData();
+
+        $members = $entityManager
+            ->getRepository(Member::class)
+            ->searchBy(
+                $query ?? ['statuses' => ['on' => new ArrayCollection([1]), 'off' => new ArrayCollection([14])]],
+                [
+                    $request->query->get('field', 'm.id') => $request->query->get('direction', 'asc'),
+                ]
+            );
+
+        return $this->render('member/index.html.twig', [
+            'members' => $members,
+            'searchForm' => $searchForm,
+        ]);
+    }
+
     /**
      * Allows to handle duplicates in database
      */
-    #[Route("/member/duplicates/{master}/{duplicate}", name: "duplicates", methods: ["GET", "POST"])]
+    #[Route("/person/duplicates/{master}/{duplicate}", name: "duplicates", methods: ["GET", "POST"])]
     public function duplicates(Request $request, Member $master, Member $duplicate, TranslatorInterface $translator, EntityManagerInterface $em)
     {
         $masterForm = $this->createForm(MemberType::class, $master, [

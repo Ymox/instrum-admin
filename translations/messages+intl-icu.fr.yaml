@@ -270,11 +270,11 @@ app:
 
   menu:
     members:
-      heading: Membres
-      list: Tous
-      active: Actifs
+      heading: Personnes
+      list: Toutes
+      active: Membres
       passive: Passifs
-      statuses: Rôles de membre
+      statuses: Rôles
       awards: Distinctions
       note_types: Types de notes
     instruments:
@@ -301,15 +301,15 @@ app:
         {type, select,
           Externe {{number, plural,
             one {Membre passif}
-            other {Liste des membres passifs}
+            other {Liste des externes}
           }}
           Membre {{number, plural,
             one {Membre actif}
-            other {Liste des membres actifs}
+            other {Liste des membres}
           }}
           other {{number, plural,
             one {Membre}
-            other {Liste des membres}
+            other {Liste des contacts}
           }}
         }
       popup:
@@ -357,9 +357,9 @@ app:
       heading: Nouveau type de propriété
   status:
     index:
-      heading: Liste des rôles de membre
+      heading: Liste des rôles
     new:
-      heading: Nouveau statut de membre
+      heading: Nouveau rôle
   stock:
     index:
       heading: Liste des stocks
