@@ -3,9 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\NoteRepository;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: NoteRepository::class)]
 class Note
@@ -14,10 +14,10 @@ class Note
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-    
+
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
-    
+
     #[ORM\ManyToOne(inversedBy: 'informations')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Member $member = null;
@@ -25,11 +25,11 @@ class Note
     #[ORM\ManyToOne]
     #[ORM\JoinColumn]
     private ?NoteType $type = null;
-    
+
     #[ORM\Column]
     #[Gedmo\Timestampable(on: 'update')]
     private ?\DateTimeImmutable $updatedAt = null;
-    
+
     #[ORM\Column(length: 255)]
     #[Gedmo\Blameable]
     private ?string $redactor = null;

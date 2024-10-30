@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit InventoryLine{% endblock %}
+{% block title %}{{ 'app.award.edit.heading'|trans({'member': award.member, 'awardType': award.awardType}) }}{% endblock %}
 
 {% block body %}
-	<h1>Edit InventoryLine</h1>
+	<h1>{{ 'app.award.edit.heading'|trans({'member': award.member, 'awardType': award.awardType}) }}</h1>
 
 	{{ include('award/_form.html.twig') }}
 

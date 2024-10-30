@@ -287,7 +287,7 @@ app:
       heading: Stocks
     users: Utilisateurs
     logout: Déconnexion
-  
+
   home:
     welcome: "Bonjour <strong>{name}</strong> !"
 
@@ -401,6 +401,8 @@ app:
       heading:
         member: "Décerner à {member}"
         award_type: "Décerner {awardType}"
+    edit:
+      heading: "{member} : {awardType}"
   note:
     new:
       title: &title Nouvelle note pour {member}
