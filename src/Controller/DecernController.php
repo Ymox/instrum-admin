@@ -8,6 +8,7 @@ use App\Entity\Member;
 use App\Form\AwardMemberType;
 use App\Form\MemberAwardType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -25,8 +26,8 @@ class DecernController extends AbstractController
         EntityManagerInterface $entityManager,
         FormFactoryInterface $formFactory,
         string $_route,
-        ?Member $member,
-        ?AwardType $awardType
+        #[MapEntity(id: 'member')] ?Member $member,
+        #[MapEntity(id: 'awardType')] ?AwardType $awardType
     ): Response
     {
         if ($member) {

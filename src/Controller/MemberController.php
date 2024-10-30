@@ -9,6 +9,7 @@ use App\Form\MemberType;
 use App\Form\NoteTypeHidderType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\HttpFoundation\HeaderUtils;
@@ -93,7 +94,7 @@ class MemberController extends AbstractController
     }
 
     #[Route("/person/{id}", name: "show", methods: ["GET"])]
-    public function show(Member $member): Response
+    public function show(#[MapEntity] Member $member): Response
     {
         $form = $this->createForm(NoteTypeHidderType::class);
         return $this->render('member/show.html.twig', [
@@ -103,7 +104,7 @@ class MemberController extends AbstractController
     }
 
     #[Route("/person/{id}/edit", name: "edit", methods: ["GET", "POST"])]
-    public function edit(Request $request, Member $member, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, #[MapEntity] Member $member, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(MemberType::class, $member);
         $form->handleRequest($request);
@@ -121,7 +122,7 @@ class MemberController extends AbstractController
     }
 
     #[Route("/person/{id}", name: "delete", methods: ["POST"])]
-    public function delete(Request $request, Member $member, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, #[MapEntity] Member $member, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$member->getId(), $request->request->get('_token'))) {
             $entityManager->remove($member);

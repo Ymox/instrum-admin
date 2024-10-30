@@ -6,6 +6,7 @@ use App\Entity\NoteType;
 use App\Form\NoteTypeType;
 use App\Repository\NoteTypeRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,7 +44,7 @@ class NoteTypeController extends AbstractController
     }
 
     #[Route('/{id}', name: 'show', methods: ['GET'])]
-    public function show(NoteType $noteType): Response
+    public function show(#[MapEntity]NoteType $noteType): Response
     {
         return $this->render('note_type/show.html.twig', [
             'noteType' => $noteType,
@@ -51,7 +52,7 @@ class NoteTypeController extends AbstractController
     }
 
     #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, NoteType $noteType, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, #[MapEntity]NoteType $noteType, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(NoteTypeType::class, $noteType);
         $form->handleRequest($request);
@@ -69,7 +70,7 @@ class NoteTypeController extends AbstractController
     }
 
     #[Route('/{id}', name: 'delete', methods: ['POST'])]
-    public function delete(Request $request, NoteType $noteType, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, #[MapEntity]NoteType $noteType, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$noteType->getName(), $request->request->get('_token'))) {
             $entityManager->remove($noteType);

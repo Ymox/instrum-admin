@@ -7,6 +7,7 @@ use App\Entity\Member;
 use App\Form\ProvisionType;
 use App\Repository\ProvisionRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProvisionController extends AbstractController
 {
     #[Route("/inventory", name: "index", methods: ["GET"])]
-    public function index(ProvisionRepository $provisionRepository, Member $member): Response
+    public function index(ProvisionRepository $provisionRepository, #[MapEntity(id: 'member')] Member $member): Response
     {
         return $this->render('provision/index.html.twig', [
             'member' => $member,
@@ -25,7 +26,7 @@ class ProvisionController extends AbstractController
     }
 
     #[Route("/stock/new", name: "new", methods: ["GET", "POST"])]
-    public function new(Request $request, EntityManagerInterface $entityManager, Member $member): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, #[MapEntity(id: 'member')] Member $member): Response
     {
         $provision = new Provision();
         $form = $this->createForm(ProvisionType::class, $provision, [

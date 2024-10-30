@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Status;
 use App\Form\StatusType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,7 +47,7 @@ class StatusController extends AbstractController
     }
 
     #[Route("/{id}/edit", name: "edit", methods: ["GET", "POST"])]
-    public function edit(Request $request, Status $status, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, #[MapEntity] Status $status, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(StatusType::class, $status);
         $form->handleRequest($request);
@@ -64,7 +65,7 @@ class StatusController extends AbstractController
     }
 
     #[Route("/{id}", name: "delete", methods: ["POST"])]
-    public function delete(Request $request, Status $status, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, #[MapEntity] Status $status, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$status->getId(), $request->request->get('_token'))) {
             $entityManager->remove($status);

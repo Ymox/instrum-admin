@@ -7,6 +7,7 @@ use App\Entity\Member;
 use App\Form\InstrumentAssignMemberType;
 use App\Form\InstrumentType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -53,7 +54,7 @@ class InstrumentController extends AbstractController
     }
 
     #[Route("/{id}", name: "show", methods: ["GET"])]
-    public function show(Instrument $instrument): Response
+    public function show(#[MapEntity] Instrument $instrument): Response
     {
         return $this->render('instrument/show.html.twig', [
             'instrument' => $instrument,
@@ -61,7 +62,7 @@ class InstrumentController extends AbstractController
     }
 
     #[Route("/{id}/edit", name: "edit", methods: ["GET", "POST"])]
-    public function edit(Request $request, Instrument $instrument, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, #[MapEntity] Instrument $instrument, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(InstrumentType::class, $instrument);
         $form->handleRequest($request);
@@ -79,7 +80,7 @@ class InstrumentController extends AbstractController
     }
 
     #[Route("/{id}/assign", name: "assign_member", methods: ["GET", "POST"])]
-    public function assign(Request $request, Instrument $instrument, EntityManagerInterface $entityManager): Response
+    public function assign(Request $request, #[MapEntity] Instrument $instrument, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(InstrumentAssignMemberType::class, $instrument);
         $form->handleRequest($request);
@@ -101,7 +102,7 @@ class InstrumentController extends AbstractController
     }
 
     #[Route("/{id}", name: "delete", methods: ["POST"])]
-    public function delete(Request $request, Instrument $instrument, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, #[MapEntity] Instrument $instrument, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$instrument->getId(), $request->request->get('_token'))) {
             $entityManager->remove($instrument);

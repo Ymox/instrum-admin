@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Property;
 use App\Form\PropertyType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,7 +47,7 @@ class PropertyController extends AbstractController
     }
 
     #[Route("/{id}/edit", name: "edit", methods: ["GET", "POST"])]
-    public function edit(Request $request, Property $property, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, #[MapEntity] Property $property, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(PropertyType::class, $property);
         $form->handleRequest($request);
@@ -64,7 +65,7 @@ class PropertyController extends AbstractController
     }
 
     #[Route("/{id}", name: "delete", methods: ["POST"])]
-    public function delete(Request $request, Property $property, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, #[MapEntity] Property $property, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$property->getId(), $request->request->get('_token'))) {
             $entityManager->remove($property);

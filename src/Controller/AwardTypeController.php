@@ -8,6 +8,7 @@ use App\Form\AwardTypeType;
 use App\Repository\AwardTypeRepository;
 use App\Repository\MemberRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,7 +46,7 @@ class AwardTypeController extends AbstractController
     }
 
     #[Route("/{id}", name: "show", methods: ["GET"])]
-    public function show(AwardType $awardType, MemberRepository $memberRepository): Response
+    public function show(#[MapEntity] AwardType $awardType, MemberRepository $memberRepository): Response
     {
         return $this->render('award_type/show.html.twig', [
             'awardType' => $awardType,
@@ -54,7 +55,7 @@ class AwardTypeController extends AbstractController
     }
 
     #[Route("/{id}/edit", name: "edit", methods: ["GET", "POST"])]
-    public function edit(Request $request, AwardType $awardType, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, #[MapEntity] AwardType $awardType, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(AwardTypeType::class, $awardType);
         $form->handleRequest($request);
@@ -72,7 +73,7 @@ class AwardTypeController extends AbstractController
     }
 
     #[Route("/{id}", name: "delete", methods: ["POST"])]
-    public function delete(Request $request, AwardType $awardType, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, #[MapEntity] AwardType $awardType, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$awardType->getId(), $request->request->get('_token'))) {
             $entityManager->remove($awardType);

@@ -8,6 +8,7 @@ use App\Entity\Stock;
 use App\Form\MemberProvisionType;
 use App\Form\StockProvisionType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -25,8 +26,8 @@ class ProvideController extends AbstractController
         EntityManagerInterface $entityManager,
         FormFactoryInterface $formFactory,
         string $_route,
-        ?Member $member,
-        ?Stock $stock
+        #[MapEntity(id: 'member')] ?Member $member,
+        #[MapEntity(id: 'stock')] ?Stock $stock
     ): Response
     {
         $formData['provisions'] = [];

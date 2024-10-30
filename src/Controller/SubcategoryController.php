@@ -6,6 +6,7 @@ use App\Entity\Category;
 use App\Entity\Subcategory;
 use App\Form\SubcategoryType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,7 +38,7 @@ class SubcategoryController extends AbstractController
     }
 
     #[Route("/{id}/edit", name: "edit", methods: ["GET", "POST"])]
-    public function edit(Request $request, Subcategory $subcategory, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, #[MapEntity] Subcategory $subcategory, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(SubcategoryType::class, $subcategory, [
             'action' => $this->generateUrl('subcategory_edit', ['id' => $subcategory->getId()])
@@ -57,7 +58,7 @@ class SubcategoryController extends AbstractController
     }
 
     #[Route("/{id}", name: "delete", methods: ["POST"])]
-    public function delete(Request $request, Subcategory $subcategory, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, #[MapEntity] Subcategory $subcategory, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$subcategory->getId(), $request->request->get('_token'))) {
             $entityManager->remove($subcategory);

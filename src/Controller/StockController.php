@@ -6,6 +6,7 @@ use App\Entity\Stock;
 use App\Form\StockType;
 use App\Repository\StockRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,7 +44,7 @@ class StockController extends AbstractController
     }
 
     #[Route("/{id}", name: "show", methods: ["GET"])]
-    public function show(Stock $stock): Response
+    public function show(#[MapEntity] Stock $stock): Response
     {
         return $this->render('stock/show.html.twig', [
             'stock' => $stock,
@@ -51,7 +52,7 @@ class StockController extends AbstractController
     }
 
     #[Route("/{id}/edit", name: "edit", methods: ["GET", "POST"])]
-    public function edit(Request $request, Stock $stock, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, #[MapEntity] Stock $stock, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(StockType::class, $stock);
         $form->handleRequest($request);
@@ -69,7 +70,7 @@ class StockController extends AbstractController
     }
 
     #[Route("/{id}", name: "delete", methods: ["POST"])]
-    public function delete(Request $request, Stock $stock, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, #[MapEntity] Stock $stock, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$stock->getId(), $request->request->get('_token'))) {
             $entityManager->remove($stock);

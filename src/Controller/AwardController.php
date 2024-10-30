@@ -4,10 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Award;
 use App\Entity\Member;
-use App\Form\AwardMemberType;
 use App\Form\MemberAwardType;
 use App\Repository\AwardRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AwardController extends AbstractController
 {
     #[Route("/award", name: "index", methods: ["GET"])]
-    public function index(AwardRepository $awardRepository, Member $member): Response
+    public function index(AwardRepository $awardRepository, #[MapEntity(id: 'member')] Member $member): Response
     {
         return $this->render('award/index.html.twig', [
             'member' => $member,
@@ -26,7 +26,7 @@ class AwardController extends AbstractController
     }
 
     #[Route("/award/new", name: "new", methods: ["GET", "POST"])]
-    public function new(Request $request, EntityManagerInterface $entityManager, Member $member): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, #[MapEntity(id: 'member')] Member $member): Response
     {
         $award = new Award();
         $form = $this->createForm(MemberAwardType::class, $award, [
@@ -50,9 +50,9 @@ class AwardController extends AbstractController
     }
 
     #[Route("/award/{awardType}/edit", name: "edit", methods: ["GET", "POST"])]
-    public function edit(Request $request, Award $award, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, #[MapEntity(id: ['member' => 'member', 'awardType' => 'awardType'])] Award $award, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(Award::class, $award);
+        $form = $this->createForm(MemberAwardType::class, $award);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -68,7 +68,7 @@ class AwardController extends AbstractController
     }
 
     #[Route("/award/{awardType}/delete", name: "delete", methods: ["POST"])]
-    public function delete(Request $request, Award $award, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, #[MapEntity(id: ['member' => 'member', 'awardType' => 'awardType'])] Award $award, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$award->getMember()->getId() . $award->getAwardType()->getId(), $request->request->get('_token'))) {
             $entityManager->remove($award);

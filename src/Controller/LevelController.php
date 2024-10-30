@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Level;
 use App\Form\LevelType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -46,7 +47,7 @@ class LevelController extends AbstractController
     }
 
     #[Route("/{id}", name: "show", methods: ["GET"])]
-    public function show(Level $level): Response
+    public function show(#[MapEntity] Level $level): Response
     {
         return $this->render('level/show.html.twig', [
             'level' => $level,
@@ -54,7 +55,7 @@ class LevelController extends AbstractController
     }
 
     #[Route("/{id}/edit", name: "edit", methods: ["GET", "POST"])]
-    public function edit(Request $request, Level $level, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, #[MapEntity] Level $level, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(LevelType::class, $level);
         $form->handleRequest($request);
@@ -72,7 +73,7 @@ class LevelController extends AbstractController
     }
 
     #[Route("/{id}", name: "delete", methods: ["POST"])]
-    public function delete(Request $request, Level $level, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, #[MapEntity] Level $level, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$level->getId(), $request->request->get('_token'))) {
             $entityManager->remove($level);

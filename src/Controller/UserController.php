@@ -7,6 +7,7 @@ use App\Form\RegistrationFormType;
 use App\Form\ChangePasswordType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -64,7 +65,7 @@ class UserController extends AbstractController
     }
 
     #[Route("/{id}", name: "show", methods: ["GET"])]
-    public function show(User $user, UserInterface $authenticatedUser): Response
+    public function show(#[MapEntity] User $user, UserInterface $authenticatedUser): Response
     {
         $this->denyAccessUnlessAdmin($authenticatedUser);
 
@@ -76,7 +77,7 @@ class UserController extends AbstractController
     #[Route("/{id}/edit", name: "edit", methods: ["GET", "POST"])]
     public function edit(
         Request $request,
-        User $user,
+        #[MapEntity] User $user,
         UserInterface $authenticatedUser,
         UserPasswordHasherInterface $userPasswordHasher,
         EntityManagerInterface $entityManager
@@ -108,7 +109,7 @@ class UserController extends AbstractController
 
     #[Route("/{id}/ask-reset-password", name: "ask_reset_password", methods: ["GET"])]
     public function askResetPassword(
-        User $user,
+        #[MapEntity] User $user,
         UserInterface $authenticatedUser,
         EntityManagerInterface $entityManager
     ): Response {
@@ -126,7 +127,7 @@ class UserController extends AbstractController
     }
 
     #[Route("/{id}", name: "delete", methods: ["POST"])]
-    public function delete(Request $request, User $user, UserInterface $authenticatedUser, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, #[MapEntity] User $user, UserInterface $authenticatedUser, EntityManagerInterface $entityManager): Response
     {
         $this->denyAccessUnlessAdmin($authenticatedUser);
 
