@@ -55,6 +55,7 @@
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script src="{{ asset('js/role_limiter.js') }}"></script>
+		<script src="{{ asset('js/select2_behaviour.js') }}"></script>
 		<script>/*<[CDATA[*/
 		$('.action').click( function() {
 			const $row = $(this).closest('tr');
@@ -83,11 +84,6 @@
 			$.each(value, function(i, e) {
 				e.name = e.name.replace(/\d(?=\](\[[\w\[\]]+\])*)/, Math.floor(i / elementSize));
 				$row.find('.master [name="' + e.name + '"]').val(e.value).change();
-			});
-		});
-		$(function() {
-			$('select.searchable').select2({
-				theme: "bootstrap-5"
 			});
 		});
 		/*]]>*/

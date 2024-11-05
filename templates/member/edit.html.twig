@@ -33,12 +33,8 @@
 		<script src="{{ asset('js/entity_adder.js') }}"></script>
 		<script src="{{ asset('js/role_limiter.js') }}"></script>
 		<script src="{{ asset('js/dynamic_options.js') }}"></script>
+		<script src="{{ asset('js/select2_behaviour.js') }}"></script>
 		<script>//<![CDATA[
-		$(function() {
-			$('select.searchable').select2({
-				theme: "bootstrap-5"
-			});
-		});
 		$('form').on('change', '#member_statuses, #member_statuses [type="checkbox"]', function() {
 			if ($(':selected:contains("Elève")', this).length || $(':checked').next().text().match(/Elève/)) {
 				$('#StudentData').show();
