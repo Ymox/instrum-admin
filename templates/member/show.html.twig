@@ -31,7 +31,7 @@
 					<a title="{{ member }}" href="tel:{{ member.phone }}">{{ member.phone }}</a>
 					{%- endif -%}
 					{%- for related in member.relateds -%}
-					{%- if related.phone %}
+					{%- if related.phone and not related.phone == member.phone %}
 					<a title="{{ related }}" href="tel:{{ related.phone }}">{{ related.phone }}</a> (<a href="{{ path('member_show', {'id': related.id}) }}" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-{% if related.title == constant('TITLE_MS', related) %}fe{% endif %}male" title="{{ 'app.fields.member.related.label'|trans }}" aria-hidden="true"></i><span class="sr-only"> {{ 'app.fields.member.relateds.label'|trans }}</span></a>)
 					{%- endif -%}
 					{%- endfor %}</td>
