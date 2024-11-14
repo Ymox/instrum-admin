@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Translation\TranslatableMessage;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route(name: "import_")]
@@ -44,7 +45,7 @@ class ImportController extends AbstractController
      * Allows to handle duplicates in database
      */
     #[Route("/import/{type}/{row<\d+>}", name: "check", methods: ["GET", "POST"])]
-    public function check(Request $request, string $type, int $row, TranslatorInterface $translator, EntityManagerInterface $em)
+    public function check(Request $request, string $type, int $row, EntityManagerInterface $em)
     {
         $className = preg_replace_callback('`(?:^|-)([a-z])`', function ($initial) {
             return strtoupper($initial[1]);
@@ -59,7 +60,7 @@ class ImportController extends AbstractController
         ) {
             if (!($master = $repository->findBy(['firstname' => $duplicate['firstname'], 'lastname' => $duplicate['lastname']])) || count($master) > 1) {
                 if (!($master = $repository->findByMobile($duplicate['mobile'])) || count($master) > 1) {
-                    $this->addFlash('warning', $translator->trans('app.flash.warning.import.match.member.none'));
+                    $this->addFlash('warning', new TranslatableMessage('app.flash.warning.import.match.member.none'));
                     $master = new Member();
                 } else {
                     $match = 'mobile';
@@ -86,14 +87,14 @@ class ImportController extends AbstractController
             $em->flush();
             $this->addFlash(
                 'success',
-                $translator->trans(
+                new TranslatableMessage(
                     'app.flash.success.import.member'
                 )
             );
             return $this->redirectToRoute('import_check', ['type' => $type, 'row' => ++$row]);
         }
-        
-        $this->addFlash('info', $translator->trans('app.flash.info.import.match.member.' . $match));
+
+        $this->addFlash('info', new TranslatableMessage('app.flash.info.import.match.member.' . $match));
 
         $duplicateForm = $this->createForm('App\\Form\\' . $className . 'ImportType', $duplicate, [
             'data_class' => null

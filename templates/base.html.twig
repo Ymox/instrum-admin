@@ -17,7 +17,7 @@
 			{% for label, messages in app.flashes %}
 				{% for message in messages %}
 					<div class="alert alert-{{ label }} mt-{{ loop.first ? '3' : '1' }}">
-						{{ message|raw }}
+						{{ message|trans|raw }}
 					</div>
 				{% endfor %}
 			{% endfor %}

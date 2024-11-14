@@ -15,6 +15,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Translation\TranslatableMessage;
 
 #[Route("/user", name: "user_")]
 class UserController extends AbstractController
@@ -121,7 +122,7 @@ class UserController extends AbstractController
             )
             ->setLastConnection(new \DateTime());
         $entityManager->flush();
-        $this->addFlash('success', 'app.flash.success.reset_password.asked');
+        $this->addFlash('success', new TranslatableMessage('app.flash.success.reset_password.asked'));
 
         return $this->redirectToRoute('user_index', status: Response::HTTP_SEE_OTHER);
     }

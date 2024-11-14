@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\HeaderUtils;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Translation\TranslatableMessage;
 
 #[Route(name: "member_")]
 class MemberController extends AbstractController
@@ -203,7 +203,7 @@ class MemberController extends AbstractController
      * Allows to handle duplicates in database
      */
     #[Route("/person/duplicates/{master}/{duplicate}", name: "duplicates", methods: ["GET", "POST"])]
-    public function duplicates(Request $request, Member $master, Member $duplicate, TranslatorInterface $translator, EntityManagerInterface $em)
+    public function duplicates(Request $request, Member $master, Member $duplicate, EntityManagerInterface $em)
     {
         $masterForm = $this->createForm(MemberType::class, $master, [
             'validation_groups' => ['duplicate']
@@ -258,7 +258,7 @@ class MemberController extends AbstractController
             $em->flush();
             $this->addFlash(
                 'success',
-                $translator->trans(
+                new TranslatableMessage(
                     'app.flash.success.duplicates.member'
                 )
             );

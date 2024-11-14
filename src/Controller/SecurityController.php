@@ -14,9 +14,9 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\PasswordHasher\PasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Translation\TranslatableMessage;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SecurityController extends AbstractController
 {
@@ -39,8 +39,7 @@ class SecurityController extends AbstractController
         Request $request,
         string $token,
         EntityManagerInterface $entityManager,
-        UserPasswordHasherInterface $userPasswordHasher,
-        TranslatorInterface $translator
+        UserPasswordHasherInterface $userPasswordHasher
     ): Response {
         $repository = $entityManager->getRepository(User::class);
         if (!($user = $repository->findOneByResetToken($token))) {
@@ -83,7 +82,7 @@ class SecurityController extends AbstractController
 
             $this->addFlash(
                 'success',
-                $translator->trans(
+                new TranslatableMessage(
                     'app.flash.success.reset_password.done'
                 )
             );
