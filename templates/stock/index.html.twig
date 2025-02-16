@@ -26,11 +26,11 @@
 				<td>{{ stock.what }}</td>
 				<td>{{ stock.amount }}</td>
 				<td>
-					<div class="btn-group btn-group-sm">
-						<a href="{{ path('stock_show', {'id': stock.id}) }}" class="btn btn-sm btn-outline-info" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank">{{ 'global.action.show'|trans }}</a>
+					<div class="btn-group dropstart btn-group-sm">
 						<button role="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" title="{{ 'global.action.expand.menu'|trans }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 							<span class="visually-hidden">{{ 'global.action.expand.menu'|trans }}</span>
 						</button>
+						<a href="{{ path('stock_show', {'id': stock.id}) }}" class="btn btn-sm btn-outline-info" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank">{{ 'global.action.show'|trans }}</a>
 						<div class="dropdown-menu">
 							<a href="{{ path('stock_edit', {'id': stock.id}) }}" class="dropdown-item"><i class="fas fa-pencil-alt" title="{{ 'global.action.edit'|trans }}" aria-hidden="true"></i> {{ 'global.action.edit'|trans }}</a>
 							<a href="{{ path('stock_provide', {'stock': stock.id}) }}" class="dropdown-item" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-user-plus" title="{{ 'app.stock.index.action.provide'|trans }}" aria-hidden="true"></i> {{ 'app.stock.index.action.provide'|trans }}</a>

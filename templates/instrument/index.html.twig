@@ -48,11 +48,11 @@
 						{%- endif %}</td>
 					<td>{{ instrument.information }}</td>
 					<td>
-						<div class="btn-group btn-group-sm">
-							<a href="{{ path('instrument_edit', {'id': instrument.id}) }}" class="btn btn-sm btn-outline-warning">{{ 'global.action.edit'|trans }}</a>
+						<div class="btn-group dropstart btn-group-sm">
 							<button role="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" title="{{ 'global.action.quick'|trans }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								<span class="visually-hidden">{{ 'global.action.quick'|trans }}</span>
 							</button>
+							<a href="{{ path('instrument_edit', {'id': instrument.id}) }}" class="btn btn-sm btn-outline-warning">{{ 'global.action.edit'|trans }}</a>
 							<div class="dropdown-menu">
 								<a href="{{ path('instrument_assign_member', {'id': instrument.id}) }}" class="dropdown-item" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-user" aria-hidden="true"></i> (Dés-)assigner</a>
 								<form method="post" action="{{ path('instrument_delete', {'id': instrument.id}) }}" style="display: list-item" onsubmit="return confirm('{{ 'global.action.confirm_delete'|trans }}');">
