@@ -30,7 +30,7 @@
 					<div class="btn-group btn-group-sm">
 						<a href="{{ path('note_type_edit', {'id': noteType.id}) }}" class="btn btn-sm btn-outline-warning">{{ 'global.action.edit'|trans }}</a>
 						<button role="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" title="{{ 'global.action.expand.menu'|trans }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<span class="sr-only">{{ 'global.action.expand.menu'|trans }}</span>
+							<span class="visually-hidden">{{ 'global.action.expand.menu'|trans }}</span>
 						</button>
 						<div class="dropdown-menu">
 							<form method="post" action="{{ path('note_type_delete', {'id': noteType.id}) }}" style="display: list-item" onsubmit="return confirm('{{ 'global.action.confirm_delete'|trans }}');">

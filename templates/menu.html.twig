@@ -2,7 +2,7 @@
 	<div class="container">
 		<a class="navbar-brand" href="{{ path('home') }}">{{ 'global.site_name'|trans }}</a>
 		<button type="button" class="navbar-toggler navbar-toggler-right" data-bs-toggle="collapse" data-bs-target="#Menu" aria-controls="Menu" aria-expanded="false">
-			<span class="navbar-toggler-icon" title="{{ 'global.action.expand.menu'|trans }}" aria-hidden="true"></span><span class="sr-only">{{ 'global.action.expand.menu'|trans }}</span>
+			<span class="navbar-toggler-icon" title="{{ 'global.action.expand.menu'|trans }}" aria-hidden="true"></span><span class="visually-hidden">{{ 'global.action.expand.menu'|trans }}</span>
 		</button>
 
 		<div class="collapse navbar-collapse" id="Menu">
@@ -28,11 +28,11 @@
 						<a class="dropdown-item{% if
 								('member_index' == app.current_route)
 								and (not app.request.query.all('q')['statuses'] is defined) %} active" aria-current="page{% endif %}" href="{{ path('member_index') }}">{{ 'app.menu.members.list'|trans }}</a>
-						<div class="dropdown-divider"></div>
+						<hr class="dropdown-divider" />
 						<a class="dropdown-item{% if 'status' in app.current_route %} active" aria-current="page{% endif %}" href="{{ path('status_index') }}">{{ 'app.menu.members.statuses'|trans }}</a>
-						<div class="dropdown-divider"></div>
+						<hr class="dropdown-divider" />
 						<a class="dropdown-item{% if 'award' in app.current_route %} active" aria-current="page{% endif %}" href="{{ path('award_type_index') }}">{{ 'app.menu.members.awards'|trans }}</a>
-						<div class="dropdown-divider"></div>
+						<hr class="dropdown-divider" />
 						<a class="dropdown-item{% if 'note' in app.current_route %} active" aria-current="page{% endif %}" href="{{ path('note_type_index') }}">{{ 'app.menu.members.note_types'|trans }}</a>
 					</div>
 				</li>
@@ -44,9 +44,9 @@
 					%} active{% endif %}" id="Instruments" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ 'app.menu.instruments.heading'|trans }}</a>
 					<div class="dropdown-menu dropdown-menu-dark" aria-labelledby="Instruments">
 						<a class="dropdown-item{% if 'instrument' in app.current_route %} active" aria-current="page{% endif %}" href="{{ path('instrument_index') }}">{{ 'app.menu.instruments.list'|trans }}</a>
-						<div class="dropdown-divider"></div>
+						<hr class="dropdown-divider" />
 						<a class="dropdown-item{% if 'category' in app.current_route %} active" aria-current="page{% endif %}" href="{{ path('category_index') }}">{{ 'app.menu.instruments.categories'|trans }}</a>
-						<div class="dropdown-divider"></div>
+						<hr class="dropdown-divider" />
 						<a class="dropdown-item{% if 'property' in app.current_route %} active" aria-current="page{% endif %}" href="{{ path('property_index') }}">{{ 'app.menu.instruments.properties'|trans }}</a>
 					</div>
 				</li>

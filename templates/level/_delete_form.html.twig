@@ -1,4 +1,4 @@
 <form method="post" action="{{ path('level_delete', {'id': level.id}) }}" style="display: inline;" onsubmit="return confirm('{{ 'global.action.confirm_delete'|trans }}');">
 	<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ level.id) }}">
-	<button type="submit" class="btn btn-danger"><i class="fas fa-trash" title="{{ 'global.action.delete'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'global.action.delete'|trans }}</span></button>
+	<button type="submit" class="btn btn-danger"><i class="fas fa-trash" title="{{ 'global.action.delete'|trans }}" aria-hidden="true"></i><span class="visually-hidden">{{ 'global.action.delete'|trans }}</span></button>
 </form>

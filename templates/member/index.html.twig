@@ -50,19 +50,19 @@
 						<div class="btn-group btn-group-sm">
 							<a href="{{ path('member_new') }}" class="btn btn-sm btn-success">{{ 'global.action.new'|trans }}</a>
 							<button role="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" title="{{ 'global.action.expand.menu'|trans }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<span class="sr-only">{{ 'global.action.expand.menu'|trans }}</span>
+								<span class="visually-hidden">{{ 'global.action.expand.menu'|trans }}</span>
 							</button>
 							<ul id="ColumnSelector" class="dropdown-menu" data-column-selector-prototype="&lt;li&gt;&lt;label class=&quot;dropdown-item&quot;&gt;&lt;input type=&quot;checkbox&quot;&gt; {name}&lt;/label&gt;&lt;/li&gt;">
 								<button type="button" class="dropdown-item mail-collector" data-bs-toggle="modal" data-bs-target="#Modal" data-prototype="&lt;div class=&quot;modal-header&quot;&gt;&lt;h3&gt;{{ 'app.member.index.popup.mailing.heading'|trans }}&lt;/h3&gt;&lt;/div&gt;&lt;div class=&quot;modal-body&quot;&gt;&lt;a href=&quot;mailto:__mails__&quot;&gt;__mails__&lt;/a&gt;&lt;/div&gt;&lt;div class=&quot;modal-footer&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-bs-dismiss=&quot;modal&quot;&gt;{{ 'global.action.close'|trans }}&lt;/button&gt;&lt;/div&gt;" data-mail-type="">{{ 'global.action.mailing.full'|trans }}</button>
 								<button type="button" class="dropdown-item mail-collector" data-bs-toggle="modal" data-bs-target="#Modal" data-prototype="&lt;div class=&quot;modal-header&quot;&gt;&lt;h3&gt;{{ 'app.member.index.popup.mailing.heading'|trans }}&lt;/h3&gt;&lt;/div&gt;&lt;div class=&quot;modal-body&quot;&gt;&lt;a href=&quot;mailto:__mails__&quot;&gt;__mails__&lt;/a&gt;&lt;/div&gt;&lt;div class=&quot;modal-footer&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-bs-dismiss=&quot;modal&quot;&gt;{{ 'global.action.close'|trans }}&lt;/button&gt;&lt;/div&gt;" data-mail-type=":not(.related)">{{ 'global.action.mailing.direct'|trans }}</button>
 								<button type="button" class="dropdown-item mail-collector" data-bs-toggle="modal" data-bs-target="#Modal" data-prototype="&lt;div class=&quot;modal-header&quot;&gt;&lt;h3&gt;{{ 'app.member.index.popup.mailing.heading'|trans }}&lt;/h3&gt;&lt;/div&gt;&lt;div class=&quot;modal-body&quot;&gt;&lt;a href=&quot;mailto:__mails__&quot;&gt;__mails__&lt;/a&gt;&lt;/div&gt;&lt;div class=&quot;modal-footer&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-bs-dismiss=&quot;modal&quot;&gt;{{ 'global.action.close'|trans }}&lt;/button&gt;&lt;/div&gt;" data-mail-type=".related">{{ 'global.action.mailing.related'|trans }}</button>
-								<div class="dropdown-divider"></div>
+								<hr class="dropdown-divider" />
 							</ul>
 						</div>
 					</th>
 				</tr>
 				<tr class="tablesorter-ignoreRow">
-					<th>{{ form_label(searchForm.statuses, null, {'label_attr': {'class': 'sr-only'}}) }}{{ form_widget(searchForm.statuses, {'attr': {'class': 'form-control form-select-sm'}, 'translation_domain': false}) }}<input type="search" id="SearchStatuses" class="d-none searchField"{% if app.request.all('q')['statuses'] is defined %} value="
+					<th>{{ form_label(searchForm.statuses, null, {'label_attr': {'class': 'visually-hidden'}}) }}{{ form_widget(searchForm.statuses, {'attr': {'class': 'form-control form-select-sm'}, 'translation_domain': false}) }}<input type="search" id="SearchStatuses" class="d-none searchField"{% if app.request.all('q')['statuses'] is defined %} value="
 							{{-
 								(app.request.query.all('q')['statuses']['on'] is defined
 									? app.request.query.all('q')['statuses']['on'] is iterable
@@ -76,21 +76,21 @@
 										? '!' ~ app.request.query.all('q')['statuses']['off']|join(' && !')
 										: app.request.query.all('q')['statuses']['off'])
 							-}}"{% endif %} data-column="0" /></th>
-					<th class="columnSelector-false">{{ form_label(searchForm.title, null, {'label_attr': {'class': 'sr-only'}}) }} {{ form_widget(searchForm.title , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.title.label'|trans, 'data-column': 1, 'tabindex': 1}, 'translation_domain': false}) }}</th>
-					<th>{{ form_label(searchForm.lastname, null, {'label_attr': {'class': 'sr-only'}}) }} {{ form_widget(searchForm.lastname , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.lastname.label'|trans, 'data-column': 2, 'tabindex': 1}, 'translation_domain': false}) }}</th>
-					<th>{{ form_label(searchForm.firstname, null, {'label_attr': {'class': 'sr-only'}}) }} {{ form_widget(searchForm.firstname , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.firstname.label'|trans, 'data-column': 3, 'tabindex': 1}, 'translation_domain': false}) }}</th>
-					<th class="columnSelector-false">{{ form_label(searchForm.levels, null, {'label_attr': {'class': 'sr-only'}}) }} {{ form_widget(searchForm.levels , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.levels.label'|trans, 'data-column': 4, 'tabindex': 1}, 'translation_domain': false}) }}</th>
-					<th class="columnSelector-false">{{ form_label(searchForm.birthday, null, {'label_attr': {'class': 'sr-only'}}) }} {{ form_widget(searchForm.birthday , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.birthday.label'|trans, 'data-column': 5, 'tabindex': 1}, 'translation_domain': false}) }}</th>
-					<th>{{ form_label(searchForm.address, null, {'label_attr': {'class': 'sr-only'}}) }} {{ form_widget(searchForm.address , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.address.label'|trans, 'data-column': 6, 'tabindex': 1}, 'translation_domain': false}) }}</th>
-					<th>{{ form_label(searchForm.cat, null, {'label_attr': {'class': 'sr-only'}}) }} {{ form_widget(searchForm.cat , {'attr': {'class': 'form-control form-select-sm', 'placeholder': 'app.fields.member.cat.label'|trans}}) }}<input type="hidden" class="d-none searchField"{% if app.request.all('q')['cat'] is defined %} value="{{ app.request.all('q')['cat'] is iterable ? '"' ~ app.request.all('q')['cat']|join('&quot; && &quot;') ~ '"' : app.request.all('q')['cat'] }}"{% endif %} data-column="7" /></th>
-					<th class="columnSelector-false">{{ form_label(searchForm.mobile, null, {'label_attr': {'class': 'sr-only'}}) }} {{ form_widget(searchForm.mobile , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.mobile.label'|trans, 'data-column': 8, 'tabindex': 1}, 'translation_domain': false}) }}</th>
-					<th class="columnSelector-false">{{ form_label(searchForm.phone, null, {'label_attr': {'class': 'sr-only'}}) }} {{ form_widget(searchForm.phone , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.phone.label'|trans, 'data-column': 9, 'tabindex': 1}, 'translation_domain': false}) }}</th>
-					<th data-sorter="false">{{ form_label(searchForm.email, null, {'label_attr': {'class': 'sr-only'}}) }} {{ form_widget(searchForm.email , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.email.label'|trans, 'data-column': 10, 'tabindex': 1}, 'translation_domain': false}) }}</th>
-					<th class="columnSelector-false">{{ form_label(searchForm.scmv, null, {'label_attr': {'class': 'sr-only'}}) }} {{ form_widget(searchForm.scmv , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.scmv.label'|trans, 'data-column': 11, 'tabindex': 1}, 'translation_domain': false}) }}</th>
-					<th class="columnSelector-false">{{ form_label(searchForm.band, null, {'label_attr': {'class': 'sr-only'}}) }} {{ form_widget(searchForm.band , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.band.label'|trans, 'data-column': 12, 'tabindex': 1}, 'translation_domain': false}) }}</th>
+					<th class="columnSelector-false">{{ form_label(searchForm.title, null, {'label_attr': {'class': 'visually-hidden'}}) }} {{ form_widget(searchForm.title , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.title.label'|trans, 'data-column': 1, 'tabindex': 1}, 'translation_domain': false}) }}</th>
+					<th>{{ form_label(searchForm.lastname, null, {'label_attr': {'class': 'visually-hidden'}}) }} {{ form_widget(searchForm.lastname , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.lastname.label'|trans, 'data-column': 2, 'tabindex': 1}, 'translation_domain': false}) }}</th>
+					<th>{{ form_label(searchForm.firstname, null, {'label_attr': {'class': 'visually-hidden'}}) }} {{ form_widget(searchForm.firstname , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.firstname.label'|trans, 'data-column': 3, 'tabindex': 1}, 'translation_domain': false}) }}</th>
+					<th class="columnSelector-false">{{ form_label(searchForm.levels, null, {'label_attr': {'class': 'visually-hidden'}}) }} {{ form_widget(searchForm.levels , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.levels.label'|trans, 'data-column': 4, 'tabindex': 1}, 'translation_domain': false}) }}</th>
+					<th class="columnSelector-false">{{ form_label(searchForm.birthday, null, {'label_attr': {'class': 'visually-hidden'}}) }} {{ form_widget(searchForm.birthday , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.birthday.label'|trans, 'data-column': 5, 'tabindex': 1}, 'translation_domain': false}) }}</th>
+					<th>{{ form_label(searchForm.address, null, {'label_attr': {'class': 'visually-hidden'}}) }} {{ form_widget(searchForm.address , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.address.label'|trans, 'data-column': 6, 'tabindex': 1}, 'translation_domain': false}) }}</th>
+					<th>{{ form_label(searchForm.cat, null, {'label_attr': {'class': 'visually-hidden'}}) }} {{ form_widget(searchForm.cat , {'attr': {'class': 'form-control form-select-sm', 'placeholder': 'app.fields.member.cat.label'|trans}}) }}<input type="hidden" class="d-none searchField"{% if app.request.all('q')['cat'] is defined %} value="{{ app.request.all('q')['cat'] is iterable ? '"' ~ app.request.all('q')['cat']|join('&quot; && &quot;') ~ '"' : app.request.all('q')['cat'] }}"{% endif %} data-column="7" /></th>
+					<th class="columnSelector-false">{{ form_label(searchForm.mobile, null, {'label_attr': {'class': 'visually-hidden'}}) }} {{ form_widget(searchForm.mobile , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.mobile.label'|trans, 'data-column': 8, 'tabindex': 1}, 'translation_domain': false}) }}</th>
+					<th class="columnSelector-false">{{ form_label(searchForm.phone, null, {'label_attr': {'class': 'visually-hidden'}}) }} {{ form_widget(searchForm.phone , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.phone.label'|trans, 'data-column': 9, 'tabindex': 1}, 'translation_domain': false}) }}</th>
+					<th data-sorter="false">{{ form_label(searchForm.email, null, {'label_attr': {'class': 'visually-hidden'}}) }} {{ form_widget(searchForm.email , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.email.label'|trans, 'data-column': 10, 'tabindex': 1}, 'translation_domain': false}) }}</th>
+					<th class="columnSelector-false">{{ form_label(searchForm.scmv, null, {'label_attr': {'class': 'visually-hidden'}}) }} {{ form_widget(searchForm.scmv , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.scmv.label'|trans, 'data-column': 11, 'tabindex': 1}, 'translation_domain': false}) }}</th>
+					<th class="columnSelector-false">{{ form_label(searchForm.band, null, {'label_attr': {'class': 'visually-hidden'}}) }} {{ form_widget(searchForm.band , {'attr': {'class': 'form-control-sm searchField', 'placeholder': 'app.fields.member.band.label'|trans, 'data-column': 12, 'tabindex': 1}, 'translation_domain': false}) }}</th>
 					<th data-sorter="false" data-filter="false" data-column-selector="disable">
-						<button type="reset" class="btn btn-sm btn-light"><i class="fas fa-sync-alt" title="{{ 'global.action.reset'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'global.action.reset'|trans }}</span></button>
-						<button type="submit" class="btn btn-sm btn-info"><i class="fas fa-download" title="{{ 'global.action.download'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'global.action.download'|trans }}</span></button>
+						<button type="reset" class="btn btn-sm btn-light"><i class="fas fa-sync-alt" title="{{ 'global.action.reset'|trans }}" aria-hidden="true"></i><span class="visually-hidden">{{ 'global.action.reset'|trans }}</span></button>
+						<button type="submit" class="btn btn-sm btn-info"><i class="fas fa-download" title="{{ 'global.action.download'|trans }}" aria-hidden="true"></i><span class="visually-hidden">{{ 'global.action.download'|trans }}</span></button>
 					</th>
 				</tr>
 			</thead>
@@ -112,7 +112,7 @@
 						{%- endif -%}
 						{%- for related in member.relateds -%}
 						{%- if related.mobile %}
-						<span class="d-inline-block"><a title="{{ related }}" href="tel:{{ related.mobile }}">{{ related.mobile }}</a> (<a href="{{ path('member_show', {'id': related.id}) }}" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-{% if related.title == constant('TITLE_MS', related) %}fe{% endif %}male" title="{{ 'app.fields.member.related.label'|trans }}" aria-hidden="true"></i><span class="sr-only"> {{ 'app.fields.member.relateds.label'|trans }}</span></a>)</span>
+						<span class="d-inline-block"><a title="{{ related }}" href="tel:{{ related.mobile }}">{{ related.mobile }}</a> (<a href="{{ path('member_show', {'id': related.id}) }}" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-{{ related.title == constant('App\\Config\\Title::MS') ? 'female' : 'male' }}" title="{{ 'app.fields.member.related.label'|trans }}" aria-hidden="true"></i><span class="visually-hidden"> {{ 'app.fields.member.relateds.label'|trans }}</span></a>)</span>
 						{%- endif -%}
 						{%- endfor %}</td>
 					<td>{% if member.phone -%}
@@ -120,7 +120,7 @@
 						{%- endif -%}
 						{%- for related in member.relateds -%}
 						{%- if related.phone and not related.phone == member.phone %}
-						<span class="d-inline-block"><a title="{{ related }}" href="tel:{{ related.phone }}">{{ related.phone }}</a> (<a href="{{ path('member_show', {'id': related.id}) }}" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-{% if related.title == constant('TITLE_MS', related) %}fe{% endif %}male" title="{{ 'app.fields.member.related.label'|trans }}" aria-hidden="true"></i><span class="sr-only"> {{ 'app.fields.member.relateds.label'|trans }}</span></a>)</span>
+						<span class="d-inline-block"><a title="{{ related }}" href="tel:{{ related.phone }}">{{ related.phone }}</a> (<a href="{{ path('member_show', {'id': related.id}) }}" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-{{ related.title == constant('App\\Config\\Title::MS') ? 'female' : 'male' }}" title="{{ 'app.fields.member.related.label'|trans }}" aria-hidden="true"></i><span class="visually-hidden"> {{ 'app.fields.member.relateds.label'|trans }}</span></a>)</span>
 						{%- endif -%}
 						{%- endfor %}</td>
 					<td>{% if member.email -%}
@@ -128,7 +128,7 @@
 						{%- endif -%}
 						{%- for related in member.relateds -%}
 						{%- if related.email %}
-						<span class="d-inline-block related"><a title="{{ related }}" href="mailto:{{ related.email }}">{{ related.email }}</a> (<a href="{{ path('member_show', {'id': related.id}) }}" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-{% if related.title == constant('TITLE_MS', related) %}fe{% endif %}male" title="{{ 'app.fields.member.related.label'|trans }}" aria-hidden="true"></i><span class="sr-only"> {{ 'app.fields.member.relateds.label'|trans }}</span></a>)</span>
+						<span class="d-inline-block related"><a title="{{ related }}" href="mailto:{{ related.email }}">{{ related.email }}</a> (<a href="{{ path('member_show', {'id': related.id}) }}" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-{{ related.title == constant('App\\Config\\Title::MS') ? 'female' : 'male' }}" title="{{ 'app.fields.member.related.label'|trans }}" aria-hidden="true"></i><span class="visually-hidden"> {{ 'app.fields.member.relateds.label'|trans }}</span></a>)</span>
 						{%- endif -%}
 						{%- endfor %}</td>
 					<td{% if member.scmv %} title={{ 'global.ago.years'|trans({'years': 'now'|date('Y') - member.scmv}) }}{% endif %}>{{ member.scmv }}</td>
@@ -137,7 +137,7 @@
 						<div class="btn-group btn-group-sm">
 							<a href="{{ path('member_show', {'id': member.id}) }}" class="btn btn-sm btn-outline-info" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank">{{ 'global.action.show'|trans }}</a>
 							<button role="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" title="{{ 'global.action.expand.menu'|trans }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<span class="sr-only">{{ 'global.action.expand.menu'|trans }}</span>
+								<span class="visually-hidden">{{ 'global.action.expand.menu'|trans }}</span>
 							</button>
 							<div class="dropdown-menu">
 								<a href="{{ path('member_edit', {'id': member.id}) }}" class="dropdown-item"><i class="fas fa-pencil-alt" title="{{ 'global.action.edit'|trans }}" aria-hidden="true"></i> {{ 'global.action.edit'|trans }}</a>

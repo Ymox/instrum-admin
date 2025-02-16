@@ -50,7 +50,7 @@
 	{% if not app.request.xmlHttpRequest %}
 	<ul class="list-inline float-item">
 		<li class="list-inline-item">
-			<a href="{{ path('award_type_index') }}" class="btn btn-light"><i class="fas fa-list" title="{{ 'global.action.list'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'global.action.list'|trans }}</span></a>
+			<a href="{{ path('award_type_index') }}" class="btn btn-light"><i class="fas fa-list" title="{{ 'global.action.list'|trans }}" aria-hidden="true"></i><span class="visually-hidden">{{ 'global.action.list'|trans }}</span></a>
 		</li>
 	{% else %}
 </div>
@@ -58,10 +58,10 @@
 	<ul class="list-inline float-end">
 	{% endif %}
 		<li class="list-inline-item">
-			<a href="{{ path('award_type_decern', {'awardType': awardType.id}) }}" class="btn btn-success"><i class="fas fa-user-plus" title="{{ 'app.awardType.show.action.decern'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'app.awardType.show.action.decern'|trans }}</span></a>
+			<a href="{{ path('award_type_decern', {'awardType': awardType.id}) }}" class="btn btn-success"><i class="fas fa-user-plus" title="{{ 'app.awardType.show.action.decern'|trans }}" aria-hidden="true"></i><span class="visually-hidden">{{ 'app.awardType.show.action.decern'|trans }}</span></a>
 		</li>
 		<li class="list-inline-item">
-			<a href="{{ path('award_type_edit', {'id': awardType.id}) }}" class="btn btn-warning"><i class="fas fa-pencil-alt" title="{{ 'global.action.edit'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'global.action.edit'|trans }}</span></a>
+			<a href="{{ path('award_type_edit', {'id': awardType.id}) }}" class="btn btn-warning"><i class="fas fa-pencil-alt" title="{{ 'global.action.edit'|trans }}" aria-hidden="true"></i><span class="visually-hidden">{{ 'global.action.edit'|trans }}</span></a>
 		</li>
 		<li class="list-inline-item">
 			{% if app.request.xmlHttpRequest -%}

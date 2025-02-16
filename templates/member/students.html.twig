@@ -22,13 +22,13 @@
 						<div class="btn-group btn-group-sm">
 							<a href="{{ path('member_new') }}" class="btn btn-sm btn-success">{{ 'global.action.new'|trans }}</a>
 							<button role="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" title="{{ 'global.action.expand.menu'|trans }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<span class="sr-only">{{ 'global.action.expand.menu'|trans }}</span>
+								<span class="visually-hidden">{{ 'global.action.expand.menu'|trans }}</span>
 							</button>
 							<ul id="ColumnSelector" class="dropdown-menu" data-column-selector-prototype="&lt;li&gt;&lt;label class=&quot;dropdown-item&quot;&gt;&lt;input type=&quot;checkbox&quot;&gt; {name}&lt;/label&gt;&lt;/li&gt;">
 								<button type="button" class="dropdown-item mail-collector" data-bs-toggle="modal" data-bs-target="#Modal" data-prototype="&lt;div class=&quot;modal-header&quot;&gt;&lt;h3&gt;{{ 'app.member.index.popup.mailing.heading'|trans }}&lt;/h3&gt;&lt;/div&gt;&lt;div class=&quot;modal-body&quot;&gt;&lt;a href=&quot;mailto:__mails__&quot;&gt;__mails__&lt;/a&gt;&lt;/div&gt;&lt;div class=&quot;modal-footer&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-bs-dismiss=&quot;modal&quot;&gt;{{ 'global.action.close'|trans }}&lt;/button&gt;&lt;/div&gt;" data-mail-type="">{{ 'global.action.mailing.full'|trans }}</button>
 								<button type="button" class="dropdown-item mail-collector" data-bs-toggle="modal" data-bs-target="#Modal" data-prototype="&lt;div class=&quot;modal-header&quot;&gt;&lt;h3&gt;{{ 'app.member.index.popup.mailing.heading'|trans }}&lt;/h3&gt;&lt;/div&gt;&lt;div class=&quot;modal-body&quot;&gt;&lt;a href=&quot;mailto:__mails__&quot;&gt;__mails__&lt;/a&gt;&lt;/div&gt;&lt;div class=&quot;modal-footer&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-bs-dismiss=&quot;modal&quot;&gt;{{ 'global.action.close'|trans }}&lt;/button&gt;&lt;/div&gt;" data-mail-type=":not(.related)">{{ 'global.action.mailing.direct'|trans }}</button>
 								<button type="button" class="dropdown-item mail-collector" data-bs-toggle="modal" data-bs-target="#Modal" data-prototype="&lt;div class=&quot;modal-header&quot;&gt;&lt;h3&gt;{{ 'app.member.index.popup.mailing.heading'|trans }}&lt;/h3&gt;&lt;/div&gt;&lt;div class=&quot;modal-body&quot;&gt;&lt;a href=&quot;mailto:__mails__&quot;&gt;__mails__&lt;/a&gt;&lt;/div&gt;&lt;div class=&quot;modal-footer&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-bs-dismiss=&quot;modal&quot;&gt;{{ 'global.action.close'|trans }}&lt;/button&gt;&lt;/div&gt;" data-mail-type=".related">{{ 'global.action.mailing.related'|trans }}</button>
-								<div class="dropdown-divider"></div>
+								<hr class="dropdown-divider" />
 							</ul>
 						</div>
 					</th>
@@ -49,7 +49,7 @@
 						{%- endif -%}
 						{%- for related in member.relateds -%}
 						{%- if related.mobile %}
-						<span class="d-inline-block"><a title="{{ related }}" href="tel:{{ related.mobile }}">{{ related.mobile }}</a> (<a href="{{ path('member_show', {'id': related.id}) }}" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-{% if related.title == constant('TITLE_MS', related) %}fe{% endif %}male" title="{{ 'app.fields.member.related.label'|trans }}" aria-hidden="true"></i><span class="sr-only"> {{ 'app.fields.member.relateds.label'|trans }}</span></a>)</span>
+						<span class="d-inline-block"><a title="{{ related }}" href="tel:{{ related.mobile }}">{{ related.mobile }}</a> (<a href="{{ path('member_show', {'id': related.id}) }}" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-{{ related.title == constant('App\\Config\\Title::MS') ? 'female' : 'male' }}" title="{{ 'app.fields.member.related.label'|trans }}" aria-hidden="true"></i><span class="visually-hidden"> {{ 'app.fields.member.relateds.label'|trans }}</span></a>)</span>
 						{%- endif -%}
 						{%- endfor %}</td>
 					<td>{% if member.phone -%}
@@ -57,7 +57,7 @@
 						{%- endif -%}
 						{%- for related in member.relateds -%}
 						{%- if related.phone and not related.phone == member.phone %}
-						<span class="d-inline-block"><a title="{{ related }}" href="tel:{{ related.phone }}">{{ related.phone }}</a> (<a href="{{ path('member_show', {'id': related.id}) }}" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-{% if related.title == constant('TITLE_MS', related) %}fe{% endif %}male" title="{{ 'app.fields.member.related.label'|trans }}" aria-hidden="true"></i><span class="sr-only"> {{ 'app.fields.member.relateds.label'|trans }}</span></a>)</span>
+						<span class="d-inline-block"><a title="{{ related }}" href="tel:{{ related.phone }}">{{ related.phone }}</a> (<a href="{{ path('member_show', {'id': related.id}) }}" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-{{ related.title == constant('App\\Config\\Title::MS') ? 'female' : 'male' }}" title="{{ 'app.fields.member.related.label'|trans }}" aria-hidden="true"></i><span class="visually-hidden"> {{ 'app.fields.member.relateds.label'|trans }}</span></a>)</span>
 						{%- endif -%}
 						{%- endfor %}</td>
 					<td>{% if member.email -%}
@@ -65,14 +65,14 @@
 						{%- endif -%}
 						{%- for related in member.relateds -%}
 						{%- if related.email %}
-						<span class="d-inline-block related"><a title="{{ related }}" href="mailto:{{ related.email }}">{{ related.email }}</a> (<a href="{{ path('member_show', {'id': related.id}) }}" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-{% if related.title == constant('TITLE_MS', related) %}fe{% endif %}male" title="{{ 'app.fields.member.related.label'|trans }}" aria-hidden="true"></i><span class="sr-only"> {{ 'app.fields.member.relateds.label'|trans }}</span></a>)</span>
+						<span class="d-inline-block related"><a title="{{ related }}" href="mailto:{{ related.email }}">{{ related.email }}</a> (<a href="{{ path('member_show', {'id': related.id}) }}" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-{{ related.title == constant('App\\Config\\Title::MS') ? 'female' : 'male' }}" title="{{ 'app.fields.member.related.label'|trans }}" aria-hidden="true"></i><span class="visually-hidden"> {{ 'app.fields.member.relateds.label'|trans }}</span></a>)</span>
 						{%- endif -%}
 						{%- endfor %}</td>
 					<td>
 						<div class="btn-group btn-group-sm">
 							<a href="{{ path('member_show', {'id': member.id}) }}" class="btn btn-sm btn-outline-info" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank">{{ 'global.action.show'|trans }}</a>
 							<button role="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" title="{{ 'global.action.expand.menu'|trans }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<span class="sr-only">{{ 'global.action.expand.menu'|trans }}</span>
+								<span class="visually-hidden">{{ 'global.action.expand.menu'|trans }}</span>
 							</button>
 							<div class="dropdown-menu">
 								<a href="{{ path('member_edit', {'id': member.id}) }}" class="dropdown-item"><i class="fas fa-pencil-alt" title="{{ 'global.action.edit'|trans }}" aria-hidden="true"></i> {{ 'global.action.edit'|trans }}</a>

@@ -1,4 +1,4 @@
 <form method="post" action="{{ path('award_delete', {'member': award.member.id, 'awardType': award.awardType.id}) }}" style="display: inline;" onsubmit="return confirm('{{ 'global.action.confirm_delete'|trans }}');">
 	<input type="hidden" name="_token" value="{{ csrf_token('delete' ~ award.member.id ~ award.awardType.id) }}">
-	<button type="submit" class="btn btn-danger"><i class="fas fa-trash" title="{{ 'global.action.delete'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'global.action.delete'|trans }}</span></button>
+	<button type="submit" class="btn btn-danger"><i class="fas fa-trash" title="{{ 'global.action.delete'|trans }}" aria-hidden="true"></i><span class="visually-hidden">{{ 'global.action.delete'|trans }}</span></button>
 </form>

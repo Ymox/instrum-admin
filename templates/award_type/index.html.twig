@@ -22,7 +22,7 @@
 					<div class="btn-group btn-group-sm">
 						<a href="{{ path('award_type_show', {'id': awardType.id}) }}" class="btn btn-sm btn-outline-info" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank">{{ 'global.action.show'|trans }}</a>
 						<button role="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" title="{{ 'global.action.expand.menu'|trans }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<span class="sr-only">{{ 'global.action.expand.menu'|trans }}</span>
+							<span class="visually-hidden">{{ 'global.action.expand.menu'|trans }}</span>
 						</button>
 						<div class="dropdown-menu">
 							<a href="{{ path('award_type_edit', {'id': awardType.id}) }}" class="dropdown-item"><i class="fas fa-pencil-alt" title="{{ 'global.action.edit'|trans }}" aria-hidden="true"></i> {{ 'global.action.edit'|trans }}</a>

@@ -13,10 +13,10 @@
 				<th id="ColumnSelector" data-sorter="false" data-filter="false" data-column-selector-prototype=""><a href="{{ path('stock_new') }}" class="btn btn-sm btn-success">{{ 'global.action.new'|trans }}</a></th>
 			</tr>
 				<tr class="tablesorter-ignoreRow">
-					<th><label for="SearchWhat" class="sr-only">{{ 'app.fields.stock.what.label'|trans }}</label><input type="search" name="q[what]" id="SearchWhat" class="searchField form-control form-control-sm"{% if app.request.all('q')['what'] is defined %} value="{{ app.request.all('q')['what'] }}"{% endif %} placeholder="{{ 'app.fields.stock.what.label'|trans }}" tabindex="1" data-column="0" /></th>
+					<th><label for="SearchWhat" class="visually-hidden">{{ 'app.fields.stock.what.label'|trans }}</label><input type="search" name="q[what]" id="SearchWhat" class="searchField form-control form-control-sm"{% if app.request.all('q')['what'] is defined %} value="{{ app.request.all('q')['what'] }}"{% endif %} placeholder="{{ 'app.fields.stock.what.label'|trans }}" tabindex="1" data-column="0" /></th>
 					<th data-filter="false"></th>
 					<th id="ColumnSelector" data-sorter="false" data-filter="false" data-column-selector="disable" data-column-selector-prototype="">
-						<button type="reset" class="btn btn-sm btn-light"><i class="fas fa-sync-alt" title="{{ 'global.action.reset'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'global.action.reset'|trans }}</span></button>
+						<button type="reset" class="btn btn-sm btn-light"><i class="fas fa-sync-alt" title="{{ 'global.action.reset'|trans }}" aria-hidden="true"></i><span class="visually-hidden">{{ 'global.action.reset'|trans }}</span></button>
 					</th>
 				</tr>
 		</thead>
@@ -29,7 +29,7 @@
 					<div class="btn-group btn-group-sm">
 						<a href="{{ path('stock_show', {'id': stock.id}) }}" class="btn btn-sm btn-outline-info" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank">{{ 'global.action.show'|trans }}</a>
 						<button role="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" title="{{ 'global.action.expand.menu'|trans }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<span class="sr-only">{{ 'global.action.expand.menu'|trans }}</span>
+							<span class="visually-hidden">{{ 'global.action.expand.menu'|trans }}</span>
 						</button>
 						<div class="dropdown-menu">
 							<a href="{{ path('stock_edit', {'id': stock.id}) }}" class="dropdown-item"><i class="fas fa-pencil-alt" title="{{ 'global.action.edit'|trans }}" aria-hidden="true"></i> {{ 'global.action.edit'|trans }}</a>

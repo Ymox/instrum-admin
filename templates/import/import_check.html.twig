@@ -59,7 +59,7 @@
 	<ul class="list-inline float-end">
 		<li class="list-inline-item">
 			<a href="{{ path('import_check', {'type': type, 'row': row + 1}) }}" class="btn btn-light">»</a>
-			<a href="{{ path('member_index') }}" class="btn btn-light"><i class="fas fa-list" title="{{ 'global.action.list'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'global.action.list'|trans }}</span></a>
+			<a href="{{ path('member_index') }}" class="btn btn-light"><i class="fas fa-list" title="{{ 'global.action.list'|trans }}" aria-hidden="true"></i><span class="visually-hidden">{{ 'global.action.list'|trans }}</span></a>
 		</li>
 	</ul>
 {% endblock %}

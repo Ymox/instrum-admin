@@ -30,8 +30,8 @@
 <div class="form-control form-select-sm">
 {% for name,child in form.on %}
 <div class="form-check">
-	<input type="checkbox" class="form-check-input positive" id="{{ child.vars.id }}" name="{{ child.vars.full_name }}"{% if child.vars.value is not none %} value="{{ child.vars.value }}"{% endif %}{% if child.vars.checked %} checked="checked"{% endif %} data-lft="{{ child.vars.attr['data-lft'] }}" data-rgt="{{ child.vars.attr['data-rgt'] }}" /><label for="{{ child.vars.id }}" class="sr-only">{{ 'global.on'|trans }}</label>
-	<input type="checkbox" class="form-check-input negative ms-0" id="{{ form.off[name].vars.id }}" name="{{ form.off[name].vars.full_name }}"{% if form.off[name].vars.value is not none %} value="{{ form.off[name].vars.value }}"{% endif %}{% if form.off[name].vars.checked %} checked="checked"{% endif %} data-lft="{{ form.off[name].vars.attr['data-lft'] }}" data-rgt="{{ form.off[name].vars.attr['data-rgt'] }}" /><label for="{{ form.off[name].vars.id }}" class="sr-only">{{ 'global.off'|trans }}</label>
+	<input type="checkbox" class="form-check-input positive" id="{{ child.vars.id }}" name="{{ child.vars.full_name }}"{% if child.vars.value is not none %} value="{{ child.vars.value }}"{% endif %}{% if child.vars.checked %} checked="checked"{% endif %} data-lft="{{ child.vars.attr['data-lft'] }}" data-rgt="{{ child.vars.attr['data-rgt'] }}" /><label for="{{ child.vars.id }}" class="visually-hidden">{{ 'global.on'|trans }}</label>
+	<input type="checkbox" class="form-check-input negative ms-0" id="{{ form.off[name].vars.id }}" name="{{ form.off[name].vars.full_name }}"{% if form.off[name].vars.value is not none %} value="{{ form.off[name].vars.value }}"{% endif %}{% if form.off[name].vars.checked %} checked="checked"{% endif %} data-lft="{{ form.off[name].vars.attr['data-lft'] }}" data-rgt="{{ form.off[name].vars.attr['data-rgt'] }}" /><label for="{{ form.off[name].vars.id }}" class="visually-hidden">{{ 'global.off'|trans }}</label>
 	<p class="form-check-label ms-4 mb-0">{{ child.vars.label }}</p>
 </div>
 {% endfor %}

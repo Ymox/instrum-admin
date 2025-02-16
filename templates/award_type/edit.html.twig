@@ -9,7 +9,7 @@
 
 	<ul class="list-inline">
 		<li class="list-inline-item">
-			<a href="{{ path('award_type_index') }}" class="btn btn-light"><i class="fas fa-list" title="{{ 'global.action.list'|trans }}" aria-hidden="true"></i><span class="sr-only">{{ 'global.action.list'|trans }}</span></a>
+			<a href="{{ path('award_type_index') }}" class="btn btn-light"><i class="fas fa-list" title="{{ 'global.action.list'|trans }}" aria-hidden="true"></i><span class="visually-hidden">{{ 'global.action.list'|trans }}</span></a>
 		</li>
 		<li class="list-inline-item">
 			{{ include('award_type/_delete_form.html.twig') }}
