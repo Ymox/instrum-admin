@@ -7,7 +7,7 @@
 
 	<div class="row mb-3">
 		{{ form_row(form.statuses, {'row_attr': {'class': 'col-sm-6'}, 'attr': {'class': 'searchable'}, 'label_attr': {'class': 'mb-3'}}) }}
-		{{ form_row(form.relateds, {'row_attr': {'class': 'col-sm-6'}, 'attr': {'class': 'addable searchable'}}) }}
+		{{ form_row(form.relateds, {'row_attr': {'class': 'col-sm-6'}, 'attr': {'class': 'addable searchable'}, 'label_attr': {'class': (app.request.xmlHttpRequest ? 'mb-3' : '')}}) }}
 	</div>
 
 	<div id="StudentData" class="row mb-3"{% if not ('Elève' in form.statuses.vars.data) %} style="display: none;"{% endif %}>
