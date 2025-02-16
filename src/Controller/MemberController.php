@@ -43,7 +43,7 @@ class MemberController extends AbstractController
         $response = null;
         if ($_format != 'html') {
             $response = new Response();
-            $response->headers->set('Content-Type', 'text/csv; charset="utf-8"');
+            $response->headers->set('Content-Type', 'text/csv; charset="utf-8"; header=present');
             $response->headers->set('Content-Disposition', HeaderUtils::makeDisposition(
                 HeaderUtils::DISPOSITION_ATTACHMENT,
                 'export.csv'
@@ -93,7 +93,7 @@ class MemberController extends AbstractController
         ]);
     }
 
-    #[Route("/person/{id}", name: "show", methods: ["GET"])]
+    #[Route("/person/{id}", name: "show", methods: ["GET"], requirements: ["id" => "\d+"])]
     public function show(#[MapEntity] Member $member): Response
     {
         $form = $this->createForm(NoteTypeHidderType::class);
@@ -149,7 +149,7 @@ class MemberController extends AbstractController
         ]);
     }
 
-    #[Route("/members", name: "members", methods: ["GET"])]
+    #[Route("/members/{_format}", name: "members", methods: ["GET"], requirements: ["_format" => "^(?![\s\S])|html|csv"])]
     public function members(Request $request, EntityManagerInterface $entityManager): Response
     {
         $searchForm = $this->createForm(MemberSearchType::class, null, [
