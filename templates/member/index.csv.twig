@@ -15,7 +15,7 @@
 {{- 'app.fields.member.band.label'|trans }}"
 {%~ for member in members -%}
 	"{{ member.statuses|join(', ', 'global.join.end'|trans) }}";"
-	{{- member.title }}";"
+	{{- member.title is not null ? member.title.value }}";"
 	{{- member.lastname }}";"
 	{{- member.firstname }}";"
 	{{- member.birthday ? member.birthday|date('d.m.Y') }}";"
@@ -31,7 +31,7 @@
 	{%~ if member.age < 18 -%}
 	{%- for related in member.relateds -%}
 	"Parent";"
-	{{- related.title }}";"
+	{{- related.title is not null ? member.title.value }}";"
 	{{- related.lastname }}";"
 	{{- related.firstname }}";"
 	{{- related.birthday ? related.birthday|date('d.m.Y') }}";"

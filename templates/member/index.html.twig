@@ -98,7 +98,7 @@
 			{% for member in members %}
 				<tr>
 					<td>{{ member.statuses|join(', ', 'global.join.end'|trans) }}</td>
-					<td>{{ member.title }}</td>
+					<td>{{ member.title is not null ? member.title.value }}</td>
 					<td>{{ member.lastname }}</td>
 					<td>{{ member.firstname }}</td>
 					<td>{{ member.levels|join(', ', 'global.join.end'|trans) }}</td>

@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Config\Title;
 use App\Entity\Instrument;
 use App\Entity\Member;
 use App\Entity\Status;
@@ -13,6 +14,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormEvent;
@@ -31,11 +33,12 @@ class MemberType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('title', ChoiceType::class, [
+            ->add('title', EnumType::class, [
                 'required' => false,
-                'choices' => array_combine(Member::$TITLES, Member::$TITLES),
+                'class' => Title::class,
                 'label_format' => 'app.fields.member.%name%.label',
                 'placeholder' => 'app.fields.member.title.placeholder',
+                'choice_label' => 'value',
                 'choice_translation_domain' => false,
             ])
             ->add('lastname', null, [
@@ -210,7 +213,7 @@ class MemberType extends AbstractType
                 },
             ]);
     }
-    
+
     private function addStatuses(FormInterface $form, ?string $title)
     {
         $form

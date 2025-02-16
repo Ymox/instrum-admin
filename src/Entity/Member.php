@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Config\Title;
 use App\Entity\Embeddable\Address;
 use App\Repository\MemberRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -25,7 +26,7 @@ class Member
     private ?int $id = 0;
 
     #[ORM\Column(length: 15, nullable: true)]
-    private ?string $title = null;
+    private ?Title $title = null;
 
     #[ORM\Column]
     private ?string $lastname = null;
@@ -115,12 +116,12 @@ class Member
         return $this->id;
     }
 
-    public function getTitle(): ?string
+    public function getTitle(): ?Title
     {
         return $this->title;
     }
 
-    public function setTitle(?string $title): static
+    public function setTitle(?Title $title): static
     {
         $this->title = $title;
 
