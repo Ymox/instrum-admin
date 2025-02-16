@@ -22,6 +22,13 @@ class StatusRepository extends ServiceEntityRepository
 
     public function findHierarchical($status)
     {
+        $qb = $this->getQueryBuilderFindHierarchical($status);
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function getQueryBuilderFindHierarchical($status)
+    {
         $qb = $this->createQueryBuilder('s');
         $andX = $qb->expr()->andX(
             $qb->expr()->between('s.lft', 's2.lft', 's2.rgt'),
@@ -36,6 +43,6 @@ class StatusRepository extends ServiceEntityRepository
             ->setParameter(':id', $status)
         ;
 
-        return $qb->getQuery()->getResult();
+        return $qb;
     }
 }
