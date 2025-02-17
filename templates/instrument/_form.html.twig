@@ -6,12 +6,12 @@
 		{{ form_row(form.number, {'row_attr': {'class': 'col-sm-6 col-md-3'}}) }}
 	</div>
 	<div class="row mb-3">
-		<div class="col-6 col-sm-3">
+		<div class="col-6 col-sm-3 col-md-2">
 			<label class="form-label mb-3"> </label>
 			{{ form_widget(form.usable) }}
 		</div>
 		{{ form_row(form.property, {'row_attr': {'class': 'col-6 col-sm-3'}}) }}
-		{{ form_row(form.recipient, {'row_attr': {'class': 'col-sm-6'}}) }}
+		{{ form_row(form.recipient, {'row_attr': {'class': 'col-sm-6 col-md-7'}, 'attr': {'class': 'searchable'}}) }}
 	</div>
 	<div class="row mb-3">
 		{{ form_row(form.information) }}
