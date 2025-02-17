@@ -20,9 +20,11 @@ class InstrumentType extends AbstractType
     {
         $builder
             ->add('number', null, [
+                'empty_data' => '',
                 'label_format' => 'app.fields.instrument.%name%.label',
             ])
             ->add('brand', null, [
+                'empty_data' => '',
                 'label_format' => 'app.fields.instrument.%name%.label',
             ])
             ->add('usable', null, [

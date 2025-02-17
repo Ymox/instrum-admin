@@ -81,6 +81,7 @@ class MemberType extends AbstractType
             ])
             ->add('scmvCorrection', null, [
                 'required' => false,
+                'empty_data' => 0,
                 'label_format' => 'app.fields.member.%name%.label',
                 'help' => 'app.fields.member.scmvCorrection.help',
             ])
@@ -214,7 +215,7 @@ class MemberType extends AbstractType
             ]);
     }
 
-    private function addStatuses(FormInterface $form, ?string $title)
+    private function addStatuses(FormInterface $form, ?Title $title)
     {
         $form
             ->add('statuses', EntityType::class, [
