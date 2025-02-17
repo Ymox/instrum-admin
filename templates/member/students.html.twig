@@ -20,9 +20,7 @@
 					<th data-sorter="false">{{ 'app.fields.member.email.label'|trans }}</th>
 					<th data-sorter="false" data-filter="false" data-column-selector="disable">
 						<div class="btn-group dropstart btn-group-sm">
-							<button role="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" title="{{ 'global.action.expand.menu'|trans }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<span class="visually-hidden">{{ 'global.action.expand.menu'|trans }}</span>
-							</button>
+							<button role="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" title="{{ 'global.action.expand.menu'|trans }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-label="{{ 'global.action.expand.menu'|trans }}" aria-expanded="false"></button>
 							<ul id="ColumnSelector" class="dropdown-menu" data-column-selector-prototype="&lt;li&gt;&lt;label class=&quot;dropdown-item&quot;&gt;&lt;input type=&quot;checkbox&quot;&gt; {name}&lt;/label&gt;&lt;/li&gt;">
 								<button type="button" class="dropdown-item mail-collector" data-bs-toggle="modal" data-bs-target="#Modal" data-prototype="&lt;div class=&quot;modal-header&quot;&gt;&lt;h3&gt;{{ 'app.member.index.popup.mailing.heading'|trans }}&lt;/h3&gt;&lt;/div&gt;&lt;div class=&quot;modal-body&quot;&gt;&lt;a href=&quot;mailto:__mails__&quot;&gt;__mails__&lt;/a&gt;&lt;/div&gt;&lt;div class=&quot;modal-footer&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-bs-dismiss=&quot;modal&quot;&gt;{{ 'global.action.close'|trans }}&lt;/button&gt;&lt;/div&gt;" data-mail-type="">{{ 'global.action.mailing.full'|trans }}</button>
 								<button type="button" class="dropdown-item mail-collector" data-bs-toggle="modal" data-bs-target="#Modal" data-prototype="&lt;div class=&quot;modal-header&quot;&gt;&lt;h3&gt;{{ 'app.member.index.popup.mailing.heading'|trans }}&lt;/h3&gt;&lt;/div&gt;&lt;div class=&quot;modal-body&quot;&gt;&lt;a href=&quot;mailto:__mails__&quot;&gt;__mails__&lt;/a&gt;&lt;/div&gt;&lt;div class=&quot;modal-footer&quot;&gt;&lt;button type=&quot;button&quot; class=&quot;btn btn-primary&quot; data-bs-dismiss=&quot;modal&quot;&gt;{{ 'global.action.close'|trans }}&lt;/button&gt;&lt;/div&gt;" data-mail-type=":not(.related)">{{ 'global.action.mailing.direct'|trans }}</button>
@@ -70,9 +68,7 @@
 						{%- endfor %}</td>
 					<td>
 						<div class="btn-group dropstart btn-group-sm">
-							<button role="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" title="{{ 'global.action.expand.menu'|trans }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<span class="visually-hidden">{{ 'global.action.expand.menu'|trans }}</span>
-							</button>
+							<button role="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" title="{{ 'global.action.expand.menu'|trans }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-label="{{ 'global.action.expand.menu'|trans }}" aria-expanded="false"></button>
 							<div class="dropdown-menu">
 								<a href="{{ path('member_edit', {'id': member.id}) }}" class="dropdown-item"><i class="fas fa-pencil-alt" title="{{ 'global.action.edit'|trans }}" aria-hidden="true"></i> {{ 'global.action.edit'|trans }}</a>
 								<form method="post" action="{{ path('member_delete', {'id': member.id}) }}" style="display: list-item" onsubmit="return confirm('{{ 'global.action.confirm_delete'|trans }}');">

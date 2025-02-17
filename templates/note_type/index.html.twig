@@ -28,9 +28,7 @@
 				<td>{{ noteType.description }}</td>
 				<td>
 					<div class="btn-group dropstart btn-group-sm">
-						<button role="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" title="{{ 'global.action.expand.menu'|trans }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							<span class="visually-hidden">{{ 'global.action.expand.menu'|trans }}</span>
-						</button>
+						<button role="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" title="{{ 'global.action.expand.menu'|trans }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-label="{{ 'global.action.expand.menu'|trans }}" aria-expanded="false"></button>
 						<a href="{{ path('note_type_edit', {'id': noteType.id}) }}" class="btn btn-sm btn-outline-warning">{{ 'global.action.edit'|trans }}</a>
 						<div class="dropdown-menu">
 							<form method="post" action="{{ path('note_type_delete', {'id': noteType.id}) }}" style="display: list-item" onsubmit="return confirm('{{ 'global.action.confirm_delete'|trans }}');">

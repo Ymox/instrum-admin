@@ -4,9 +4,10 @@
 
 {% block body %}
 	<h1>{{ 'app.instrument.index.heading'|trans }}</h1>
-
+</div>
+<div class="container-fluid">
 	<div class="table-responsive">
-		<table class="table table-sm table-hover">
+		<table class="table table-sm table-hover mx-auto">
 			<thead>
 				<tr>
 					<th class="filter-match filter-select">{{ 'app.fields.instrument.cat.label'|trans }}</th>
@@ -27,7 +28,7 @@
 					<th><label for="SearchRecipient" class="visually-hidden">{{ 'app.fields.instrument.recipient.label'|trans }}</label><input type="search" name="q[recipient]" id="SearchRecipient" class="searchField form-control form-control-sm"{% if app.request.query.all('q')['recipient'] is defined %} value="{{ app.request.query.all('q')['recipient'] }}"{% endif %} placeholder="{{ 'app.fields.instrument.recipient.label'|trans }}" tabindex="1" data-column="5" /></th>
 					<th data-filter="false"></th>
 					<th data-sorter="false" data-filter="false" data-column-selector="disable">
-						<button type="reset" class="btn btn-sm btn-light"><i class="fas fa-sync-alt" title="{{ 'global.action.reset'|trans }}" aria-hidden="true"></i><span class="visually-hidden">{{ 'global.action.reset'|trans }}</span></button>
+						<button type="reset" class="btn btn-sm btn-light"><i class="fas fa-sync-alt" title="{{ 'global.action.reset'|trans }}" aria-label="{{ 'global.action.reset'|trans }}"></i></button>
 					</th>
 				</tr>
 			</thead>
@@ -49,10 +50,7 @@
 					<td>{{ instrument.information }}</td>
 					<td>
 						<div class="btn-group dropstart btn-group-sm">
-							<button role="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" title="{{ 'global.action.quick'|trans }}" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<span class="visually-hidden">{{ 'global.action.quick'|trans }}</span>
-							</button>
-							<a href="{{ path('instrument_edit', {'id': instrument.id}) }}" class="btn btn-sm btn-outline-warning">{{ 'global.action.edit'|trans }}</a>
+							<button type="button" class="btn btn-outline-secondary dropdown-toggle dropdown-toggle-split" title="{{ 'global.action.quick'|trans }}" data-bs-toggle="dropdown" aria-label="{{ 'global.action.quick'|trans }}" aria-haspopup="true" aria-expanded="false"></button>
 							<div class="dropdown-menu">
 								<a href="{{ path('instrument_assign_member', {'id': instrument.id}) }}" class="dropdown-item" data-bs-target="#Modal" data-bs-toggle="modal" target="_blank"><i class="fas fa-user" aria-hidden="true"></i> (Dés-)assigner</a>
 								<form method="post" action="{{ path('instrument_delete', {'id': instrument.id}) }}" style="display: list-item" onsubmit="return confirm('{{ 'global.action.confirm_delete'|trans }}');">
@@ -60,6 +58,7 @@
 									<button type="submit" class="dropdown-item"><i class="fas fa-trash" title="{{ 'global.action.delete'|trans }}" aria-hidden="true"></i> {{ 'global.action.delete'|trans }}</button>
 								</form>
 							</div>
+							<a href="{{ path('instrument_edit', {'id': instrument.id}) }}" class="btn btn-sm btn-outline-warning">{{ 'global.action.edit'|trans }}</a>
 						</div>
 					</td>
 				</tr>
