@@ -23,7 +23,7 @@
 					<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 				{% endif %}
 				<div class="mb-3 form-floating">
-					<input type="text" name="_username" id="username" class="form-control" placeholder="{{ 'app.fields.user.username.label'|trans }}" value="{{ lastUsername }}" />
+					<input type="text" name="_username" id="username" class="form-control" placeholder="{{ 'app.fields.user.username.label'|trans }}" value="{{ lastUsername }}" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" />
 					<label for="username">{{ 'app.fields.user.username.label'|trans }}</label>
 				</div>
 
