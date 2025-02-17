@@ -1,17 +1,17 @@
 {{ form_start(form, {'attr': {'class': app.request.xmlHttpRequest ? 'ajaxify' : null}}) }}
 	<div class="row mb-3">
-		{{ form_row(form.cat, {'row_attr': {'class': 'col-sm-3'}}) }}
-		{{ form_row(form.subcat, {'row_attr': {'class': 'col-sm-3'}}) }}
-		{{ form_row(form.brand, {'row_attr': {'class': 'col-sm-3'}}) }}{# datalist #}
-		{{ form_row(form.number, {'row_attr': {'class': 'col-sm-3'}}) }}
+		{{ form_row(form.cat, {'row_attr': {'class': 'col-sm-6 col-md-3'}}) }}
+		{{ form_row(form.subcat, {'row_attr': {'class': 'col-sm-6 col-md-3'}}) }}
+		{{ form_row(form.brand, {'row_attr': {'class': 'col-sm-6 col-md-3'}}) }}{# datalist #}
+		{{ form_row(form.number, {'row_attr': {'class': 'col-sm-6 col-md-3'}}) }}
 	</div>
 	<div class="row mb-3">
-		<div class="col-sm-4">
+		<div class="col-6 col-sm-3">
 			<label class="form-label mb-3"> </label>
 			{{ form_widget(form.usable) }}
 		</div>
-		{{ form_row(form.property, {'row_attr': {'class': 'col-sm-4'}}) }}
-		{{ form_row(form.recipient, {'row_attr': {'class': 'col-sm-4'}}) }}
+		{{ form_row(form.property, {'row_attr': {'class': 'col-6 col-sm-3'}}) }}
+		{{ form_row(form.recipient, {'row_attr': {'class': 'col-sm-6'}}) }}
 	</div>
 	<div class="row mb-3">
 		{{ form_row(form.information) }}
