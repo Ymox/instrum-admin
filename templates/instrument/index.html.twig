@@ -26,7 +26,7 @@
 					<th><label for="SearchProperty" class="visually-hidden">{{ 'app.fields.instrument.property.label'|trans }}</label><input type="search" name="q[property]" id="SearchProperty" class="searchField form-control form-control-sm"{% if app.request.query.all('q')['property'] is defined %} value="{{ app.request.query.all('q')['property'] }}"{% endif %} placeholder="{{ 'app.fields.instrument.property.label'|trans }}" tabindex="1" data-column="4" /></th>
 					<th><label for="SearchRecipient" class="visually-hidden">{{ 'app.fields.instrument.recipient.label'|trans }}</label><input type="search" name="q[recipient]" id="SearchRecipient" class="searchField form-control form-control-sm"{% if app.request.query.all('q')['recipient'] is defined %} value="{{ app.request.query.all('q')['recipient'] }}"{% endif %} placeholder="{{ 'app.fields.instrument.recipient.label'|trans }}" tabindex="1" data-column="5" /></th>
 					<th data-filter="false"></th>
-					<th id="ColumnSelector" data-sorter="false" data-filter="false" data-column-selector="disable" data-column-selector-prototype="">
+					<th data-sorter="false" data-filter="false" data-column-selector="disable">
 						<button type="reset" class="btn btn-sm btn-light"><i class="fas fa-sync-alt" title="{{ 'global.action.reset'|trans }}" aria-hidden="true"></i><span class="visually-hidden">{{ 'global.action.reset'|trans }}</span></button>
 					</th>
 				</tr>

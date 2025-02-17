@@ -15,7 +15,7 @@
 				<tr class="tablesorter-ignoreRow">
 					<th><label for="SearchWhat" class="visually-hidden">{{ 'app.fields.stock.what.label'|trans }}</label><input type="search" name="q[what]" id="SearchWhat" class="searchField form-control form-control-sm"{% if app.request.all('q')['what'] is defined %} value="{{ app.request.all('q')['what'] }}"{% endif %} placeholder="{{ 'app.fields.stock.what.label'|trans }}" tabindex="1" data-column="0" /></th>
 					<th data-filter="false"></th>
-					<th id="ColumnSelector" data-sorter="false" data-filter="false" data-column-selector="disable" data-column-selector-prototype="">
+					<th data-sorter="false" data-filter="false" data-column-selector="disable">
 						<button type="reset" class="btn btn-sm btn-light"><i class="fas fa-sync-alt" title="{{ 'global.action.reset'|trans }}" aria-hidden="true"></i><span class="visually-hidden">{{ 'global.action.reset'|trans }}</span></button>
 					</th>
 				</tr>
