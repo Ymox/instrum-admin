@@ -25,13 +25,13 @@
 	{{- member.mobile }}";"
 	{{- member.phone }}";"
 	{{- member.cat ? member.cat }}";"
-	{{- member.email }}";"
-	{{- member.scmv ? member.scmv }}";"
-	{{- member.band ? member.band }}"
+	{{- member.email }}";
+	{{- member.scmv ? member.scmv }};
+	{{- member.band ? member.band }}
 	{%~ if member.age < 18 -%}
 	{%- for related in member.relateds -%}
 	"Parent";"
-	{{- related.title is not null ? member.title.value }}";"
+	{{- related.title is not null ? related.title.value }}";"
 	{{- related.lastname }}";"
 	{{- related.firstname }}";"
 	{{- related.birthday ? related.birthday|date('d.m.Y') }}";"
@@ -42,7 +42,7 @@
 	{{- related.phone }}";"
 	{{- related.cat ? member.cat }}";"
 	{{- related.email }}";;
-	{%- endfor -%}
+	{%~ endfor -%}
 	{%- endif -%}
 {%- endfor -%}
 {%- endautoescape -%}
