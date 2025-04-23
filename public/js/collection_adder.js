@@ -1,7 +1,7 @@
 /**
- * 
+ *
  */
- $(function() {
+$(function() {
 	const removeButton = function($where) {
 		$('>div, >tbody>tr', $where).filter(function() {
 			return $('>.remover', $where).length === 0;

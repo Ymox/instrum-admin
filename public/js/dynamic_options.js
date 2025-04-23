@@ -1,7 +1,7 @@
 /**
- * 
+ *
  */
- $(function() {
+$(function() {
 	$('[data-dynamic-options]').each( function () {
 		const selfId = '#' + this.id;
 		let start = this.name.length;
