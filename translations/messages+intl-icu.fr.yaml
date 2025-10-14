@@ -254,7 +254,7 @@ app:
       description:
         label: Description
         default: Type par défaut
-  
+
     import:
       type: Type d'import
       file: Fichier à importer
@@ -273,7 +273,7 @@ app:
       heading: Personnes
       list: Toutes
       active: Membres
-      passive: Passifs
+      external: Externes
       statuses: Rôles
       awards: Distinctions
       note_types: Types de notes

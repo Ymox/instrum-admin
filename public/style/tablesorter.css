@@ -1,0 +1,23 @@
+thead {
+    border-top: 0 none transparent !important;
+}
+
+.tablesorter-filter.disabled {
+    display: none;
+}
+
+.tablesorter-header:not(.sorter-false) {
+    --direction: '◆';
+}
+
+.tablesorter-headerAsc {
+    --direction: '⏶';
+}
+
+.tablesorter-headerDesc {
+    --direction: '⏷';
+}
+
+.tablesorter-header .tablesorter-header-inner::before {
+    content: var(--direction) ' ';
+}

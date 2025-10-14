@@ -23,7 +23,7 @@
 								('member_index' == app.current_route)
 								and app.request.query.has('q')
 								and app.request.query.all('q')['statuses'] is defined
-								and ('Externe' in app.request.query.all('q')['statuses']['on']) %} active" aria-current="page{% endif %}" href="{{ path('member_index', {'q': {'statuses': {'on': ['Externe']}}}) }}">{{ 'app.menu.members.passive'|trans }}</a>
+								and ('Externe' in app.request.query.all('q')['statuses']['on']) %} active" aria-current="page{% endif %}" href="{{ path('member_index', {'q': {'statuses': {'on': ['Externe']}}}) }}">{{ 'app.menu.members.external'|trans }}</a>
 						<a class="dropdown-item{% if 'member_students' == app.current_route %} active" aria-current="page{% endif %}" href="{{ path('member_students') }}">{{ 'app.menu.students'|trans }}</a>
 						<a class="dropdown-item{% if
 								('member_index' == app.current_route)
