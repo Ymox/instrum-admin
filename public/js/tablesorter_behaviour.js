@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 $(function() {
 	const $table = $('table').tablesorter({
@@ -15,7 +15,17 @@ $(function() {
 			savesort: true,
 			columnSelector_mediaquery: false,
 			columnSelector_container: '#ColumnSelector',
-			columnSelector_layout: document.getElementById('ColumnSelector').dataset.columnSelectorPrototype
+			columnSelector_layout: document.getElementById('ColumnSelector').dataset.columnSelectorPrototype,
+			filter_functions: {
+				0: function (cell, normalizedData, filterValue, columnIndex, $row, config, data) {
+					if (filterValue.length <= 17) {
+						return;
+					}
+					const values = JSON.parse(filterValue);
+					return !!values.on.length && values.on.some(wanted => (new RegExp(wanted, 'i')).test(cell))
+						&& !!values.off.length && !values.off.some(unwanted => (new RegExp(unwanted, 'i')).test(cell));
+				}
+			}
 		}
 	});
 	$('[type="reset"]', $table).click( function() {

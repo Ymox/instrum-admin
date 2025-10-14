@@ -10,11 +10,11 @@ thead {
     --direction: '◆';
 }
 
-.tablesorter-headerAsc {
+.tablesorter-header.tablesorter-headerAsc {
     --direction: '⏶';
 }
 
-.tablesorter-headerDesc {
+.tablesorter-header.tablesorter-headerDesc {
     --direction: '⏷';
 }
 

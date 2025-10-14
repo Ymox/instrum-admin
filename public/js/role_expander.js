@@ -13,37 +13,17 @@ $('.form-select-sm').on('change', '[type="checkbox"]', function() {
 			selected.push(this.value);
 		}
 	});
-	let value = '';
-	if (self.name.match(/on/)) {
-		value = selected.join(' or ');
-		selected.length = 0;
-		$('[name="' + self.name.replace(/on/, 'off') + '"]:checked').each( function() {
-			selected.push('!' + this.value);
-		});
-		if (value.length) {
-			value = value + ' && ';
+	let value = {'on': [], 'off': []};
+	$(this).closest('.form-select-sm').find('[type="checkbox"]:checked').each( function() {
+		if (this.name.match(/\[on\]/)) {
+			value.on.push(this.value);
+		} else {
+			value.off.push(this.value);
 		}
-		if (selected.length) {
-			value = value + selected.join(' && ');
-		}
-	} else {
-		if (selected.length) {
-			value += '!' + selected.join(' and !');
-		}
-		selected.length = 0;
-		$('[name="' + self.name.replace(/off/, 'on') + '"]:checked').each( function() {
-			selected.push(this.value);
-		});
-		if (value.length) {
-			value = value + ' && ';
-		}
-		if (selected.length) {
-			value = value + selected.join(' or ');
-		}
-	}
+	});
 	const searchField = $(self).closest('.form-select-sm').next('.searchField');
-	if (value.length) {
-		searchField.val(value);
+	if (value.on?.length || value.off?.length) {
+		searchField.val(JSON.stringify(value));
 	} else {
 		searchField.val(null);
 	}

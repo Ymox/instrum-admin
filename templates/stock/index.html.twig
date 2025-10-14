@@ -46,16 +46,13 @@
 {% endblock %}
 
 {% block stylesheets %}
-		<style type="text/css">
-			thead { border-top: 0 none transparent !important; }
-			.tablesorter-filter.disabled { display: none; }
-		</style>
+		<link rel="stylesheet" href="{{ asset('style/tablesorter.css') }}" />
 {% endblock %}
 
 {% block javascripts %}
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/jquery.tablesorter.widgets.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.3/js/widgets/widget-columnSelector.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.32.0/js/jquery.tablesorter.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.32.0/js/jquery.tablesorter.widgets.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.32.0/js/widgets/widget-columnSelector.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 		<script src="{{ asset('js/collection_adder.js') }}"></script>
 		<script src="{{ asset('js/dynamic_modal.js') }}"></script>
 		<script src="{{ asset('js/ajaxify.js') }}"></script>
