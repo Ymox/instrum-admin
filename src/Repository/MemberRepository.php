@@ -91,7 +91,7 @@ class MemberRepository extends ServiceEntityRepository
         }
 
         foreach ($orderBy as $field => $direction) {
-            $qb->addOrderBy($this->sanitizeField($field), $direction);
+            $qb->addOrderBy($this->sanitizeField($field), (strtolower($direction) === 'desc') ? 'desc' : 'asc');
         }
 
         if (null != $limit) {
@@ -168,7 +168,9 @@ class MemberRepository extends ServiceEntityRepository
             case 'firstname':
             case 'email':
                 $field = 'm.' . $field;
+                break;
             default:
+                $field = 'm.id';
                 break;
         }
 

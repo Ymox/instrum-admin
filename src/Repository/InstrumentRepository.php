@@ -63,7 +63,7 @@ class InstrumentRepository extends ServiceEntityRepository
         }
 
         foreach ($orderBy as $field => $direction) {
-            $qb->addOrderBy($this->sanitizeField($field), $direction);
+            $qb->addOrderBy($this->sanitizeField($field), (strtolower($direction) === 'desc') ? 'desc' : 'asc');
         }
 
         if (null != $limit) {
@@ -109,7 +109,9 @@ class InstrumentRepository extends ServiceEntityRepository
             case 'brand':
             case 'usable':
                 $field = 'i.' . $field;
+                break;
             default:
+                $field = 'm.id';
                 break;
         }
 
