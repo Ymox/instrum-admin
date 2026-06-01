@@ -68,11 +68,12 @@ class MemberRepository extends ServiceEntityRepository
             unset($criteria['statuses']);
         }
 
+        $i = 0;
         foreach ($criteria as $field => $value) {
             if (empty($value) || $value->isEmpty()) {
                 continue;
             }
-            $marker = ':' . $field;
+            $marker = ':params' . $i++;
             if (is_string($value)) {
                 if (preg_match('`^".*"$`', $value)) {
                     $value = trim($value, '"');
@@ -95,10 +96,10 @@ class MemberRepository extends ServiceEntityRepository
         }
 
         if (null != $limit) {
-            $qb->setMaxResults($limit);
+            $qb->setMaxResults(max($limit, 0));
         }
         if (null != $offset) {
-            $qb->setFirstResult($offset);
+            $qb->setFirstResult(max($offset, 0));
         }
 
         $paginator = new Paginator($qb);
@@ -147,6 +148,19 @@ class MemberRepository extends ServiceEntityRepository
         ;
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function getMemberQueryBuilder(string $alias = 'm')
+    {
+        $qb = $this->createQueryBuilder($alias);
+        $qb ->leftJoin(\App\Entity\Status::class, 's1', Join::WITH, $qb->expr()->eq('s1.name', $qb->expr()->literal('Membre')))
+            ->innerJoin('m.statuses', 's2', Join::WITH, $qb->expr()->andX(
+                $qb->expr()->between('s1', 's2.lft', 's2.rgt'),
+                $qb->expr()->between('s1', 's2.lft', 's2.rgt')
+            ))
+        ;
+
+        return $qb;
     }
 
     private function sanitizeField($field)

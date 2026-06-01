@@ -53,11 +53,12 @@ class InstrumentRepository extends ServiceEntityRepository
     {
         $qb = $this->getQueryBuilderFindComplete();
 
+        $i = 0;
         foreach ($criteria as $field => $value) {
             if ($value === null) {
                 continue;
             }
-            $marker = ':' . $field;
+            $marker = ':params_' . $i++;
             $qb->andWhere($qb->expr()->eq($this->sanitizeField($field), $marker));
             $qb->setParameter($marker, $value);
         }
@@ -67,10 +68,10 @@ class InstrumentRepository extends ServiceEntityRepository
         }
 
         if (null != $limit) {
-            $qb->setMaxResults($limit);
+            $qb->setMaxResults(max($limit, 0));
         }
         if (null != $offset) {
-            $qb->setFirstResult($offset);
+            $qb->setFirstResult(max($offset, 0));
         }
 
         $paginator = new Paginator($qb);
