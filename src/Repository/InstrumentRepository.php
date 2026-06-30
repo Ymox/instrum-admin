@@ -112,7 +112,7 @@ class InstrumentRepository extends ServiceEntityRepository
                 $field = 'i.' . $field;
                 break;
             default:
-                $field = 'm.id';
+                $field = 'i.id';
                 break;
         }
 
